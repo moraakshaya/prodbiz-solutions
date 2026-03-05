@@ -1,0 +1,55 @@
+.button {
+    font-family: var(--font-mplus), sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.65rem 1.6rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+/* Primary Variant (Gradient) */
+.button--primary {
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #d4522e 100%);
+    box-shadow: 0 4px 16px rgba(231, 96, 56, 0.3);
+}
+
+.button--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(231, 96, 56, 0.45);
+    background: linear-gradient(135deg, #f0704c 0%, #d4522e 100%);
+}
+
+/* Secondary Variant (Glass) */
+.button--secondary {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.button--secondary:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Large size for Hero */
+.button--lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
