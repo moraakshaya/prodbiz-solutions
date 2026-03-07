@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 :root {
   --primary-color: #2197A1;
   --secondary-color: #e76038;
@@ -56,6 +66,19 @@ h3 {
   /* 24px */
   margin-bottom: 1rem;
 }
+
+h4 {
+  font-size: 1.25rem;
+  /* 20px */
+  margin-bottom: 0.5rem;
+}
+
+h6 {
+  font-size: 0.9rem;
+  /* 20px */
+  margin-bottom: 0.6rem;
+}
+
 
 p,
 li {

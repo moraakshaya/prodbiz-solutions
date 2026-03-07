@@ -1,0 +1,94 @@
+.trust-strip {
+    padding: 2.5rem 1rem;
+    background: var(--bg-color);
+    position: relative;
+    z-index: 5;
+    margin-top: -20px;
+    /* Pull up slightly to overlap wave if needed, or keep flush */
+}
+
+.trust-strip__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.trust-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    /* 3D Effect */
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.05),
+        0 6px 6px rgba(0, 0, 0, 0.05),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.1),
+        inset 0 4px 6px rgba(255, 255, 255, 0.8);
+}
+
+.trust-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 30px rgba(0, 0, 0, 0.1),
+        0 10px 10px rgba(0, 0, 0, 0.05),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.trust-card__icon-wrapper {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1b7a82 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(33, 151, 161, 0.3);
+    flex-shrink: 0;
+}
+
+.trust-card:nth-child(even) .trust-card__icon-wrapper {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #d4522e 100%);
+    box-shadow: 0 4px 12px rgba(231, 96, 56, 0.3);
+}
+
+.trust-card__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.trust-card__value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-color);
+    line-height: 1.2;
+}
+
+.trust-card__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+    .trust-strip {
+        padding: 2rem 0.5rem;
+    }
+
+    .trust-strip__container {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
