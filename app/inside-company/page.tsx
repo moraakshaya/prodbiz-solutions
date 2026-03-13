@@ -1,7 +1,456 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import { Image, Calendar, PlayCircle, Grid, Users, Sparkles, Film, X } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
+const tabs = [
+    { id: "Photo Gallery", label: "Photo Gallery", icon: Image },
+    { id: "Events & Activities", label: "Events & Activities", icon: Calendar },
+    { id: "Video Section", label: "Video Section", icon: PlayCircle },
+];
+
+const galleryImages = [
+    {
+        url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80",
+        title: "Office Workspace",
+        description: "Our modern, high-tech office workspace.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80",
+        title: "Team Meeting",
+        description: "Brainstorming and collaborative decision making.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1522071823991-b99772a6998c?auto=format&fit=crop&q=80",
+        title: "Collaboration Session",
+        description: "Developers working together on innovative solutions.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80",
+        title: "Project Discussion",
+        description: "Deep diving into project requirements and UI/UX.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&q=80",
+        title: "Work Environment",
+        description: "A look into our vibrant, open-plan office.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80",
+        title: "Tech Culture",
+        description: "Our team sharing ideas over coffee.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80",
+        title: "Design Studio",
+        description: "Where creative concepts come to life.",
+    },
+    {
+        url: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80",
+        title: "Team Spirit",
+        description: "Stronger together, aiming for excellence.",
+    }
+];
+
+const eventImages = [
+    {
+        url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80",
+        title: "Team Outings",
+        description: "Building bonds beyond the office walls."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80",
+        title: "Company Celebrations",
+        description: "Celebrating our wins and milestones together."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80",
+        title: "Workshops",
+        description: "Interactive sessions to sharpen our creative skills."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80",
+        title: "Training Sessions",
+        description: "Continuous learning and professional growth."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80",
+        title: "Festivals",
+        description: "Bringing cultural vibrancy to our workspace."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1528605248644-14dd04cb11c7?auto=format&fit=crop&q=80",
+        title: "Team Lunch",
+        description: "Sharing moments and flavors as one team."
+    }
+];
+
+const videoData = [
+    {
+        url: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80",
+        title: "Office Walkthrough",
+        description: "A quick tour of our creative workspace."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80",
+        title: "Team Event Highlights",
+        description: "Capturing the energy of our latest team outing."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80",
+        title: "Workshop Recordings",
+        description: "Knowledge sharing and brainstorming sessions."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1504384308090-c89e124d6d5b?auto=format&fit=crop&q=80",
+        title: "Project Launch Moments",
+        description: "The excitement behind our latest releases."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80",
+        title: "Internal Tech Talks",
+        description: "Diving deep into our development stack."
+    },
+    {
+        url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80",
+        title: "Behind the Screens",
+        description: "The real magic happening at every desk."
+    }
+];
+
 export default function InsideCompanyPage() {
+    const [activeTab, setActiveTab] = useState(tabs[0].id);
+    const [selectedImage, setSelectedImage] = useState<null | { url: string, title: string }>(null);
+    const galleryRef = useRef<HTMLDivElement>(null);
+    const eventRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (contentRef.current) {
+            gsap.fromTo(contentRef.current,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+            );
+        }
+
+        if (activeTab === "Photo Gallery" && galleryRef.current) {
+            const items = galleryRef.current.querySelectorAll(".gallery-item");
+            gsap.fromTo(items,
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: galleryRef.current,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        }
+
+        if (activeTab === "Events & Activities" && eventRef.current) {
+            const items = eventRef.current.querySelectorAll(".event-item");
+            gsap.fromTo(items,
+                {
+                    opacity: 0,
+                    scale: 0.5,
+                    y: -40,
+                    transformOrigin: "top center"
+                },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    duration: 0.7,
+                    stagger: 0.2,
+                    ease: "back.out(1.2)",
+                }
+            );
+        }
+
+        if (activeTab === "Video Section" && videoRef.current) {
+            const items = videoRef.current.querySelectorAll(".video-item");
+            gsap.fromTo(items,
+                {
+                    opacity: 0,
+                    scale: 0.5,
+                    y: -40,
+                    transformOrigin: "top center"
+                },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    duration: 0.7,
+                    stagger: 0.2,
+                    ease: "back.out(1.2)",
+                }
+            );
+        }
+    }, [activeTab]);
+
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1 className="text-4xl font-bold">Inside Company</h1>
+        <main className="flex min-h-screen flex-col items-center bg-white">
+            {/* Inside Prodbiz Hero Section */}
+            <section
+                className="relative w-full min-h-[90vh] flex items-center overflow-hidden"
+                style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
+            >
+                {/* Content Container */}
+                <div className="z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6">
+
+                    {/* Left Side: Heading and Paragraph (80% Area) */}
+                    <div className="w-full md:w-[70%] !pl-[14%] flex flex-col items-start">
+                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] mb-6">
+                            Inside Prodbiz
+                        </h1>
+                        <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium max-w-3xl">
+                            Explore the moments that define Prodbiz — from team collaborations and
+                            project milestones to events and celebrations. This is a glimpse into
+                            the people, culture, and experiences behind our work.
+                        </p>
+                    </div>
+
+                    {/* Right Side: Empty space for image (20% Area) */}
+                    <div className="w-full md:w-[20%] flex justify-center items-center h-full min-h-[300px]">
+                        {/* Empty space left for future image */}
+                    </div>
+
+                </div>
+
+                {/* Bottom 3D Drip Border */}
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
+                    <svg
+                        className="relative block w-[calc(100%+1.3px)] h-[80px] md:h-[140px]"
+                        data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                    >
+                        <defs>
+                            <filter id="inner-shadow">
+                                <feOffset dx="0" dy="5" />
+                                <feGaussianBlur stdDeviation="4" result="offset-blur" />
+                                <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+                                <feFlood floodColor="black" floodOpacity="0.3" result="color" />
+                                <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+                                <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+                            </filter>
+                        </defs>
+                        <path
+                            d="M 0,120 L 0,0 C 10,0 20,10 20,30 C 18,50 32,50 30,30 C 30,10 40,0 50,0 C 60,0 70,40 70,80 C 68,100 82,100 80,80 C 80,40 90,0 100,0 C 110,0 120,20 120,40 C 118,60 132,60 130,40 C 130,20 140,0 150,0 C 160,0 170,50 170,100 C 168,120 182,120 180,100 C 180,50 190,0 200,0 C 210,0 220,10 220,20 C 218,40 232,40 230,20 C 230,10 240,0 250,0 C 260,0 270,30 270,60 C 268,80 282,80 280,60 C 280,30 290,0 300,0 C 310,0 320,45 320,90 C 318,110 332,110 330,90 C 330,45 340,0 350,0 C 360,0 370,10 370,30 C 368,50 382,50 380,30 C 380,10 390,0 400,0 C 410,0 420,35 420,70 C 418,90 432,90 430,70 C 430,35 440,0 450,0 C 460,0 470,25 470,50 C 468,70 482,70 480,50 C 480,25 490,0 500,0 C 510,0 520,50 520,95 C 518,115 532,115 530,95 C 530,50 540,0 550,0 C 560,0 570,20 570,40 C 568,60 582,60 580,40 C 580,20 590,0 600,0 C 610,0 620,40 620,80 C 618,100 632,100 630,80 C 630,40 640,0 650,0 C 660,0 670,10 670,20 C 668,40 682,40 680,20 C 680,10 690,0 700,0 C 710,0 720,35 720,70 C 718,90 732,90 730,70 C 730,35 740,0 750,0 C 760,0 770,45 770,90 C 768,110 782,110 780,90 C 780,45 790,0 800,0 C 810,0 820,20 820,40 C 818,60 832,60 830,40 C 830,20 840,0 850,0 C 860,0 870,50 870,100 C 868,120 882,120 880,100 C 880,50 890,0 900,0 C 910,0 920,10 920,30 C 918,50 932,50 930,30 C 930,10 940,0 950,0 C 960,0 970,40 970,80 C 968,100 982,100 980,80 C 980,40 990,0 1000,0 C 1010,0 1020,25 1020,50 C 1018,70 1032,70 1030,50 C 1030,25 1040,0 1050,0 C 1060,0 1070,10 1070,20 C 1068,40 1082,40 1080,20 C 1080,10 1090,0 1100,0 C 1110,0 1120,35 1120,70 C 1118,90 1132,90 1130,70 C 1130,35 1140,0 1150,0 C 1160,0 1170,45 1170,90 C 1168,110 1182,110 1180,90 C 1180,45 1190,0 1200,0 L 1200,120 Z"
+                            fill="#ffffff"
+                            filter="url(#inner-shadow)"
+                        ></path>
+                    </svg>
+                </div>
+
+            </section>
+
+            {/* Tab Section - Redesigned like image */}
+            <div className="w-full max-w-5xl mx-auto -mt-16 !mb-10 !px-12 z-20">
+                <div className="bg-[#f0f9fa] rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.18)] flex items-center justify-between px-8 md:px-16 py-4 overflow-x-hidden overflow-y-hidden no-scrollbar">
+                    {tabs.map((tab) => {
+                        const Icon = tab.icon;
+                        const isActive = activeTab === tab.id;
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className="flex flex-col items-center  w-full !py-1 !gap-2 transition-all duration-300 hover:scale-105 active:scale-95"
+                            >
+                                <Icon
+                                    size={24}
+                                    className={`${isActive ? "text-[#e76038]" : "text-gray-400"} transition-colors`}
+                                />
+                                <span
+                                    className={`text-sm font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-[#e76038]" : "text-gray-500"} transition-colors`}
+                                >
+                                    {tab.label}
+                                </span>
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* Content Section */}
+            <section className="w-full max-w-7xl mx-auto px-6 py-24 flex flex-col items-center overflow-hidden">
+                <div ref={contentRef} className="w-full">
+                    {activeTab === "Photo Gallery" ? (
+                        <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
+                            {/* 10% Text Section (Refactored to Header) */}
+                            <div className="w-full text-center flex flex-col items-center">
+                                <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
+                                    Life at <span className="text-[#2197A1]">Prodbiz</span>
+                                </h2>
+                                <p className="text-gray-500 text-base font-medium leading-relaxed max-w-2xl mt-4">
+                                    A look into our everyday workspace, team collaborations, and the environment where ideas turn into innovative digital solutions.
+                                </p>
+                            </div>
+
+                            {/* 90% Image Grid (Masonry) */}
+                            <div
+                                ref={galleryRef}
+                                className="w-full columns-1 md:columns-2 lg:columns-3 gap-6 !space-y-6"
+                            >
+                                {galleryImages.map((img, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="gallery-item relative overflow-hidden rounded-3xl cursor-pointer group break-inside-avoid shadow-lg transition-transform duration-300 hover:shadow-2xl"
+                                        onClick={() => setSelectedImage(img)}
+                                    >
+                                        <div className="absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10" />
+                                        <img
+                                            src={img.url}
+                                            alt={img.title}
+                                            className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute w-full bg-black/30 !p-2 bottom-0 left-0 right-0 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                            <p className="text-white font-bold !mb-1 text-lg text-center">{img.title}</p>
+                                            <p className="text-white/80 font-medium text-sm text-center">{img.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="w-full min-h-[400px]">
+                            {activeTab === "Events & Activities" && (
+                                <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
+                                    {/* Centered Header Section */}
+                                    <div className="w-full text-center flex flex-col items-center">
+                                        <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
+                                            Events & <span className="text-[#2197A1]">Celebrations</span>
+                                        </h2>
+                                        <p className="text-gray-500 font-medium text-base leading-relaxed max-w-2xl mt-4">
+                                            At Prodbiz, we celebrate achievements, milestones, and moments that bring our team together. These events strengthen our team spirit and create memorable experiences.
+                                        </p>
+                                    </div>
+
+                                    {/* 3-Column Image Grid */}
+                                    <div
+                                        ref={eventRef}
+                                        className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                                    >
+                                        {eventImages.map((img, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="event-item relative overflow-hidden rounded-[2.5rem] cursor-pointer group shadow-lg transition-all duration-300 hover:shadow-2xl aspect-[4/3]"
+                                                onClick={() => setSelectedImage(img)}
+                                            >
+                                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-60 transition-opacity duration-300 z-10" />
+                                                <img
+                                                    src={img.url}
+                                                    alt={img.title}
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                />
+                                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                                    <p className="text-white font-bold text-2xl mb-2 text-center">{img.title}</p>
+                                                    <p className="text-white/90 font-medium text-sm text-center">{img.description}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            {activeTab === "Video Section" && (
+                                <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
+                                    {/* Centered Header Section */}
+                                    <div className="w-full text-center flex flex-col items-center">
+                                        <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
+                                            Prodbiz in <span className="text-[#2197A1]">Action</span>
+                                        </h2>
+                                        <p className="text-gray-500 text-base font-medium leading-relaxed max-w-2xl mt-4">
+                                            Short clips capturing team activities, office culture, and highlights from events. Experience the energy and innovation of Prodbiz in motion.
+                                        </p>
+                                    </div>
+
+                                    {/* 3-Column Video Grid */}
+                                    <div
+                                        ref={videoRef}
+                                        className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                                    >
+                                        {videoData.map((vid, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="video-item relative overflow-hidden rounded-[2.5rem] cursor-pointer group shadow-lg transition-all duration-300 hover:shadow-2xl aspect-video"
+                                                onClick={() => setSelectedImage(vid)}
+                                            >
+                                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300 z-10" />
+                                                <img
+                                                    src={vid.url}
+                                                    alt={vid.title}
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                />
+
+                                                {/* Play Icon Overlay */}
+                                                <div className="absolute inset-0 z-20 flex items-center justify-center">
+                                                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transform transition-transform duration-500 group-hover:scale-125">
+                                                        <PlayCircle className="text-white w-10 h-10 fill-white/20" />
+                                                    </div>
+                                                </div>
+
+                                                <div className="absolute inset-x-0 bottom-0 z-30 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                                    <p className="text-white font-bold text-xl !mb-1 text-center">{vid.title}</p>
+                                                    <p className="text-white/80 font-medium text-xs text-center">{vid.description}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            {/* Lightbox Overlay */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-xl transition-all duration-300 p-4"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <button
+                        className="absolute top-8 right-8 text-white/70 hover:text-white transition-colors"
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        <X size={40} />
+                    </button>
+                    <div
+                        className="max-w-6xl w-fit max-h-[85vh] relative flex flex-col items-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src={selectedImage.url}
+                            alt={selectedImage.title}
+                            className="max-w-full max-h-[50vh] object-contain rounded-2xl shadow-2xl transition-all duration-500"
+                            style={{ animation: "lightbox-in 0.5s ease-out" }}
+                        />
+                        <div className="text-center !text-white">
+                            <h4 className="text-2xl font-bold !mt-6 !text-[#fff]">{selectedImage.title}</h4>
+                        </div>
+                    </div>
+                </div>
+            )}
+            <style jsx global>{`
+                @keyframes lightbox-in {
+                    from { opacity: 0; transform: scale(0.9); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+            `}</style>
         </main>
     );
 }

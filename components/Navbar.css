@@ -110,7 +110,7 @@
     top: calc(100% + 12px);
     left: 50%;
     transform: translateX(-50%);
-    min-width: 220px;
+    min-width: 380px;
     background: rgba(254, 254, 254, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -147,6 +147,7 @@
     color: var(--text-color);
     transition: background 0.2s ease, color 0.2s ease;
     border-radius: 6px;
+    text-align: start;
     margin: 0 0.4rem;
 }
 

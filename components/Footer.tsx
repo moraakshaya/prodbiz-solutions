@@ -13,10 +13,11 @@ const quickLinks = [
 ];
 
 const services = [
-    { label: "Web Development", href: "/solutions/web-development" },
-    { label: "SEO Services", href: "/solutions/seo-services" },
-    { label: "Digital Marketing", href: "/solutions/digital-marketing" },
-    { label: "App Development", href: "/solutions/app-development" },
+    { label: "Digital Product & Software Development", href: "/solutions/digital-product-software-development" },
+    { label: "Performance Marketing", href: "/solutions/performance-marketing" },
+    { label: "Brand Growth & Reputation Management", href: "/solutions/brand-growth-reputation-management" },
+    { label: "Data, Analytics & Campaign Intelligence", href: "/solutions/data-analytics-campaign-intelligence" },
+    { label: "Creative Media & Brand Production", href: "/solutions/creative-media-brand-production" },
 ];
 
 const socialLinks = [

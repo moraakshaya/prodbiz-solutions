@@ -1,265 +1,359 @@
 "use client";
 
-import React, { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
-const MapPinIcon = () => (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-        <circle cx="12" cy="10" r="3" />
-    </svg>
-);
-const PhoneIcon = () => (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.39 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-);
-const MailIcon = () => (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2" />
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-);
-const ClockIcon = () => (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="12 6 12 12 16 14" />
-    </svg>
-);
-
-const contactInfo = [
-    {
-        icon: <MapPinIcon />,
-        label: "Address",
-        value: "123 Business Street, City, Country",
-    },
-    {
-        icon: <PhoneIcon />,
-        label: "Phone",
-        value: "+91 98765 43210",
-        href: "tel:+919876543210",
-    },
-    {
-        icon: <MailIcon />,
-        label: "Email",
-        value: "info@prodbiz.com",
-        href: "mailto:info@prodbiz.com",
-    },
-    {
-        icon: <ClockIcon />,
-        label: "Working Hours",
-        value: "Mon – Fri : 9:00 AM – 6:00 PM",
-    },
-];
-
 export default function ContactPage() {
-    const [form, setForm] = useState({
-        name: "", email: "", phone: "", subject: "", message: "",
-    });
-    const [submitted, setSubmitted] = useState(false);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setSubmitted(true);
-    };
-
     return (
-        <main className="min-h-screen bg-white">
+        <main className="flex min-h-screen flex-col items-center">
+            {/* Contact Hero Section */}
+            <section
+                className="relative w-full min-h-[90vh] flex items-center overflow-hidden"
+                style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
+            >
+                {/* Content Container */}
+                <div className="z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6">
 
-            {/* ── 1. HERO BANNER ─────────────────────────────────────────────────── */}
-            <section className="relative w-full min-h-[360px] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.15)_0%,_transparent_60%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(0,0,0,0.15)_0%,_transparent_60%)]" />
-                {/* Ring decorations */}
-                <div className="absolute w-[500px] h-[500px] rounded-full border border-white/10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute w-[300px] h-[300px] rounded-full border border-white/10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+                    {/* Left Side: Heading and Paragraph (80% Area) */}
+                    <div className="w-full md:w-[70%] !pl-[14%] flex flex-col items-start">
+                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] mb-6">
+                            Get In Touch
+                        </h1>
+                        <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium max-w-3xl">
+                            We're here to help you grow your business. Reach out to our team
+                            for inquiries, project proposals, or just to say hello. Let's build
+                            something amazing together.
+                        </p>
+                    </div>
 
-                <div className="relative z-10 text-center px-6 py-20">
-                    <p className="text-xs font-black uppercase tracking-[0.2em] text-white/50 mb-4">Get In Touch</p>
-                    <h1 className="text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">Contact Us</h1>
-                    <p className="text-lg text-white/75 font-medium max-w-xl mx-auto leading-relaxed">
-                        Have a project in mind? We'd love to hear from you.<br />
-                        Send us a message and we'll respond as soon as possible.
-                    </p>
+                    {/* Right Side: Empty space for image (20% Area) */}
+                    <div className="w-full md:w-[20%] flex justify-center items-center h-full min-h-[300px]">
+                        {/* Empty space left for future image */}
+                    </div>
+
                 </div>
 
-                {/* Wavy bottom edge */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] translate-y-[1px]">
-                    <svg className="relative block w-[calc(100%+1.3px)] h-[60px]" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                        <path d="M0,60V22c47,11,100,16,158,14,70-3,136-17,207-19,74-2,148,8,218,18,69,9,138,12,209,7,36-3,70-9,104-15C989,12,1113,0,1200,26V60H0Z" fill="white" />
+                {/* Bottom 3D Drip Border */}
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
+                    <svg
+                        className="relative block w-[calc(100%+1.3px)] h-[80px] md:h-[140px]"
+                        data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                    >
+                        <defs>
+                            <filter id="inner-shadow">
+                                <feOffset dx="0" dy="5" />
+                                <feGaussianBlur stdDeviation="4" result="offset-blur" />
+                                <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+                                <feFlood floodColor="black" floodOpacity="0.3" result="color" />
+                                <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+                                <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+                            </filter>
+                        </defs>
+                        <path
+                            d="M 0,120 L 0,0 C 10,0 20,10 20,30 C 18,50 32,50 30,30 C 30,10 40,0 50,0 C 60,0 70,40 70,80 C 68,100 82,100 80,80 C 80,40 90,0 100,0 C 110,0 120,20 120,40 C 118,60 132,60 130,40 C 130,20 140,0 150,0 C 160,0 170,50 170,100 C 168,120 182,120 180,100 C 180,50 190,0 200,0 C 210,0 220,10 220,20 C 218,40 232,40 230,20 C 230,10 240,0 250,0 C 260,0 270,30 270,60 C 268,80 282,80 280,60 C 280,30 290,0 300,0 C 310,0 320,45 320,90 C 318,110 332,110 330,90 C 330,45 340,0 350,0 C 360,0 370,10 370,30 C 368,50 382,50 380,30 C 380,10 390,0 400,0 C 410,0 420,35 420,70 C 418,90 432,90 430,70 C 430,35 440,0 450,0 C 460,0 470,25 470,50 C 468,70 482,70 480,50 C 480,25 490,0 500,0 C 510,0 520,50 520,95 C 518,115 532,115 530,95 C 530,50 540,0 550,0 C 560,0 570,20 570,40 C 568,60 582,60 580,40 C 580,20 590,0 600,0 C 610,0 620,40 620,80 C 618,100 632,100 630,80 C 630,40 640,0 650,0 C 660,0 670,10 670,20 C 668,40 682,40 680,20 C 680,10 690,0 700,0 C 710,0 720,35 720,70 C 718,90 732,90 730,70 C 730,35 740,0 750,0 C 760,0 770,45 770,90 C 768,110 782,110 780,90 C 780,45 790,0 800,0 C 810,0 820,20 820,40 C 818,60 832,60 830,40 C 830,20 840,0 850,0 C 860,0 870,50 870,100 C 868,120 882,120 880,100 C 880,50 890,0 900,0 C 910,0 920,10 920,30 C 918,50 932,50 930,30 C 930,10 940,0 950,0 C 960,0 970,40 970,80 C 968,100 982,100 980,80 C 980,40 990,0 1000,0 C 1010,0 1020,25 1020,50 C 1018,70 1032,70 1030,50 C 1030,25 1040,0 1050,0 C 1060,0 1070,10 1070,20 C 1068,40 1082,40 1080,20 C 1080,10 1090,0 1100,0 C 1110,0 1120,35 1120,70 C 1118,90 1132,90 1130,70 C 1130,35 1140,0 1150,0 C 1160,0 1170,45 1170,90 C 1168,110 1182,110 1180,90 C 1180,45 1190,0 1200,0 L 1200,120 Z"
+                            fill="#ffffff"
+                            filter="url(#inner-shadow)"
+                        ></path>
                     </svg>
                 </div>
+
             </section>
 
-            {/* ── 2. CONTACT INFO CARDS ──────────────────────────────────────────── */}
-            <section className="py-20 px-6 bg-white">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-14">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-primary/50 mb-3">Reach Us</p>
-                        <h2 className="text-4xl font-bold text-gray-900 tracking-tight">Contact Information</h2>
-                    </div>
+            {/* Split Interaction Section */}
+            <section className="relative w-full min-h-[80vh] bg-white py-20 px-6 sm:px-12 lg:px-24 flex justify-center -mt-10 lg:-mt-20 z-20">
+                <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch">
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {contactInfo.map((item, idx) => (
-                            <div
-                                key={idx}
-                                className="group relative flex flex-col items-center text-center p-8 rounded-3xl bg-white border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(33,151,161,0.14)] hover:-translate-y-2 transition-all duration-300"
-                            >
-                                {/* Top accent line */}
-                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2197A1] to-[#125960] rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:bg-primary group-hover:text-white shadow-[0_8px_20px_rgba(33,151,161,0.1)] group-hover:shadow-[0_12px_30px_rgba(33,151,161,0.25)] transition-all duration-300">
-                                    {item.icon}
-                                </div>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-primary/50 mb-2">{item.label}</p>
-                                {item.href ? (
-                                    <a href={item.href} className="font-semibold text-gray-700 hover:text-primary transition-colors duration-200 text-sm leading-relaxed">
-                                        {item.value}
-                                    </a>
-                                ) : (
-                                    <p className="font-semibold text-gray-700 text-sm leading-relaxed">{item.value}</p>
-                                )}
+                    {/* Left: Contact Form (3D Neumorphic / Glassmorphic card) */}
+                    <div className="w-full lg:w-1/2 flex flex-col z-10 relative">
+                        {/* More pronounced glassmorphism wrapper with Light Teal focus */}
+                        <div className="w-full !p-8 sm:p-12">
+
+                            <div className="mb-10 text-center sm:text-left">
+                                <h3 className="text-[#2A2A2A] !mb-1 tracking-tight">Send a message</h3>
+                                <p className="text-gray-500 font-medium">We'll get back to you as soon as possible.</p>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
-            {/* ── 3. CONTACT FORM ────────────────────────────────────────────────── */}
-            <section className="py-20 px-6 bg-[#f2f4f7]">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-14">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-primary/50 mb-3">Send a Message</p>
-                        <h2 className="text-4xl font-bold text-gray-900 tracking-tight">Get In Touch</h2>
-                    </div>
+                            <form id="contact-form" className="flex flex-col gap-5 sm:gap-6" onSubmit={(e) => e.preventDefault()}>
+                                {/* Split row for Name & Phone if desired, or keep stacked. Keeping stacked for simplicity but adjusting spacing */}
 
-                    <div className="bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-gray-100 p-10 md:p-14">
-                        {submitted ? (
-                            <div className="flex flex-col items-center justify-center py-16 gap-5">
-                                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <svg className="w-10 h-10 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                        <polyline points="22 4 12 14.01 9 11.01" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-2xl font-bold text-gray-900">Message Sent!</h3>
-                                <p className="text-gray-500 font-medium text-center max-w-sm">Thank you for reaching out. We'll get back to you within 24 hours.</p>
-                                <button onClick={() => setSubmitted(false)} className="mt-2 text-primary font-semibold text-sm underline underline-offset-4 hover:opacity-70 transition-opacity">Send another message</button>
-                            </div>
-                        ) : (
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                {/* Row 1: Name + Email */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Name <span className="text-primary">*</span></label>
-                                        <input
-                                            name="name" value={form.name} onChange={handleChange} required
-                                            placeholder="Your full name"
-                                            className="w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 text-sm font-medium placeholder:text-gray-300 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all duration-200"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Email <span className="text-primary">*</span></label>
-                                        <input
-                                            name="email" type="email" value={form.email} onChange={handleChange} required
-                                            placeholder="your@email.com"
-                                            className="w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 text-sm font-medium placeholder:text-gray-300 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all duration-200"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Row 2: Phone + Subject */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Phone</label>
-                                        <input
-                                            name="phone" type="tel" value={form.phone} onChange={handleChange}
-                                            placeholder="+91 XXXXX XXXXX"
-                                            className="w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 text-sm font-medium placeholder:text-gray-300 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all duration-200"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Subject</label>
-                                        <input
-                                            name="subject" value={form.subject} onChange={handleChange}
-                                            placeholder="How can we help?"
-                                            className="w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 text-sm font-medium placeholder:text-gray-300 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all duration-200"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Message */}
-                                <div>
-                                    <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Message <span className="text-primary">*</span></label>
-                                    <textarea
-                                        name="message" value={form.message} onChange={handleChange} required rows={5}
-                                        placeholder="Tell us about your project or inquiry..."
-                                        className="w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-gray-50 text-gray-800 text-sm font-medium placeholder:text-gray-300 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all duration-200 resize-none"
+                                {/* Name Input */}
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="name" className="text-sm font-bold text-[#2A2A2A] ml-1">Full Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        suppressHydrationWarning
+                                        className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)]"
+                                        placeholder="John Doe"
                                     />
                                 </div>
 
-                                {/* Submit */}
-                                <div className="flex justify-end">
+                                <div className="flex flex-col sm:flex-row gap-5 sm:gap-6">
+                                    {/* Email Input */}
+                                    <div className="flex flex-col gap-2 w-full sm:w-1/2">
+                                        <label htmlFor="email" className="text-sm font-bold text-[#2A2A2A] ml-1">Email Address</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            suppressHydrationWarning
+                                            className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)]"
+                                            placeholder="john@example.com"
+                                        />
+                                    </div>
+
+                                    {/* Phone Input */}
+                                    <div className="flex flex-col gap-2 w-full sm:w-1/2">
+                                        <label htmlFor="phone" className="text-sm font-bold text-[#2A2A2A] ml-1">Phone Number <span className="text-gray-400 font-normal">(Optional)</span></label>
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            suppressHydrationWarning
+                                            className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2_4px_rgba(0,0,0,0.01)]"
+                                            placeholder="+1 (555) 000-0000"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Message Textarea */}
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="message" className="text-sm font-bold text-[#2A2A2A] ml-1">How can we help you?</label>
+                                    <textarea
+                                        id="message"
+                                        rows={4}
+                                        suppressHydrationWarning
+                                        className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)]"
+                                        placeholder="Tell us about your project..."
+                                    ></textarea>
+                                </div>
+
+                                {/* 3D Submit Button */}
+                                <div className="mt-4">
                                     <button
-                                        type="submit"
-                                        className="px-10 py-4 rounded-2xl bg-primary text-white font-bold text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(33,151,161,0.3)] hover:shadow-[0_20px_50px_rgba(33,151,161,0.4)] hover:bg-[#1b7a82] hover:-translate-y-0.5 transition-all duration-300"
+                                        suppressHydrationWarning
+                                        className="w-full group relative inline-flex items-center justify-center bg-[#2197A1] text-white font-bold text-lg py-4 rounded-2xl shadow-[0_8px_0_#125960,0_15px_30px_rgba(33,151,161,0.3)] active:shadow-[0_0px_0_#125960,0_0px_0_rgba(33,151,161,0.4)] active:translate-y-2 transform transition-all duration-150 overflow-hidden"
                                     >
-                                        Send Message
+                                        <span className="relative z-10 flex items-center gap-2">
+                                            Send Message
+                                            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </span>
+                                        {/* Subtle shine effect on hover */}
+                                        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                                     </button>
                                 </div>
                             </form>
-                        )}
+                        </div>
                     </div>
+
+                    {/* Right: Info / Value Proposition Section */}
+                    <div className="w-full lg:w-1/2 flex flex-col justify-center px-4 md:px-12 py-10 lg:py-0">
+                        <div className="max-w-md ml-auto mr-auto lg:mr-0 lg:ml-8">
+                            <h3 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-4 leading-tight">
+                                Let's talk about<br />
+                                <span className="text-[#2197A1]">your project</span>
+                            </h3>
+                            <p className="text-gray-600 mb-10 text-lg">
+                                Whether you have a clear vision or need help defining your strategy, we're here to guide you to success.
+                            </p>
+
+                            <div className="flex flex-col gap-2">
+                                {/* Benefit 1 */}
+                                <div className="flex items-start gap-5 group">
+                                    <div className="flex-shrink-0 w-14 h-14 bg-orange-50 group-hover:bg-[#e76038] transition-colors duration-300 flex items-center justify-center rounded-2xl shadow-sm border border-orange-100">
+                                        <span className="text-[#e76038] group-hover:text-white transition-colors duration-300 text-2xl">⚡</span>
+                                    </div>
+                                    <div className="pt-1">
+                                        <h4 className="text-xl font-bold text-[#2A2A2A] mb-1">Fast Response</h4>
+                                        <p className="text-gray-500 text-sm leading-relaxed">We aim to respond to all inquiries within 24 hours.</p>
+                                    </div>
+                                </div>
+
+                                {/* Benefit 2 */}
+                                <div className="flex items-start gap-5 group">
+                                    <div className="flex-shrink-0 w-14 h-14 bg-teal-50 group-hover:bg-[#2197A1] transition-colors duration-300 flex items-center justify-center rounded-2xl shadow-sm border border-teal-100">
+                                        <span className="text-[#2197A1] group-hover:text-white transition-colors duration-300 text-2xl">📩</span>
+                                    </div>
+                                    <div className="pt-1">
+                                        <h4 className="text-xl font-bold text-[#2A2A2A] mb-1">Dedicated Team</h4>
+                                        <p className="text-gray-500 text-sm leading-relaxed">Direct access to experts who will personally handle your case.</p>
+                                    </div>
+                                </div>
+
+                                {/* Benefit 3 */}
+                                <div className="flex items-start gap-5 group">
+                                    <div className="flex-shrink-0 w-14 h-14 bg-gray-50 group-hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center rounded-2xl shadow-sm border border-gray-200">
+                                        <span className="text-gray-600 group-hover:text-white transition-colors duration-300 text-2xl">🔒</span>
+                                    </div>
+                                    <div className="pt-1">
+                                        <h4 className="text-xl font-bold text-[#2A2A2A] mb-1">Secure Form</h4>
+                                        <p className="text-gray-500 text-sm leading-relaxed">Your information is strictly confidential and protected.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
-            {/* ── 4. GOOGLE MAP ──────────────────────────────────────────────────── */}
-            <section className="py-20 px-6 bg-white">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-14">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-primary/50 mb-3">Find Us</p>
-                        <h2 className="text-4xl font-bold text-gray-900 tracking-tight">Our Location</h2>
+
+            {/* Contact Info & Map Section */}
+            <section className="w-full bg-white !py-5 !px-6 sm:px-12">
+                <div className="w-full !mx-auto flex flex-col !gap-1 items-center">
+
+                    {/* LEFT: 3 Redesigned Sticky-Note Cards — 66% */}
+                    <div className="w-full  flex flex-col sm:flex-row gap-8 items-center justify-center flex-wrap !pb-10">
+
+                        {/* Card 1: Our Office — Orange Bottom-Left Accent */}
+                        <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden">
+                            {/* Thick Corner Accent */}
+                            <div className="absolute bottom-0 left-0 w-16 h-16 border-b-[6px] border-l-[6px] border-[#e76038] rounded-bl-[3rem]"></div>
+
+                            {/* Label */}
+                            <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">01 OUR OFFICE</p>
+
+                            {/* Heading */}
+                            <h4 className="text-[#2A2A2A] font-bold text-lg mb-4">Location</h4>
+
+                            {/* Text */}
+                            <p className="text-gray-500 text-xs leading-relaxed">
+                                St. Peter's Tech Park<br />
+                                Madhapur, HITEC City<br />
+                                Hyderabad, Telangana<br />
+                                – 500081
+                            </p>
+                        </div>
+
+                        {/* Card 2: Working Hours — Orange Top-Left Accent */}
+                        <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden mt-8 sm:mt-12">
+                            {/* Thick Corner Accent */}
+                            <div className="absolute top-0 left-0 w-16 h-16 border-t-[6px] border-l-[6px] border-[#e76038] rounded-tl-[3rem]"></div>
+
+                            {/* Label */}
+                            <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">02 WORKING HOURS</p>
+
+                            {/* Heading */}
+                            <h4 className="text-[#2A2A2A] font-bold text-lg mb-4">Schedule</h4>
+
+                            {/* Text */}
+                            <p className="text-gray-500 text-xs leading-relaxed">
+                                <span className="font-medium text-gray-700">Mon – Fri :</span> 9 AM – 6 PM<br />
+                                <span className="font-medium text-gray-700">Saturday :</span> 10 AM – 2 PM<br />
+                                <span className="font-medium text-gray-700">Sunday :</span> Closed
+                            </p>
+                        </div>
+
+                        {/* Card 3: Contact Us — Orange Top-Right Accent */}
+                        <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden">
+                            {/* Thick Corner Accent */}
+                            <div className="absolute bottom-0 left-0 w-16 h-16 border-b-[6px] border-l-[6px] border-[#e76038] rounded-bl-[3rem]"></div>
+
+                            {/* Label */}
+                            <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">03 CONTACT US</p>
+
+                            {/* Heading */}
+                            <h4 className="text-[#2A2A2A] font-bold text-lg mb-4">Reach Out</h4>
+
+                            {/* Text */}
+                            <p className="text-gray-500 text-xs leading-relaxed">
+                                <span className="font-medium text-gray-700">Phone No:</span> +91 98765 43210<br />
+                                <span className="font-medium text-gray-700">Email:</span> hello@company.com
+                            </p>
+                        </div>
+
+
                     </div>
-                    <div className="rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-gray-100 h-[420px]">
+
+                    {/* RIGHT: Live Map — 30% */}
+                    <div className="w-full lg:w-[88%] min-h-[400px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(33,151,161,0.15)] relative">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU4JzE3LjgiTiA3N8KwMzUnNDAuNiJF!5e0!3m2!1sen!2sin!4v1609459200000!5m2!1sen!2sin"
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0 }}
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.244504437476!2d78.37615831484326!3d17.447190988034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dbb1d60e71%3A0x3de8b4c0e7f6e12e!2sMadhapur%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin"
+                            className="w-full h-full absolute inset-0"
+                            style={{ border: 0, minHeight: '400px' }}
+                            allowFullScreen={false}
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
-                            title="Our Office Location"
-                            allowFullScreen
-                        />
+                        ></iframe>
+                        {/* Overlay label */}
+                        <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-md z-10 flex items-center gap-2 pointer-events-none">
+                            <span className="text-[#e76038] text-lg">📍</span>
+                            <div>
+                                <p className="text-[#2A2A2A] font-bold text-xs">HITEC City</p>
+                                <p className="text-gray-500 text-[10px]">Hyderabad, Telangana</p>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </section>
 
-            {/* ── 5. QUICK CTA ───────────────────────────────────────────────────── */}
-            <section className="relative py-24 px-6 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12)_0%,_transparent_60%)]" />
-                <div className="absolute w-[500px] h-[500px] rounded-full border border-white/10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+            {/* Final CTA Section */}
+            <section className="w-full !pt-55 pb-0 px-6">
+                <div className="!mx-auto relative">
+                    {/* Splash Top Border */}
+                    <div className="absolute top-0 left-0 w-full overflow-visible leading-[0] transform -translate-y-full pointer-events-none">
+                        <svg
+                            viewBox="0 0 1200 160"
+                            className="w-full h-40 md:h-64 overflow-visible"
+                            preserveAspectRatio="none"
+                        >
+                            <defs>
+                                <linearGradient id="waveGradientBack" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.2" />
+                                    <stop offset="100%" stopColor="#2197A1" stopOpacity="0.25" />
+                                </linearGradient>
+                                <linearGradient id="waveGradientFront" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.05" />
+                                    <stop offset="100%" stopColor="#2197A1" stopOpacity="0.1" />
+                                </linearGradient>
+                            </defs>
+                            {/* Layer 1: Back Lighter Wave */}
+                            <path
+                                d="M0,160 C150,160 200,100 350,120 C500,140 550,60 650,40 C750,20 850,100 1000,80 C1150,60 1200,160 1200,160 L0,160 Z"
+                                fill="url(#waveGradientBack)"
+                            />
 
-                <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center gap-6">
-                    <p className="text-xs font-black uppercase tracking-[0.2em] text-white/50">Work With Us</p>
-                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-                        Let's Work Together
-                    </h2>
-                    <p className="text-lg text-white/75 font-medium leading-relaxed">
-                        Have an idea or project? Contact us today and let's build something amazing.
-                    </p>
-                    <Link
-                        href="/get-proposal"
-                        className="mt-2 px-10 py-4 rounded-2xl bg-white text-primary font-bold text-sm uppercase tracking-widest shadow-[0_15px_40px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.3)] hover:scale-105 transition-all duration-300"
-                    >
-                        Get In Touch
-                    </Link>
+                            {/* Organic Blobs/Spots between layers */}
+                            <ellipse cx="250" cy="110" rx="20" ry="12" fill="url(#waveGradientBack)" opacity="0.5" transform="rotate(-15, 250, 110)" />
+                            <ellipse cx="600" cy="60" rx="15" ry="10" fill="url(#waveGradientBack)" opacity="0.6" transform="rotate(20, 600, 60)" />
+                            <ellipse cx="900" cy="90" rx="18" ry="11" fill="url(#waveGradientBack)" opacity="0.5" transform="rotate(-10, 900, 90)" />
+
+                            {/* Layer 2: Main Front Wave */}
+                            <path
+                                d="M0,160 C100,160 180,120 300,140 C420,160 500,80 600,100 C700,120 780,40 900,60 C1020,80 1100,160 1200,160 L0,160 Z"
+                                fill="url(#waveGradientFront)"
+                            />
+
+                            {/* Additional droplets on top */}
+                            <circle cx="450" cy="115" r="8" fill="url(#waveGradientBack)" opacity="0.4" />
+                            <circle cx="750" cy="70" r="6" fill="url(#waveGradientBack)" opacity="0.3" />
+                            <circle cx="1050" cy="110" r="5" fill="url(#waveGradientBack)" opacity="0.2" />
+                        </svg>
+                    </div>
+
+                    <div className="bg-[#2197A1]/28 !p-12 md:p-20 text-center relative overflow-hidden">
+                        {/* Background Accents */}
+                        {/* <div className="absolute top-0 right-0 w-64 h-64 bg-[#2197A1] opacity-10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#e76038] opacity-10 rounded-full -ml-32 -mb-32 blur-3xl"></div> */}
+
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
+                            Ready to Start Your Project?
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-500 font-medium mb-10 max-w-2xl !mx-auto relative z-10">
+                            Tell us about your goals and we’ll help you build the right digital solution for your business.
+                        </p>
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-6 !py-3 rounded-3xl font-bold text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
+                        >
+                            Start Your Project
+                            <ArrowRight size={22} />
+                        </Link>
+                    </div>
                 </div>
             </section>
 

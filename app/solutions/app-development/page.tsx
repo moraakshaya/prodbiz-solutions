@@ -1,7 +1,0 @@
-export default function AppDevelopmentPage() {
-    return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1 className="text-4xl font-bold">App Development</h1>
-        </main>
-    );
-}

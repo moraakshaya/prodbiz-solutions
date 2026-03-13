@@ -87,6 +87,10 @@ li {
   margin-bottom: 1rem;
 }
 
+p {
+  line-height: normal;
+}
+
 a {
   color: var(--primary-color);
   text-decoration: none;
@@ -104,7 +108,16 @@ ol {
   margin-bottom: 1rem;
 }
 
-li {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
