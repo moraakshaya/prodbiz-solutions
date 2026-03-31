@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { Image, Calendar, PlayCircle, Grid, Users, Sparkles, Film, X } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { PlayCircle, X, Image as ImageIcon, Calendar, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import FinalCTA from "@/components/FinalCTA";
+import Button from "@/components/Button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -11,7 +14,7 @@ if (typeof window !== "undefined") {
 }
 
 const tabs = [
-    { id: "Photo Gallery", label: "Photo Gallery", icon: Image },
+    { id: "Photo Gallery", label: "Photo Gallery", icon: ImageIcon },
     { id: "Events & Activities", label: "Events & Activities", icon: Calendar },
     { id: "Video Section", label: "Video Section", icon: PlayCircle },
 ];
@@ -126,6 +129,12 @@ const videoData = [
 ];
 
 export default function InsideCompanyPage() {
+    const scrollToContent = () => {
+        const element = document.getElementById("inside-content-section");
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
     const [activeTab, setActiveTab] = useState(tabs[0].id);
     const [selectedImage, setSelectedImage] = useState<null | { url: string, title: string }>(null);
     const galleryRef = useRef<HTMLDivElement>(null);
@@ -205,37 +214,79 @@ export default function InsideCompanyPage() {
         <main className="flex min-h-screen flex-col items-center bg-white">
             {/* Inside Prodbiz Hero Section */}
             <section
-                className="relative w-full min-h-[90vh] flex items-center overflow-hidden"
+                className="relative w-full min-h-[75vh] min-[340px]:min-h-[60vh] min-[360px]:min-h-[75vh] min-[380px]:min-h-[60vh] min-[400px]:min-h-[58vh] min-[540px]:min-h-[68vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center overflow-hidden"
                 style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
             >
                 {/* Content Container */}
-                <div className="z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6">
-
-                    {/* Left Side: Heading and Paragraph (80% Area) */}
-                    <div className="w-full md:w-[70%] !pl-[14%] flex flex-col items-start">
-                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] mb-6">
-                            Inside Prodbiz
+                <div className="z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-1 md:gap-1">
+ 
+                    {/* Hero Content Wrapper */}
+                    <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-20px] md:pr-0">
+                        {/* Title: Centered on Mobile */}
+                        <h1 className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full">
+                            Inside <span className="text-[#2197A1]">Prodbiz</span>
                         </h1>
-                        <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium max-w-3xl">
-                            Explore the moments that define Prodbiz — from team collaborations and
-                            project milestones to events and celebrations. This is a glimpse into
-                            the people, culture, and experiences behind our work.
-                        </p>
+
+                        <div className="w-full flex flex-col md:block">
+                            {/* Short mobile content: Centered as requested */}
+                            <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center !mb-0">
+                                Explore the moments that define Prodbiz — from team collaborations to project milestones.
+                            </p>
+
+                            {/* Desktop long content */}
+                            <div className="hidden md:block">
+                                <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium leading-relaxed max-w-3xl mb-1 md:mb-8">
+                                    At Prodbiz, we believe in transparency and the power of team culture.
+                                    Explore the moments that truly define us — from intense team collaborations and
+                                    major project milestones to our vibrant internal events and celebrations.
+                                    This is a small glimpse into the dedicated people, the collaborative
+                                    culture, and the unique, shared experiences that form the foundation
+                                    behind every single piece of work we deliver to our clients worldwide.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Mobile Image: Rendered below content on mobile */}
+                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-0 h-[180px] relative">
+                             {/* Ambient Glow */} 
+                             <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
+                            <Image
+                                src="/images/inside-pb-hero.png"
+                                alt="Inside Prodbiz"
+                                fill
+                                className="object-contain drop-shadow-xl scale-150 transition-transform duration-700 !mt-2"
+                                priority
+                            />
+                        </div>
+                        {/* Button: Centered on Mobile */}
+                        <div className="w-full flex justify-center md:justify-start">
+                            <Button
+                                onClick={scrollToContent}
+                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                            >
+                                <span>See Our Culture</span>
+                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
+                            </Button>
+                        </div>
                     </div>
 
-                    {/* Right Side: Empty space for image (20% Area) */}
-                    <div className="w-full md:w-[20%] flex justify-center items-center h-full min-h-[300px]">
-                        {/* Empty space left for future image */}
+                    {/* Desktop Image Section - Hidden on Mobile */}
+                    <div className="hidden md:flex w-[100%] md:w-[40%] justify-center items-center h-full min-h-[300px] md:min-h-[400px]">
+                        <Image
+                            src="/images/inside-pb-hero.png"
+                            alt="Inside Prodbiz"
+                            width={500}
+                            height={500}
+                            priority
+                            className="w-full h-auto object-contain drop-shadow-xl md:scale-125"
+                        />
                     </div>
-
                 </div>
 
                 {/* Bottom 3D Drip Border */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] flex justify-center">
                     <svg
-                        className="relative block w-[calc(100%+1.3px)] h-[80px] md:h-[140px]"
-                        data-name="Layer 1"
-                        xmlns="http://www.w3.org/2000/svg"
+                        className="relative block w-[300%] sm:w-[200%] lg:w-[150%] xl:w-[calc(100%+1.3px)] h-[70px] md:h-[100px] lg:h-[140px] flex-shrink-0"
                         viewBox="0 0 1200 120"
                         preserveAspectRatio="none"
                     >
@@ -260,7 +311,7 @@ export default function InsideCompanyPage() {
             </section>
 
             {/* Tab Section - Redesigned like image */}
-            <div className="w-full max-w-5xl mx-auto -mt-16 !mb-10 !px-12 z-20">
+            <div className="w-full md:max-w-5xl mx-auto !mt-5 md:!mt-10 !mb-10 md:!px-12 !px-4 z-20">
                 <div className="bg-[#f0f9fa] rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.18)] flex items-center justify-between px-8 md:px-16 py-4 overflow-x-hidden overflow-y-hidden no-scrollbar">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
@@ -276,7 +327,7 @@ export default function InsideCompanyPage() {
                                     className={`${isActive ? "text-[#e76038]" : "text-gray-400"} transition-colors`}
                                 />
                                 <span
-                                    className={`text-sm font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-[#e76038]" : "text-gray-500"} transition-colors`}
+                                    className={`text-[10px] md:text-sm font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-[#e76038]" : "text-gray-500"} transition-colors`}
                                 >
                                     {tab.label}
                                 </span>
@@ -287,7 +338,7 @@ export default function InsideCompanyPage() {
             </div>
 
             {/* Content Section */}
-            <section className="w-full max-w-7xl mx-auto px-6 py-24 flex flex-col items-center overflow-hidden">
+            <section id="inside-content-section" className="w-full max-w-7xl mx-auto px-6 !pb-0 flex flex-col items-center overflow-hidden">
                 <div ref={contentRef} className="w-full">
                     {activeTab === "Photo Gallery" ? (
                         <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
@@ -430,7 +481,7 @@ export default function InsideCompanyPage() {
                         <X size={40} />
                     </button>
                     <div
-                        className="max-w-6xl w-fit max-h-[85vh] relative flex flex-col items-center"
+                        className="absolute -top-[10%] md:top-[0%] left-[0%] max-w-6xl w-fit max-h-[85vh] relative flex flex-col items-center !px-4 md:!px-0"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <img
@@ -451,6 +502,9 @@ export default function InsideCompanyPage() {
                     to { opacity: 1; transform: scale(1); }
                 }
             `}</style>
+
+            {/* Final CTA Section */}
+            <FinalCTA />
         </main>
     );
 }

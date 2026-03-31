@@ -1,44 +1,95 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import FinalCTA from "@/components/FinalCTA";
+import Button from "@/components/Button";
 
 export default function ContactPage() {
+    const scrollToContactForm = () => {
+        const element = document.getElementById("contact-form-section");
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <main className="flex min-h-screen flex-col items-center">
             {/* Contact Hero Section */}
             <section
-                className="relative w-full min-h-[90vh] flex items-center overflow-hidden"
+                className="relative w-full min-h-[75vh] min-[340px]:min-h-[60vh] min-[360px]:min-h-[75vh] min-[380px]:min-h-[60vh] min-[400px]:min-h-[58vh] min-[540px]:min-h-[68vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center overflow-hidden"
                 style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
             >
                 {/* Content Container */}
-                <div className="z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6">
+                <div className="z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
 
-                    {/* Left Side: Heading and Paragraph (80% Area) */}
-                    <div className="w-full md:w-[70%] !pl-[14%] flex flex-col items-start">
-                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] mb-6">
-                            Get In Touch
+                    {/* Hero Content Wrapper */}
+                    <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-20px] md:pr-0">
+                        {/* Title: Centered on Mobile */}
+                        <h1 className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full">
+                            Get In <span className="text-[#2197A1]">Touch</span>
                         </h1>
-                        <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium max-w-3xl">
-                            We're here to help you grow your business. Reach out to our team
-                            for inquiries, project proposals, or just to say hello. Let's build
-                            something amazing together.
-                        </p>
+
+                        <div className="w-full flex flex-col md:block">
+                            {/* Short mobile content: Centered as requested */}
+                            <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center mb-8">
+                                At Prodbiz Solutions, we are dedicated to helping your business thrive. Reach out today and let&apos;s build a high-performance digital future together.
+                            </p>
+
+                            {/* Desktop long content */}
+                            <div className="hidden md:block">
+                                <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium leading-relaxed max-w-4xl mb-1 md:mb-8">
+                                    At Prodbiz Solutions, we are dedicated to helping your business thrive in the digital age.
+                                    Whether you have a specific project inquiry, a comprehensive proposal, or simply want to explore
+                                    how our technology and marketing expertise can benefit your brand, our team is ready to listen.
+                                    Reach out to us today, and together we can build a high-performance digital future that drives
+                                    measurable results and lasting success for your organization.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Mobile Image: Rendered below content on mobile */}
+                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-8 h-[100px] relative">
+                            {/* Ambient Glow */}
+                            <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
+                            <Image
+                                src="/images/contact-hero.png"
+                                alt="Contact Prodbiz"
+                                fill
+                                className="object-contain drop-shadow-xl scale-125"
+                                priority
+                            />
+                        </div>
+
+                        {/* Button: Centered on Mobile */}
+                        <div className="w-full flex justify-center md:justify-start">
+                            <Button
+                                onClick={scrollToContactForm}
+                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                            >
+                                <span>Ready to talk?</span>
+                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
+                            </Button>
+                        </div>
                     </div>
 
-                    {/* Right Side: Empty space for image (20% Area) */}
-                    <div className="w-full md:w-[20%] flex justify-center items-center h-full min-h-[300px]">
-                        {/* Empty space left for future image */}
+                    {/* Right Side Image Placeholder - Hidden on Mobile */}
+                    <div className="hidden md:flex w-[40%] md:w-[30%] justify-center items-center h-full min-h-[300px] md:min-h-[400px]">
+                        <Image
+                            src="/images/contact-hero.png"
+                            alt="Contact Prodbiz"
+                            width={500}
+                            height={500}
+                            priority
+                            className="w-full h-auto object-contain drop-shadow-xl md:scale-125"
+                        />
                     </div>
-
                 </div>
 
                 {/* Bottom 3D Drip Border */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] flex justify-center">
                     <svg
-                        className="relative block w-[calc(100%+1.3px)] h-[80px] md:h-[140px]"
-                        data-name="Layer 1"
-                        xmlns="http://www.w3.org/2000/svg"
+                        className="relative block w-[300%] sm:w-[200%] lg:w-[150%] xl:w-[calc(100%+1.3px)] h-[70px] md:h-[100px] lg:h-[140px] flex-shrink-0"
                         viewBox="0 0 1200 120"
                         preserveAspectRatio="none"
                     >
@@ -63,17 +114,17 @@ export default function ContactPage() {
             </section>
 
             {/* Split Interaction Section */}
-            <section className="relative w-full min-h-[80vh] bg-white py-20 px-6 sm:px-12 lg:px-24 flex justify-center -mt-10 lg:-mt-20 z-20">
+            <section id="contact-form-section" className="relative w-full min-h-[80vh] bg-white py-20 !px-6 lg:px-24 flex justify-center -mt-10 lg:-mt-20 z-20">
                 <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch">
 
                     {/* Left: Contact Form (3D Neumorphic / Glassmorphic card) */}
                     <div className="w-full lg:w-1/2 flex flex-col z-10 relative">
                         {/* More pronounced glassmorphism wrapper with Light Teal focus */}
-                        <div className="w-full !p-8 sm:p-12">
+                        <div className="w-full !p-4 md:!p-8">
 
                             <div className="mb-10 text-center sm:text-left">
                                 <h3 className="text-[#2A2A2A] !mb-1 tracking-tight">Send a message</h3>
-                                <p className="text-gray-500 font-medium">We'll get back to you as soon as possible.</p>
+                                <p className="text-gray-500 font-medium">We&apos;ll get back to you as soon as possible.</p>
                             </div>
 
                             <form id="contact-form" className="flex flex-col gap-5 sm:gap-6" onSubmit={(e) => e.preventDefault()}>
@@ -131,19 +182,19 @@ export default function ContactPage() {
 
                                 {/* 3D Submit Button */}
                                 <div className="mt-4">
-                                    <button
-                                        suppressHydrationWarning
-                                        className="w-full group relative inline-flex items-center justify-center bg-[#2197A1] text-white font-bold text-lg py-4 rounded-2xl shadow-[0_8px_0_#125960,0_15px_30px_rgba(33,151,161,0.3)] active:shadow-[0_0px_0_#125960,0_0px_0_rgba(33,151,161,0.4)] active:translate-y-2 transform transition-all duration-150 overflow-hidden"
+                                    <Button
+                                        type="submit"
+                                        variant="primary"
+                                        size="md"
+                                        className="w-full group shadow-[0_10px_20px_rgba(231,96,56,0.3)] !rounded-2xl"
                                     >
-                                        <span className="relative z-10 flex items-center gap-2">
+                                        <span className="relative z-10 flex items-center gap-2 text-md md:text-lg">
                                             Send Message
                                             <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                             </svg>
                                         </span>
-                                        {/* Subtle shine effect on hover */}
-                                        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
-                                    </button>
+                                    </Button>
                                 </div>
                             </form>
                         </div>
@@ -153,11 +204,11 @@ export default function ContactPage() {
                     <div className="w-full lg:w-1/2 flex flex-col justify-center px-4 md:px-12 py-10 lg:py-0">
                         <div className="max-w-md ml-auto mr-auto lg:mr-0 lg:ml-8">
                             <h3 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-4 leading-tight">
-                                Let's talk about<br />
+                                Let&apos;s talk about<br />
                                 <span className="text-[#2197A1]">your project</span>
                             </h3>
                             <p className="text-gray-600 mb-10 text-lg">
-                                Whether you have a clear vision or need help defining your strategy, we're here to guide you to success.
+                                Whether you have a clear vision or need help defining your strategy, we&apos;re here to guide you to success.
                             </p>
 
                             <div className="flex flex-col gap-2">
@@ -206,7 +257,7 @@ export default function ContactPage() {
                 <div className="w-full !mx-auto flex flex-col !gap-1 items-center">
 
                     {/* LEFT: 3 Redesigned Sticky-Note Cards — 66% */}
-                    <div className="w-full  flex flex-col sm:flex-row gap-8 items-center justify-center flex-wrap !pb-10">
+                    <div className="w-full  flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-center flex-wrap !pb-10">
 
                         {/* Card 1: Our Office — Orange Bottom-Left Accent */}
                         <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden">
@@ -221,7 +272,7 @@ export default function ContactPage() {
 
                             {/* Text */}
                             <p className="text-gray-500 text-xs leading-relaxed">
-                                St. Peter's Tech Park<br />
+                                St. Peter&apos;s Tech Park<br />
                                 Madhapur, HITEC City<br />
                                 Hyderabad, Telangana<br />
                                 – 500081
@@ -292,71 +343,7 @@ export default function ContactPage() {
             </section>
 
             {/* Final CTA Section */}
-            <section className="w-full !pt-55 pb-0 px-6">
-                <div className="!mx-auto relative">
-                    {/* Splash Top Border */}
-                    <div className="absolute top-0 left-0 w-full overflow-visible leading-[0] transform -translate-y-full pointer-events-none">
-                        <svg
-                            viewBox="0 0 1200 160"
-                            className="w-full h-40 md:h-64 overflow-visible"
-                            preserveAspectRatio="none"
-                        >
-                            <defs>
-                                <linearGradient id="waveGradientBack" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.2" />
-                                    <stop offset="100%" stopColor="#2197A1" stopOpacity="0.25" />
-                                </linearGradient>
-                                <linearGradient id="waveGradientFront" x1="0%" y1="100%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.05" />
-                                    <stop offset="100%" stopColor="#2197A1" stopOpacity="0.1" />
-                                </linearGradient>
-                            </defs>
-                            {/* Layer 1: Back Lighter Wave */}
-                            <path
-                                d="M0,160 C150,160 200,100 350,120 C500,140 550,60 650,40 C750,20 850,100 1000,80 C1150,60 1200,160 1200,160 L0,160 Z"
-                                fill="url(#waveGradientBack)"
-                            />
-
-                            {/* Organic Blobs/Spots between layers */}
-                            <ellipse cx="250" cy="110" rx="20" ry="12" fill="url(#waveGradientBack)" opacity="0.5" transform="rotate(-15, 250, 110)" />
-                            <ellipse cx="600" cy="60" rx="15" ry="10" fill="url(#waveGradientBack)" opacity="0.6" transform="rotate(20, 600, 60)" />
-                            <ellipse cx="900" cy="90" rx="18" ry="11" fill="url(#waveGradientBack)" opacity="0.5" transform="rotate(-10, 900, 90)" />
-
-                            {/* Layer 2: Main Front Wave */}
-                            <path
-                                d="M0,160 C100,160 180,120 300,140 C420,160 500,80 600,100 C700,120 780,40 900,60 C1020,80 1100,160 1200,160 L0,160 Z"
-                                fill="url(#waveGradientFront)"
-                            />
-
-                            {/* Additional droplets on top */}
-                            <circle cx="450" cy="115" r="8" fill="url(#waveGradientBack)" opacity="0.4" />
-                            <circle cx="750" cy="70" r="6" fill="url(#waveGradientBack)" opacity="0.3" />
-                            <circle cx="1050" cy="110" r="5" fill="url(#waveGradientBack)" opacity="0.2" />
-                        </svg>
-                    </div>
-
-                    <div className="bg-[#2197A1]/28 !p-12 md:p-20 text-center relative overflow-hidden">
-                        {/* Background Accents */}
-                        {/* <div className="absolute top-0 right-0 w-64 h-64 bg-[#2197A1] opacity-10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#e76038] opacity-10 rounded-full -ml-32 -mb-32 blur-3xl"></div> */}
-
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
-                            Ready to Start Your Project?
-                        </h2>
-                        <p className="text-lg md:text-xl text-gray-500 font-medium mb-10 max-w-2xl !mx-auto relative z-10">
-                            Tell us about your goals and we’ll help you build the right digital solution for your business.
-                        </p>
-                        <Link
-                            href="/contact"
-                            className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-6 !py-3 rounded-3xl font-bold text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
-                        >
-                            Start Your Project
-                            <ArrowRight size={22} />
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
+            <FinalCTA />
         </main>
     );
 }

@@ -1,0 +1,131 @@
+﻿
+> prodbiz@0.1.0 lint
+> eslint
+
+
+C:\prodbiz\app\case-studies\page.tsx
+    4:22  warning  'Filter' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    4:30  warning  'ChevronLeft' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+    4:43  warning  'ChevronRight' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  334:49  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  354:49  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\contact\page.tsx
+    3:10   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+    4:8    warning  'Link' is defined but never used                                 @typescript-eslint/no-unused-vars
+   93:76   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  173:36   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  177:104  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  241:42   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\prodbiz\app\get-proposal\page.tsx
+  189:37   error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  189:152  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\prodbiz\app\inside-company\page.tsx
+    3:27   warning  'useEffect' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+    4:10   warning  'ArrowRight' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+    4:37   warning  'Rocket' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    4:45   warning  'Users' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    4:52   warning  'Target' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    4:60   warning  'Globe' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    4:97   warning  'Grid' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+    4:103  warning  'Sparkles' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+    4:113  warning  'Film' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  331:41   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  370:49   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  408:49   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  451:25   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\insights\[slug]\page.tsx
+    6:29  warning  'User' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   95:65  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  163:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  204:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  256:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\insights\page.tsx
+  139:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\page.tsx
+  1:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\prodbiz\app\privacy-policy\page.tsx
+   5:8   warning  'Button' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   6:8   warning  'FinalCTA' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  47:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\solutions\brand-growth-reputation-management\page.tsx
+   10:5    warning  'Workflow' is defined but never used                             @typescript-eslint/no-unused-vars
+   12:8    warning  'FinalCTA' is defined but never used                             @typescript-eslint/no-unused-vars
+   13:8    warning  'WhyChooseUs' is defined but never used                          @typescript-eslint/no-unused-vars
+  317:121  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\prodbiz\app\solutions\creative-media-brand-production\page.tsx
+   6:5  warning  'Video' is defined but never used        @typescript-eslint/no-unused-vars
+   8:5  warning  'Palette' is defined but never used      @typescript-eslint/no-unused-vars
+  10:5  warning  'Layers' is defined but never used       @typescript-eslint/no-unused-vars
+  12:5  warning  'Workflow' is defined but never used     @typescript-eslint/no-unused-vars
+  15:8  warning  'FinalCTA' is defined but never used     @typescript-eslint/no-unused-vars
+  16:8  warning  'WhyChooseUs' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\prodbiz\app\solutions\data-analytics-campaign-intelligence\page.tsx
+   9:5  warning  'PieChart' is defined but never used     @typescript-eslint/no-unused-vars
+  10:5  warning  'Search' is defined but never used       @typescript-eslint/no-unused-vars
+  12:5  warning  'Layers' is defined but never used       @typescript-eslint/no-unused-vars
+  14:5  warning  'Zap' is defined but never used          @typescript-eslint/no-unused-vars
+  15:5  warning  'Target' is defined but never used       @typescript-eslint/no-unused-vars
+  16:5  warning  'Workflow' is defined but never used     @typescript-eslint/no-unused-vars
+  18:8  warning  'Link' is defined but never used         @typescript-eslint/no-unused-vars
+  19:8  warning  'FinalCTA' is defined but never used     @typescript-eslint/no-unused-vars
+  20:8  warning  'WhyChooseUs' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\prodbiz\app\solutions\digital-product-software-development\page.tsx
+    8:5   warning  'Globe' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    9:5   warning  'Smartphone' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   10:5   warning  'Settings' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   12:5   warning  'Zap' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   13:5   warning  'Clock' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   14:5   warning  'Shield' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   15:5   warning  'Cpu' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   18:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   19:8   warning  'FinalCTA' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   20:8   warning  'WhyChooseUs' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  179:41  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  397:49  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\solutions\performance-marketing\page.tsx
+   6:5  warning  'MousePointerClick' is defined but never used  @typescript-eslint/no-unused-vars
+  11:5  warning  'Workflow' is defined but never used           @typescript-eslint/no-unused-vars
+  13:8  warning  'Link' is defined but never used               @typescript-eslint/no-unused-vars
+  14:8  warning  'FinalCTA' is defined but never used           @typescript-eslint/no-unused-vars
+  15:8  warning  'WhyChooseUs' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\prodbiz\app\terms-and-conditions\page.tsx
+   4:10  warning  'CheckCircle2' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   5:8   warning  'Button' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  46:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\prodbiz\app\who-we-are\page.tsx
+  5:22  warning  'Laptop' is defined but never used  @typescript-eslint/no-unused-vars
+  5:30  warning  'Users' is defined but never used   @typescript-eslint/no-unused-vars
+  5:37  warning  'Rocket' is defined but never used  @typescript-eslint/no-unused-vars
+  5:45  warning  'Globe' is defined but never used   @typescript-eslint/no-unused-vars
+  5:52  warning  'Shield' is defined but never used  @typescript-eslint/no-unused-vars
+  5:60  warning  'Zap' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\prodbiz\components\ClientsSection.tsx
+   4:8   warning  'Image' is defined but never used                                @typescript-eslint/no-unused-vars
+  87:27  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\prodbiz\components\HeroVisual3D.tsx
+   3:25  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+   5:10  warning  'Float' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   5:42  warning  'Text' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   9:57  warning  'label' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   9:66  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  45:15  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  70:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+Γ£û 90 problems (11 errors, 79 warnings)
+

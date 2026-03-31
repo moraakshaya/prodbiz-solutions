@@ -1,62 +1,80 @@
 "use client";
 
 import React from "react";
-import Button from "./Button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-const FinalCTA = () => {
+interface FinalCTAProps {
+    title?: string | React.ReactNode;
+    description?: string | React.ReactNode;
+    buttonText?: string;
+    buttonHref?: string;
+}
+
+const FinalCTA = ({
+    title = "Ready to Start Your Project?",
+    description = "Tell us about your goals and we’ll help you build the right digital solution for your business.",
+    buttonText = "Start Your Project",
+    buttonHref = "/contact",
+}: FinalCTAProps) => {
     return (
-        <section className="relative w-full overflow-hidden">
-            {/* Background — same hero gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12)_0%,_transparent_60%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_rgba(0,0,0,0.15)_0%,_transparent_60%)]" />
-
-            <div className="relative z-10 max-w-7xl !mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                {/* LEFT — Content */}
-                <div className="flex flex-col items-start gap-0">
-                    <span className="text-xs font-black uppercase tracking-[0.2em] text-white/50">Let's Work Together</span>
-                    <h2 className="text-4xl md:text-5x font-bold text-white leading-tight tracking-tight">
-                        Ready to Accelerate<br /> Your Growth?
-                    </h2>
-                    <p className="text-lg !mb-4 text-white/75 font-medium leading-relaxed max-w-lg">
-                        Let's build something extraordinary together. Tell us about your project and we'll get back to you within 24 hours.
-                    </p>
-                    <Button
-                        href="/get-proposal"
-                        variant="secondary"
-                        size="lg"
-                        className="shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.3)] hover:scale-105 transition-all duration-300"
+        <section className="w-full !pt-40 lg:!pt-55 pb-0 px-6">
+            <div className="!mx-auto relative">
+                {/* Splash Top Border (Organic Waves) */}
+                <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] transform -translate-y-full pointer-events-none flex justify-center">
+                    <svg
+                        viewBox="0 0 1200 160"
+                        className="w-[300%] sm:w-[200%] lg:w-[150%] xl:w-[calc(100%+1.3px)] h-24 sm:h-32 md:h-48 lg:h-64 flex-shrink-0"
+                        preserveAspectRatio="none"
                     >
-                        Get Proposal
-                    </Button>
+                        <defs>
+                            <linearGradient id="waveGradientBack" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#2197A1" stopOpacity="0.2" />
+                                <stop offset="100%" stopColor="#2197A1" stopOpacity="0.25" />
+                            </linearGradient>
+                            <linearGradient id="waveGradientFront" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#2197A1" stopOpacity="0.05" />
+                                <stop offset="100%" stopColor="#2197A1" stopOpacity="0.1" />
+                            </linearGradient>
+                        </defs>
+                        {/* Layer 1: Back Lighter Wave */}
+                        <path
+                            d="M0,160 C150,160 200,100 350,120 C500,140 550,60 650,40 C750,20 850,100 1000,80 C1150,60 1200,160 1200,160 L0,160 Z"
+                            fill="url(#waveGradientBack)"
+                        />
+
+                        {/* Organic Blobs/Spots between layers */}
+                        <ellipse cx="250" cy="110" rx="20" ry="12" fill="url(#waveGradientBack)" opacity="0.5" transform="rotate(-15, 250, 110)" />
+                        <ellipse cx="600" cy="60" rx="15" ry="10" fill="url(#waveGradientBack)" opacity="0.6" transform="rotate(20, 600, 60)" />
+                        <ellipse cx="900" cy="90" rx="18" ry="11" fill="url(#waveGradientBack)" opacity="0.5" transform="rotate(-10, 900, 90)" />
+
+                        {/* Layer 2: Main Front Wave */}
+                        <path
+                            d="M0,160 C100,160 180,120 300,140 C420,160 500,80 600,100 C700,120 780,40 900,60 C1020,80 1100,160 1200,160 L0,160 Z"
+                            fill="url(#waveGradientFront)"
+                        />
+
+                        {/* Additional droplets on top */}
+                        <circle cx="450" cy="115" r="8" fill="url(#waveGradientBack)" opacity="0.4" />
+                        <circle cx="750" cy="70" r="6" fill="url(#waveGradientBack)" opacity="0.3" />
+                        <circle cx="1050" cy="110" r="5" fill="url(#waveGradientBack)" opacity="0.2" />
+                    </svg>
                 </div>
 
-                {/* RIGHT — Image placeholder */}
-                <div className="flex items-center justify-center">
-                    <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.25)]">
-                        {/* Placeholder — swap src with your image */}
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src="/cta-image.png"
-                            alt="Ready to grow your business"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).style.display = "none";
-                                const fb = e.currentTarget.nextElementSibling as HTMLElement;
-                                if (fb) fb.style.display = "flex";
-                            }}
-                        />
-                        {/* Fallback shown when image is missing */}
-                        <div className="hidden w-full h-full items-center justify-center bg-white/10 backdrop-blur-sm border-2 border-dashed border-white/20 rounded-3xl flex-col gap-3">
-                            <svg className="w-12 h-12 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2" />
-                                <circle cx="8.5" cy="8.5" r="1.5" />
-                                <path d="M21 15l-5-5L5 21" />
-                            </svg>
-                            <span className="text-white/30 text-xs font-bold uppercase tracking-widest">Place Image Here</span>
-                            <span className="text-white/20 text-[10px] font-medium">/public/cta-image.png</span>
-                        </div>
-                    </div>
+                <div className="bg-[#2197A1]/28 !p-10 md:p-20 text-center relative overflow-hidden">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
+                        {title}
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-600 font-medium mb-10 max-w-2xl !mx-auto relative z-10 leading-relaxed">
+                        {description}
+                    </p>
+                    <Link
+                        href={buttonHref}
+                        className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-6 !py-3 lg:!px-10 lg:!py-4 rounded-3xl font-bold text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
+                    >
+                        {buttonText}
+                        <ArrowRight size={22} />
+                    </Link>
                 </div>
             </div>
         </section>

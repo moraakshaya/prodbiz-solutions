@@ -5,24 +5,24 @@ import Button from "./Button";
 
 const caseStudies = [
     {
-        client: "Global Retail Brand",
-        problem: "Outdated legacy platform with slow load times and critically declining mobile conversion rates.",
-        solution: "End-to-end migration to a headless commerce architecture powered by Next.js and high-performance APIs.",
+        client: "Ricchhotel Restaurant",
+        problem: "Ricchhotel struggled with zero digital footprint. Without an official website, potential customers couldn't find their menu, location, or even confirm their existence online.",
+        solution: "We engineered their first digital flagship—a mobile-responsive platform with structured menu discovery, local SEO, and integrated reservation touchpoints.",
         results: [
-            { label: "Organic Growth", value: "+240%" },
-            { label: "Conversion Rate", value: "3× Higher" },
+            { label: "Online Presence", value: "First Website" },
+            { label: "Visiblity", value: "SEO Improved" },
         ],
         accent: "#2197A1",
         polaroidAngle: "-rotate-2",
         polaroidAngle2: "rotate-3",
     },
     {
-        client: "FinTech Innovation Lab",
-        problem: "Complex data silos making it impossible for users to track real-time portfolio metrics consistently.",
-        solution: "Unified SaaS dashboard with interactive visualizations and an automated reporting engine.",
+        client: "Shriswara Hospital",
+        problem: "A legacy WordPress site hindered patient access. Slow loading speeds and poor mobile responsiveness made it difficult to find critical care and doctor information.",
+        solution: "A complete architectural overhaul into a scalable healthcare platform with intuitive patient-centric navigation and optimized doctor directories.",
         results: [
-            { label: "User Engagement", value: "+180%" },
-            { label: "Reporting Speed", value: "85% Faster" },
+            { label: "Patient UX", value: "Redesigned" },
+            { label: "Accessibility", value: "Full Mobile" },
         ],
         accent: "#1b7a82",
         polaroidAngle: "rotate-2",
@@ -97,7 +97,7 @@ const TimelineItem = ({
 
 const CaseStudiesPreview = () => {
     return (
-        <section className="relative w-full !py-20 px-6 overflow-hidden flex items-center justify-center">
+        <section className="relative w-full !py-12 lg:!py-20 !px-6 lg:!py-6 overflow-hidden flex items-center justify-center">
             {/* Decorative blob */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl -mr-48 -mt-48 pointer-events-none" />
 
@@ -113,7 +113,7 @@ const CaseStudiesPreview = () => {
                 </div>
 
                 {/* Case Study Rows */}
-                <div className="!space-y-14 !mt-10 ">
+                <div className="!space-y-14 !mt-6 lg:!mt-10 ">
                     {caseStudies.map((cs, idx) => {
                         const isReversed = idx % 2 !== 0;
 
@@ -124,7 +124,7 @@ const CaseStudiesPreview = () => {
                                     <span className="inline-block bg-primary/10 text-primary text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
                                         Case Study {String(idx + 1).padStart(2, "0")}
                                     </span>
-                                    <h3 className="text-3xl !mt-2 font-bold text-gray-900">
+                                    <h3 className="!mt-2 font-bold text-gray-900">
                                         {cs.client}
                                     </h3>
                                 </div>
@@ -216,26 +216,24 @@ const CaseStudiesPreview = () => {
                         return (
                             <div
                                 key={idx}
-                                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                                className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 items-center"
                             >
-                                {isReversed ? (
-                                    <>
-                                        {polaroid}
-                                        {timeline}
-                                    </>
-                                ) : (
-                                    <>
-                                        {timeline}
-                                        {polaroid}
-                                    </>
-                                )}
+                                {/* Timeline - always on top for mobile */}
+                                <div className={`order-1 ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
+                                    {timeline}
+                                </div>
+
+                                {/* Polaroid - always on bottom for mobile */}
+                                <div className={`order-2 ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
+                                    {polaroid}
+                                </div>
                             </div>
                         );
                     })}
                 </div>
 
                 {/* CTA */}
-                <div className="flex justify-center !mt-20">
+                <div className="flex justify-center lg:!mt-20 !mt-2">
                     <Button href="/case-studies" variant="primary" size="lg">
                         View All Case Studies
                     </Button>

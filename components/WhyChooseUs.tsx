@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 const whyChooseUsData = [
     {
@@ -61,17 +63,91 @@ const whyChooseUsData = [
     },
 ];
 
-const WhyChooseUs = () => {
+interface WhyChooseUsItem {
+    step: string;
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    color: string;
+}
+
+const WhyChooseUsCard = ({ item, idx, isDesktop }: { item: WhyChooseUsItem; idx: number; isDesktop?: boolean }) => {
     return (
-        <section className="relative w-full !py-20 px-6 flex items-center justify-center overflow-hidden">
+        <div className={`group relative flex flex-col items-center ${isDesktop ? "" : "min-w-full w-full flex-shrink-0 snap-center pb-2 px-4"}`}>
+            {/* Circular Card with 3D effect */}
+            <div className="relative w-48 md:w-64 h-48 md:h-64 !my-3">
+                {/* Outer Rotating Arc Background */}
+                <div className={`absolute inset-0 rounded-full border-[8px] border-white/10 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]`} />
+
+                {/* Colored Gradient Arc */}
+                <div className={`absolute inset-0 rounded-full border-[8px] border-transparent border-t-white/40 border-r-white/40 rotate-45 group-hover:rotate-180 transition-transform duration-1000`} />
+
+                {/* Main Circle - Glassmorphism 3D effect */}
+                <div className="absolute inset-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl flex flex-col items-center justify-center p-6 transition-all duration-300 group-hover:bg-white group-hover:scale-100 group-hover:-translate-y-0 text-center">
+                    <div className={`mb-3 transition-colors duration-300 group-hover:text-primary text-white`}>
+                        {item.icon}
+                    </div>
+                    <span className={`text-xs font-black !mb-1 transition-colors duration-300 group-hover:text-primary/70 text-white/60 tracking-widest uppercase`}>
+                        Step {item.step}
+                    </span>
+                    <h4 className={`font-bold transition-colors duration-300 group-hover:text-gray-900 text-white leading-tight text-balance break-words w-full`}>
+                        {item.title}
+                    </h4>
+                </div>
+
+                {/* Animated Arrow for desktop connectors */}
+                {isDesktop && idx < 3 && (
+                    <div className="hidden lg:block absolute top-1/2 -right-8 -translate-y-1/2 z-20">
+                        <svg className="w-8 h-8 text-white/30 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                )}
+            </div>
+
+            {/* Description below circle */}
+            <p className="text-white/70 font-medium leading-relaxed max-w-[200px] transition-colors duration-300 group-hover:text-white mt-4 text-center">
+                {item.description}
+            </p>
+        </div>
+    );
+};
+
+const WhyChooseUs = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
+        const scrollPosition = scrollRef.current.scrollLeft;
+        const cardWidth = scrollRef.current.offsetWidth;
+        if (cardWidth === 0) return;
+        const index = Math.round(scrollPosition / cardWidth);
+        if (index !== activeIndex && index >= 0 && index < whyChooseUsData.length) {
+            setActiveIndex(index);
+        }
+    };
+
+    const scrollToCard = (index: number) => {
+        if (!scrollRef.current) return;
+        const cardWidth = scrollRef.current.offsetWidth;
+        scrollRef.current.scrollTo({
+            left: cardWidth * index,
+            behavior: "smooth"
+        });
+        setActiveIndex(index);
+    };
+
+    return (
+        <section className="relative w-full !py-10 lg:!py-20 px-6 flex items-center justify-center overflow-hidden">
             {/* Background Gradient matching hero */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960] -z-20" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent -z-10" />
 
-            <div className="max-w-7xl mx-auto text-center">
+            <div className="max-w-7xl !mx-auto w-full text-center">
                 {/* Header Text */}
                 <div className="mb-20 flex flex-col items-center">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                    <h2 className="font-bold text-white mb-6 tracking-tight">
                         Why Choose ProdBiz ?
                     </h2>
                     {/* <div className="w-24 h-1.5 bg-white mx-auto mb-6 rounded-full opacity-80"></div> */}
@@ -80,47 +156,43 @@ const WhyChooseUs = () => {
                     </p>
                 </div>
 
-                {/* 3D Circular Infographic Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
+                {/* Desktop 3D Circular Infographic Grid */}
+                <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-12 relative w-full items-start justify-items-center">
                     {whyChooseUsData.map((item, idx) => (
-                        <div key={idx} className="group relative flex flex-col items-center">
-                            {/* Circular Card with 3D effect */}
-                            <div className="relative w-64 h-64 !my-3">
-                                {/* Outer Rotating Arc Background */}
-                                <div className={`absolute inset-0 rounded-full border-[8px] border-white/10 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]`} />
-
-                                {/* Colored Gradient Arc */}
-                                <div className={`absolute inset-0 rounded-full border-[8px] border-transparent border-t-white/40 border-r-white/40 rotate-45 group-hover:rotate-180 transition-transform duration-1000`} />
-
-                                {/* Main Circle - Glassmorphism 3D effect */}
-                                <div className="absolute inset-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl flex flex-col items-center justify-center p-6 transition-all duration-300 group-hover:bg-white group-hover:scale-100 group-hover:-translate-y-0">
-                                    <div className={`mb-3 transition-colors duration-300 group-hover:text-primary text-white`}>
-                                        {item.icon}
-                                    </div>
-                                    <span className={`text-xs font-black mb-1 transition-colors duration-300 group-hover:text-primary/70 text-white/60 tracking-widest uppercase`}>
-                                        Step {item.step}
-                                    </span>
-                                    <h4 className={`text-lg font-bold transition-colors duration-300 group-hover:text-gray-900 text-white leading-tight`}>
-                                        {item.title}
-                                    </h4>
-                                </div>
-
-                                {/* Animated Arrow for desktop connectors */}
-                                {idx < 3 && (
-                                    <div className="hidden lg:block absolute top-1/2 -right-8 -translate-y-1/2 z-20">
-                                        <svg className="w-8 h-8 text-white/30 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Description below circle */}
-                            <p className="text-white/70 text-sm font-medium leading-relaxed max-w-[200px] transition-colors duration-300 group-hover:text-white">
-                                {item.description}
-                            </p>
-                        </div>
+                        <WhyChooseUsCard key={idx} item={item} idx={idx} isDesktop={true} />
                     ))}
+                </div>
+
+                {/* Mobile Carousel */}
+                <div className="md:hidden flex flex-col w-full relative">
+                    <style dangerouslySetInnerHTML={{
+                        __html: `
+                        .no-scrollbar::-webkit-scrollbar {
+                            display: none;
+                        }
+                    `}} />
+                    <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
+                        className="flex overflow-x-auto snap-x snap-mandatory flex-nowrap !pb-4 pt-4 px-2 no-scrollbar"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                        {whyChooseUsData.map((item, idx) => (
+                            <WhyChooseUsCard key={idx} item={item} idx={idx} isDesktop={false} />
+                        ))}
+                    </div>
+
+                    {/* Pagination Dots */}
+                    <div className="flex justify-center gap-2 mt-2">
+                        {whyChooseUsData.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => scrollToCard(idx)}
+                                className={`h-2.5 rounded-full transition-all duration-300 ${activeIndex === idx ? 'w-8 bg-white' : 'w-2.5 bg-white/30'}`}
+                                aria-label={`Go to slide ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

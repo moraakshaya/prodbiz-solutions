@@ -3,12 +3,41 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { categories, insights } from "./data";
+import FinalCTA from "@/components/FinalCTA";
+import Button from "@/components/Button";
 
 export default function InsightsPage() {
+    const scrollToInsights = () => {
+        const element = document.getElementById("insights-grid-section");
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
     const [selectedCategory, setSelectedCategory] = React.useState("All");
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 6;
+    const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+    const [scrollInfo, setScrollInfo] = React.useState({ scrollLeft: 0, scrollWidth: 1, clientWidth: 1 });
+
+    const handleScroll = () => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            setScrollInfo({ scrollLeft, scrollWidth, clientWidth });
+        }
+    };
+
+    React.useEffect(() => {
+        handleScroll();
+        // Use a small timeout to ensure layout is ready
+        const timer = setTimeout(handleScroll, 100);
+        window.addEventListener('resize', handleScroll);
+        return () => {
+            window.removeEventListener('resize', handleScroll);
+            clearTimeout(timer);
+        };
+    }, []);
 
     // Reset to first page when category changes
     React.useEffect(() => {
@@ -31,31 +60,79 @@ export default function InsightsPage() {
         <main className="flex min-h-screen flex-col items-center bg-white">
             {/* Insights Hero Section */}
             <section
-                className="relative w-full min-h-[90vh] flex items-center overflow-hidden"
+                className="relative w-full min-h-[75vh] min-[340px]:min-h-[60vh] min-[360px]:min-h-[75vh] min-[380px]:min-h-[60vh] min-[400px]:min-h-[58vh] min-[540px]:min-h-[68vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center overflow-hidden"
                 style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
             >
                 {/* Content Container */}
-                <div className="z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6 pt-20">
-
-                    {/* Left Side: Heading and Paragraph */}
-                    <div className="w-full md:w-[70%] !pl-[14%] flex flex-col items-start translate-y-[-20px]">
-                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] mb-6 leading-tight">
+                <div className="z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
+ 
+                    {/* Hero Content Wrapper */}
+                    <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-20px] md:pr-0">
+                        {/* Title: Centered on Mobile */}
+                        <h1 className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full">
                             Insights & <span className="text-[#2197A1]">Innovation</span>
                         </h1>
-                        <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium max-w-3xl">
-                            Explore expert insights, digital trends, and practical strategies
-                            to help your business grow online.
-                        </p>
+
+                        <div className="w-full flex flex-col md:block">
+                            {/* Short mobile content: Centered as requested */}
+                            <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center mb-8">
+                                Stay ahead in the digital landscape with expert insights, performance marketing trends, and actionable growth strategies.
+                            </p>
+
+                            {/* Desktop long content */}
+                            <div className="hidden md:block">
+                                <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium leading-relaxed max-w-3xl mb-1 md:mb-8">
+                                    Welcome to the Prodbiz Insights portal, your dedicated destination for staying ahead in the
+                                    rapidly evolving digital landscape. We believe that knowledge sharing is the cornerstone
+                                    of innovation, which is why we curate the latest industry trends, performance marketing
+                                    breakthroughs, and technical deep-dives for ambitious businesses. Our expert team regularly
+                                    publishes actionable strategies, from mastering search engine algorithms to optimizing
+                                    high-conversion user interfaces, helping you navigate technology with a competitive edge.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Mobile Image: Rendered below content on mobile */}
+                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-2 h-[150px] relative">
+                             {/* Ambient Glow */} 
+                            <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
+                            <Image
+                                src="/images/hero-insights.png"
+                                alt="Insights & Innovation"
+                                fill
+                                className="object-contain drop-shadow-xl scale-125"
+                                priority
+                            />
+                        </div>
+                        {/* Button: Centered on Mobile */}
+                        <div className="w-full flex justify-center md:justify-start">
+                            <Button
+                                onClick={scrollToInsights}
+                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                            >
+                                <span>Explore Our Insights</span>
+                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
+                            </Button>
+                        </div>
                     </div>
 
-                    <div className="w-full md:w-[20%] flex justify-center items-center h-full min-h-[300px]">
+                    {/* Desktop Image - Hidden on Mobile */}
+                    <div className="hidden md:flex w-[40%] md:w-[40%] md:!mb-20 justify-center items-center h-full min-h-[300px] md:min-h-[400px]">
+                        <Image
+                            src="/images/hero-insights.png"
+                            alt="Insights & Innovation"
+                            width={500}
+                            height={500}
+                            priority
+                            className="w-full h-auto object-contain drop-shadow-xl md:scale-125"
+                        />
                     </div>
                 </div>
 
                 {/* Bottom 3D Drip Border */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] flex justify-center">
                     <svg
-                        className="relative block w-[calc(100%+1.3px)] h-[80px] md:h-[140px]"
+                        className="relative block w-[300%] sm:w-[200%] lg:w-[150%] xl:w-[calc(100%+1.3px)] h-[70px] md:h-[100px] lg:h-[140px] flex-shrink-0"
                         viewBox="0 0 1200 120"
                         preserveAspectRatio="none"
                     >
@@ -80,34 +157,70 @@ export default function InsightsPage() {
 
 
             {/* Tab Filter Section - Redesigned like Inside Prodbiz */}
-            <div className="w-full max-w-5xl mx-auto !mt-10 !mb-10 !px-12 z-20">
-                <div className="bg-[#f0f9fa] rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.18)] flex items-center justify-between px-8 md:px-16 py-4 overflow-x-hidden overflow-y-hidden no-scrollbar">
-                    {categories.map((cat) => {
-                        const Icon = cat.icon;
-                        const isActive = selectedCategory === cat.id;
-                        return (
-                            <button
-                                key={cat.id}
-                                onClick={() => setSelectedCategory(cat.id)}
-                                className="flex flex-col items-center w-full !py-1 !gap-2 transition-all duration-300 hover:scale-105 active:scale-95"
-                            >
-                                <Icon
-                                    size={24}
-                                    className={`${isActive ? "text-[#e76038]" : "text-gray-400"} transition-colors`}
-                                />
-                                <span
-                                    className={`text-sm font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-[#e76038]" : "text-gray-500"} transition-colors`}
+            <div className="w-full max-w-5xl !mx-auto !mt-10 md:!mb-10 !px-2 md:!px-12 z-20">
+                <style jsx>{`
+                    .custom-scrollbar::-webkit-scrollbar {
+                        height: 4px;
+                        display: block;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-track {
+                        background: rgba(33, 151, 161, 0.1);
+                        border-radius: 10px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-thumb {
+                        background: #2197A1;
+                        border-radius: 10px;
+                    }
+                    .custom-scrollbar {
+                        scrollbar-width: thin;
+                        scrollbar-color: #2197A1 rgba(33, 151, 161, 0.1);
+                        -webkit-overflow-scrolling: touch;
+                    }
+                `}</style>
+                <div className="bg-[#f0f9fa] rounded-3xl md:rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.18)] !pt-1 overflow-hidden relative">
+                    <div
+                        ref={scrollContainerRef}
+                        onScroll={handleScroll}
+                        className="flex items-center md:justify-between justify-start px-4 md:px-16 !pb-1 md:!py-2 overflow-x-auto md:overflow-x-hidden no-scrollbar scroll-smooth"
+                    >
+                        {categories.map((cat) => {
+                            const Icon = cat.icon;
+                            const isActive = selectedCategory === cat.id;
+                            return (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setSelectedCategory(cat.id)}
+                                    className="flex flex-col items-center flex-shrink-0 w-[28%] md:w-[20%] !py-1 md:!gap-2 transition-all duration-300 hover:scale-105 active:scale-95"
                                 >
-                                    {cat.label}
-                                </span>
-                            </button>
-                        );
-                    })}
+                                    <Icon
+                                        size={24}
+                                        className={`${isActive ? "text-[#e76038]" : "text-gray-400"} transition-colors`}
+                                    />
+                                    <span
+                                        className={`text-[10px] md:text-sm font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-[#e76038]" : "text-gray-500"} transition-colors`}
+                                    >
+                                        {cat.label}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Border-style Scroll Indicator for Mobile */}
+                    <div className="md:hidden absolute bottom-0 left-0 w-full h-[4px] bg-[#2197A1]/10 overflow-hidden">
+                        <div
+                            className="h-full bg-[#2197A1] transition-all duration-150"
+                            style={{
+                                width: `${(scrollInfo.clientWidth / scrollInfo.scrollWidth) * 100}%`,
+                                transform: `translateX(${(scrollInfo.scrollLeft / scrollInfo.clientWidth) * 100}%)`
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
 
             {/* Insights Grid */}
-            <section className="w-full max-w-7xl mx-auto px-6 !pt-15 !pb-20">
+            <section id="insights-grid-section" className="w-full max-w-7xl mx-auto !px-6 md:!px-0 !pt-15 md:!pb-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {paginatedInsights.map((insight) => (
                         <div
@@ -197,6 +310,9 @@ export default function InsightsPage() {
                     )
                 )}
             </section>
+
+            {/* Final CTA Section */}
+            <FinalCTA />
         </main>
     );
 }

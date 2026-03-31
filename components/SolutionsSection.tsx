@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 const solutions = [
     {
@@ -52,16 +52,16 @@ const solutions = [
 
 const SolutionCard = ({ number, title, items }: { number: string; title: string; items: string[] }) => {
     return (
-        <div className="group relative flex flex-col items-center pt-10 h-full">
+        <div className="group relative flex flex-col items-center h-full">
             {/* Number Badge - Precise styling from image */}
-            <div className="absolute -top-5 z-30 flex h-20 w-20 items-center justify-center rounded-full border-[6px] border-[#f2f4f7] bg-primary text-3xl font-extrabold text-white shadow-[0_8px_15px_rgba(33,151,161,0.2)] transition-transform duration-300 group-hover:scale-110">
+            <div className="absolute -top-6 lg:-top-5 z-30 flex h-15 w-15 lg:h-20 lg:w-20 items-center justify-center rounded-full border-[6px] border-[#f2f4f7] bg-primary text-3xl font-extrabold text-white shadow-[0_8px_15px_rgba(33,151,161,0.2)] transition-transform duration-300 group-hover:scale-110">
                 {number}
             </div>
 
             {/* Card Container */}
             <div className="flex flex-col flex-1 w-[95%] bg-white rounded-[2.5rem] shadow-[0_20px_40px_rgba(0,0,0,0.06)] transition-all duration-300 hover:shadow-[0_35px_70px_rgba(0,0,0,0.1)] hover:-translate-y-2 overflow-hidden">
                 {/* Exact Wave Shape Header */}
-                <div className="relative h-35 w-full bg-primary overflow-hidden">
+                <div className="relative h-30 lg:h-35 w-full bg-primary overflow-hidden">
                     <svg
                         viewBox="0 0 500 150"
                         preserveAspectRatio="none"
@@ -73,11 +73,11 @@ const SolutionCard = ({ number, title, items }: { number: string; title: string;
                 </div>
 
                 {/* Content Area */}
-                <div className="flex flex-col flex-1 px-8 pb-8 pt-4 items-center text-center">
+                <div className="flex flex-col flex-1 !px-1 pb-8 !pt-0 items-center text-center">
                     {/* Title */}
-                    <h4 className="text-xl font-bold text-gray-800 tracking-wide min-h-[4rem] flex items-center justify-center">
+                    <h3 className="font-bold text-gray-800 tracking-wide flex items-center justify-center">
                         {title}
-                    </h4>
+                    </h3>
 
                     {/* List Items */}
                     <ul className="space-y-3 text-left w-full ml-0 mb-0">
@@ -95,12 +95,36 @@ const SolutionCard = ({ number, title, items }: { number: string; title: string;
 };
 
 const SolutionsSection = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
+        const scrollPosition = scrollRef.current.scrollLeft;
+        const cardWidth = scrollRef.current.offsetWidth;
+        if (cardWidth === 0) return;
+        const index = Math.round(scrollPosition / cardWidth);
+        if (index !== activeIndex && index >= 0 && index < solutions.length) {
+            setActiveIndex(index);
+        }
+    };
+
+    const scrollToCard = (index: number) => {
+        if (!scrollRef.current) return;
+        const cardWidth = scrollRef.current.offsetWidth;
+        scrollRef.current.scrollTo({
+            left: cardWidth * index,
+            behavior: "smooth"
+        });
+        setActiveIndex(index);
+    };
+
     return (
         <section className="!py-18 w-full">
-            <div className="container mx-auto px-6 sm:px-12 lg:px-24 xl:px-32 max-w-[1800px]">
+            <div className="container !mx-auto !px-2 flex flex-col max-w-[1800px]">
                 {/* Section Header */}
-                <div className="!mb-8 text-center flex flex-col items-center">
-                    <h2 className="mb-6 text-4xl font-bold text-gray-900 sm:text-5xl tracking-tight max-w-5xl">
+                <div className="!mb-0 lg:!mb-8 text-center px-6 sm:px-12 lg:px-24 xl:px-32 flex flex-col items-center">
+                    <h2 className="mb-6 font-bold text-gray-900 tracking-tight max-w-5xl">
                         Comprehensive Digital Solutions for Modern Businesses
                     </h2>
                     <p className="max-w-3xl text-lg text-gray-500 font-medium leading-relaxed">
@@ -108,11 +132,45 @@ const SolutionsSection = () => {
                     </p>
                 </div>
 
-                {/* Cards Grid - Uniform spacing */}
-                <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 items-stretch w-full px-15">
+                {/* Desktop Grid - Uniform spacing */}
+                <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 items-stretch w-full px-6 sm:px-12 lg:px-24 xl:px-32">
                     {solutions.map((solution, index) => (
                         <SolutionCard key={index} {...solution} />
                     ))}
+                </div>
+
+                {/* Mobile Carousel */}
+                <div className="md:hidden flex flex-col w-full relative">
+                    <style dangerouslySetInnerHTML={{
+                        __html: `
+                        .no-scrollbar::-webkit-scrollbar {
+                            display: none;
+                        }
+                    `}} />
+                    <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
+                        className="flex overflow-x-auto snap-x snap-mandatory flex-nowrap !pb-6 !pt-6 !px-2 no-scrollbar"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                        {solutions.map((solution, index) => (
+                            <div key={index} className="min-w-full w-full flex-shrink-0 snap-center pb-2 !px-0">
+                                <SolutionCard {...solution} />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Pagination Dots */}
+                    <div className="flex justify-center gap-2 mt-0">
+                        {solutions.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => scrollToCard(idx)}
+                                className={`h-2.5 rounded-full transition-all duration-300 ${activeIndex === idx ? 'w-8 bg-primary' : 'w-2.5 bg-gray-300'}`}
+                                aria-label={`Go to slide ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

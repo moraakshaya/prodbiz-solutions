@@ -2,8 +2,8 @@ import { LayoutGrid, Globe, Megaphone, Code, FileText } from "lucide-react";
 
 export const categories = [
     { id: "All", label: "All", icon: LayoutGrid },
-    { id: "SEO", label: "SEO", icon: Globe },
     { id: "Marketing", label: "Marketing", icon: Megaphone },
+    { id: "SEO", label: "SEO", icon: Globe },
     { id: "Web Development", label: "Web Development", icon: Code },
     { id: "Case Studies", label: "Case Studies", icon: FileText },
 ];

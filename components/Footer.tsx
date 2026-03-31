@@ -5,7 +5,6 @@ import "./Footer.css";
 
 const quickLinks = [
     { label: "Who We Are", href: "/who-we-are" },
-    { label: "Solutions", href: "/solutions" },
     { label: "Case Studies", href: "/case-studies" },
     { label: "Insights", href: "/insights" },
     { label: "Inside ProdBiz", href: "/inside-company" },
@@ -110,9 +109,9 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* ── Column 3: Services ── */}
+                    {/* ── Column 3: Solutions ── */}
                     <div className="footer__col">
-                        <h4 className="footer__heading">Services</h4>
+                        <h4 className="footer__heading">Solutions</h4>
                         <ul className="footer__list">
                             {services.map((link) => (
                                 <li key={link.href}>
@@ -154,10 +153,8 @@ export default function Footer() {
                         &copy; {new Date().getFullYear()} ProdBiz. All rights reserved.
                     </p>
                     <ul className="footer__legal">
-                        <li><Link href="#">Privacy Policy</Link></li>
-                        <li><Link href="#">Terms &amp; Conditions</Link></li>
-                        <li><Link href="#">Refund Policy</Link></li>
-                        <li><Link href="#">Sitemap</Link></li>
+                        <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                        <li><Link href="/terms-and-conditions">Terms &amp; Conditions</Link></li>
                     </ul>
                 </div>
             </div>
