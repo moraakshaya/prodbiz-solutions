@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 
 interface FinalCTAProps {
     title?: string | React.ReactNode;
@@ -17,8 +20,73 @@ const FinalCTA = ({
     buttonText = "Start Your Project",
     buttonHref = "/contact",
 }: FinalCTAProps) => {
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const paraRef = useRef<HTMLParagraphElement>(null);
+    const buttonRef = useRef<HTMLAnchorElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (!headingRef.current || !paraRef.current || !buttonRef.current) return;
+
+        // Split paragraph into lines
+        const split = new SplitType(paraRef.current, { types: "lines" });
+        const lines = split.lines;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: headingRef.current,
+                start: "top 85%", // Trigger when top of heading is 85% down the viewport
+                toggleActions: "play none none none", // Only play once
+            },
+        });
+
+        // Step 1: Heading slide up + fade
+        tl.fromTo(
+            headingRef.current,
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            }
+        );
+
+        // Step 2: Line-by-line paragraph animation
+        tl.fromTo(
+            lines,
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out",
+            },
+            "-=0.6" // Start paragraph slightly before heading finishes
+        );
+
+        // Step 3: Button slide up + fade
+        tl.fromTo(
+            buttonRef.current,
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            },
+            "-=0.6" // Start slightly before paragraph ends
+        );
+
+        return () => {
+            split.revert();
+        };
+    }, []);
+
     return (
-        <section className="w-full !pt-40 lg:!pt-55 pb-0 px-6">
+        <section className="w-full !pt-30 lg:!pt-55 pb-0 px-6">
             <div className="!mx-auto relative">
                 {/* Splash Top Border (Organic Waves) */}
                 <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] transform -translate-y-full pointer-events-none flex justify-center">
@@ -62,13 +130,14 @@ const FinalCTA = ({
                 </div>
 
                 <div className="bg-[#2197A1]/28 !p-10 md:p-20 text-center relative overflow-hidden">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
+                    <h2 ref={headingRef} className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
                         {title}
                     </h2>
-                    <p className="text-lg md:text-xl text-gray-600 font-medium mb-10 max-w-2xl !mx-auto relative z-10 leading-relaxed">
+                    <p ref={paraRef} className="text-lg md:text-xl text-gray-600 font-medium mb-10 max-w-2xl !mx-auto relative z-10 leading-relaxed">
                         {description}
                     </p>
                     <Link
+                        ref={buttonRef}
                         href={buttonHref}
                         className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-6 !py-3 lg:!px-10 lg:!py-4 rounded-3xl font-bold text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
                     >

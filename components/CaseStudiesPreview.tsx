@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import Button from "./Button";
 
 const caseStudies = [
@@ -96,6 +99,71 @@ const TimelineItem = ({
 
 
 const CaseStudiesPreview = () => {
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const paraRef = useRef<HTMLParagraphElement>(null);
+    const buttonRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (!headingRef.current || !paraRef.current || !buttonRef.current) return;
+
+        // Split paragraph into lines
+        const split = new SplitType(paraRef.current, { types: "lines" });
+        const lines = split.lines;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: headingRef.current,
+                start: "top 85%", // Trigger when top of heading is 85% down the viewport
+                toggleActions: "play none none none", // Only play once
+            },
+        });
+
+        // Step 1: Heading slide up + fade
+        tl.fromTo(
+            headingRef.current,
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            }
+        );
+
+        // Step 2: Line-by-line paragraph animation
+        tl.fromTo(
+            lines,
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out",
+            },
+            "-=0.6" // Start paragraph slightly before heading finishes
+        );
+
+        // Step 3: Button slide up + fade
+        tl.fromTo(
+            buttonRef.current,
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            },
+            "-=0.1" // Start slightly before paragraph ends
+        );
+
+        return () => {
+            split.revert();
+        };
+    }, []);
+
     return (
         <section className="relative w-full !py-12 lg:!py-20 !px-6 lg:!py-6 overflow-hidden flex items-center justify-center">
             {/* Decorative blob */}
@@ -104,10 +172,10 @@ const CaseStudiesPreview = () => {
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
                 <div className="mb-20 text-center flex flex-col items-center">
-                    <h2 className="font-bold text-gray-900 mb-6 tracking-tight">
+                    <h2 ref={headingRef} className="font-bold text-gray-900 mb-6 tracking-tight">
                         Case Studies
                     </h2>
-                    <p className="max-w-3xl text-lg text-gray-500 font-medium leading-relaxed">
+                    <p ref={paraRef} className="max-w-3xl text-lg text-gray-500 font-medium leading-relaxed">
                         Real problems solved with innovative digital strategies — turning complex challenges into measurable success.
                     </p>
                 </div>
@@ -233,7 +301,7 @@ const CaseStudiesPreview = () => {
                 </div>
 
                 {/* CTA */}
-                <div className="flex justify-center lg:!mt-20 !mt-2">
+                <div ref={buttonRef} className="flex justify-center lg:!mt-20 !mt-2">
                     <Button href="/case-studies" variant="primary" size="lg">
                         View All Case Studies
                     </Button>

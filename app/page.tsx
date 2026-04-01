@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import SplitType from "split-type";
 import Link from "next/link";
 import Button from "@/components/Button";
 import TrustIndicators from "@/components/TrustIndicators";
@@ -8,6 +13,66 @@ import ClientsSection from "@/components/ClientsSection";
 import FinalCTA from "@/components/FinalCTA";
 
 export default function Home() {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const paraRef = useRef<HTMLParagraphElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+
+  const paraText = "We deliver scalable IT solutions and data-driven digital marketing strategies to help your business grow and thrive online.";
+
+  useEffect(() => {
+    if (!titleRef.current || !paraRef.current || !buttonsRef.current) return;
+
+    const words = paraRef.current.querySelectorAll(".para-word");
+    const chars = titleRef.current.querySelectorAll(".char");
+    const buttons = buttonsRef.current.children;
+    
+    const tl = gsap.timeline({ delay: 0.5 });
+
+    // H1 Animation
+    tl.fromTo(
+      chars,
+      { y: -100, opacity: 0, rotateX: -45 },
+      {
+        y: 0,
+        opacity: 1,
+        rotateX: 0,
+        duration: 1.2,
+        stagger: 0.03,
+        ease: "expo.out",
+      }
+    );
+
+    // Paragraph Animation (Manual Word-by-Word)
+    tl.fromTo(
+      words,
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.05,
+        ease: "power2.out",
+      },
+      "-=1.0" // Overlap H1's ending 
+    );
+
+    // Buttons Animation (Fade + Slight Up + Stagger)
+    tl.fromTo(
+      buttons,
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+      },
+      "-=0.5" // Overlap Paragraph's ending 
+    );
+  }, []);
+
+  const titleText = "Empower Your Business With ProdBiz";
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       {/* Hero Section */}
@@ -18,15 +83,32 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gra dient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-black/20 via-transparent to-transparent -z-10" />
 
         {/* Content */}
-        <div className="z-10 text-center !px-6 max-w-4xl mx-auto flex flex-col items-center">
-          <h1 className="font-bold text-white mb-6 drop-shadow-md">
-            Empower Your Business With ProdBiz
+        <div className="z-10 text-center !px-4 md:!px-6 max-w-5xl mx-auto flex flex-col items-center">
+          <h1 ref={titleRef} className="font-bold text-white md:!mb-6 drop-shadow-md text-4xl lg:text-5xl perspective-1000">
+            {titleText.split(" ").map((word, wordIndex) => (
+              <span key={wordIndex} className="word inline-block whitespace-nowrap">
+                {word.split("").map((char, charIndex) => (
+                  <span
+                    key={charIndex}
+                    className="char inline-block"
+                  >
+                    {char}
+                  </span>
+                ))}
+                {wordIndex < titleText.split(" ").length - 1 && (
+                  <span className="inline-block">&nbsp;</span>
+                )}
+              </span>
+            ))}
           </h1>
-          <p className="text-white/90 mb-10 max-w-2xl drop-shadow">
-            We deliver scalable IT solutions and data-driven digital marketing
-            strategies to help your business grow and thrive online.
+          <p ref={paraRef} className="text-white/90 md:!mb-8 max-w-2xl drop-shadow">
+            {paraText.split(" ").map((word, wordIndex) => (
+              <span key={wordIndex} className="para-word inline-block">
+                {word}{wordIndex < paraText.split(" ").length - 1 ? "\u00A0" : ""}
+              </span>
+            ))}
           </p>
-          <div className="flex flex-col sm:flex-row gap-0 lg:gap-4">
+          <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-0 lg:gap-4">
             <Button
               href="/get-proposal"
               variant="primary"
