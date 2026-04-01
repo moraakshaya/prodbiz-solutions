@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 
 const whyChooseUsData = [
     {
@@ -73,7 +76,7 @@ interface WhyChooseUsItem {
 
 const WhyChooseUsCard = ({ item, idx, isDesktop }: { item: WhyChooseUsItem; idx: number; isDesktop?: boolean }) => {
     return (
-        <div className={`group relative flex flex-col items-center ${isDesktop ? "" : "min-w-full w-full flex-shrink-0 snap-center pb-2 px-4"}`}>
+        <div className={`group relative flex flex-col items-center why-card-anim ${isDesktop ? "" : "min-w-full w-full flex-shrink-0 snap-center pb-2 px-4"}`}>
             {/* Circular Card with 3D effect */}
             <div className="relative w-48 md:w-64 h-48 md:h-64 !my-3">
                 {/* Outer Rotating Arc Background */}
@@ -115,7 +118,75 @@ const WhyChooseUsCard = ({ item, idx, isDesktop }: { item: WhyChooseUsItem; idx:
 
 const WhyChooseUs = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const scrollRef = React.useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const paraRef = useRef<HTMLParagraphElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (!headingRef.current || !paraRef.current || !sectionRef.current) return;
+
+        // Split paragraph into lines
+        const split = new SplitType(paraRef.current, { types: "lines" });
+        const lines = split.lines;
+
+        // Find cards
+        const cards = sectionRef.current.querySelectorAll(".why-card-anim");
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: headingRef.current,
+                start: "top 85%", // Trigger when top of heading is 85% down the viewport
+                toggleActions: "play none none none", // Only play once
+            },
+        });
+
+        // Step 1: Heading slide up + fade
+        tl.fromTo(
+            headingRef.current,
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            }
+        );
+
+        // Step 2: Line-by-line paragraph animation
+        tl.fromTo(
+            lines,
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out",
+            },
+            "-=0.6" // Start paragraph slightly before heading finishes
+        );
+
+        // Step 3: Card stagger animation
+        tl.fromTo(
+            cards,
+            { y: 40, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.5,
+                ease: "power2.out",
+            },
+            "-=0.8" // Start cards slightly before paragraph finishes
+        );
+
+        return () => {
+            split.revert();
+        };
+    }, []);
 
     const handleScroll = () => {
         if (!scrollRef.current) return;
@@ -139,7 +210,7 @@ const WhyChooseUs = () => {
     };
 
     return (
-        <section className="relative w-full !py-10 lg:!py-20 px-6 flex items-center justify-center overflow-hidden">
+        <section ref={sectionRef} className="relative w-full !py-10 lg:!py-20 px-6 flex items-center justify-center overflow-hidden">
             {/* Background Gradient matching hero */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960] -z-20" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent -z-10" />
@@ -147,11 +218,11 @@ const WhyChooseUs = () => {
             <div className="max-w-7xl !mx-auto w-full text-center">
                 {/* Header Text */}
                 <div className="mb-20 flex flex-col items-center">
-                    <h2 className="font-bold text-white mb-6 tracking-tight">
+                    <h2 ref={headingRef} className="font-bold text-white mb-6 tracking-tight">
                         Why Choose ProdBiz ?
                     </h2>
                     {/* <div className="w-24 h-1.5 bg-white mx-auto mb-6 rounded-full opacity-80"></div> */}
-                    <p className="max-w-3xl text-lg text-white/80 font-medium">
+                    <p ref={paraRef} className="max-w-3xl text-lg text-white/80 font-medium">
                         We empower businesses with cutting-edge technology and strategic vision. Our commitment to excellence drives everything we do.
                     </p>
                 </div>

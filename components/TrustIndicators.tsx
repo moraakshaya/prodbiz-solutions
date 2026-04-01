@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./TrustIndicators.css";
 
 const indicators = [
@@ -35,8 +37,35 @@ const indicators = [
 ];
 
 const TrustIndicators = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (!sectionRef.current) return;
+
+        const cards = sectionRef.current.querySelectorAll(".trust-card");
+
+        gsap.fromTo(
+            cards,
+            { y: 60, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 85%", // Trigger when top of section is 85% down the viewport
+                    toggleActions: "play none none none", // Only play once
+                },
+            }
+        );
+    }, []);
+
     return (
-        <section className="trust-strip">
+        <section ref={sectionRef} className="trust-strip">
             <div className="trust-strip__container">
                 {indicators.map((item, index) => (
                     <div key={index} className="trust-card">
