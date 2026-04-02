@@ -5,6 +5,11 @@ import { ArrowRight } from "lucide-react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import FinalCTA from "@/components/FinalCTA";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const caseStudies = [
     {
@@ -162,6 +167,14 @@ const TimelineItem = ({
 
 export default function CaseStudiesPage() {
     const [currentPage, setCurrentPage] = React.useState(1);
+    const [mounted, setMounted] = React.useState(false);
+    
+    const h1Ref = React.useRef<HTMLHeadingElement>(null);
+    const spanRef = React.useRef<HTMLSpanElement>(null);
+    const paraRef = React.useRef<HTMLDivElement>(null);
+    const buttonsRef = React.useRef<HTMLDivElement>(null);
+    const heroImageRef = React.useRef<HTMLDivElement>(null);
+
     const itemsPerPage = 2;
 
     const totalPages = Math.ceil(caseStudies.length / itemsPerPage);
@@ -169,6 +182,83 @@ export default function CaseStudiesPage() {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
+    React.useEffect(() => {
+        setMounted(true);
+
+        if (h1Ref.current && spanRef.current && paraRef.current && buttonsRef.current) {
+            // Core Entrance Timeline
+            const tl = gsap.timeline();
+
+            // Split all P tags within the container into individual lines
+            const splitParas = new SplitType(paraRef.current.querySelectorAll("p"), { types: "lines" });
+
+            // 1. H1 Slide In
+            tl.fromTo(
+                h1Ref.current,
+                { x: -80, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+                0.2 // Starts at 0.2s absolute
+            );
+
+            // 2. Paragraph (Line-by-line soft fade + slight upward)
+            tl.fromTo(
+                splitParas.lines,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+                "-=0.6" // Starts 0.6s before H1 completes
+            );
+
+            // 3. Buttons (Subtle fade + stagger)
+            tl.fromTo(
+                buttonsRef.current.children,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+                "-=0.4" // Starts 0.4s before paragraph completes
+            );
+
+            // 4. Hero Image (Slide from right + slight scale)
+            tl.fromTo(
+                ".hero-image-animate",
+                { x: 100, scale: 0.9, opacity: 0 },
+                { x: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" },
+                1.0 // Matches Who We Are timing
+            );
+
+            // 5. Floating Animation loops after the entrance
+            gsap.to(".hero-image-animate", {
+                y: -15,
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+                delay: 2.2
+            });
+
+            // Slot-machine roll for "Studies"
+            const loopTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5, delay: 1.0 });
+
+            loopTl.to(spanRef.current, {
+                y: -25,
+                opacity: 0,
+                rotationX: 90,
+                duration: 0.6,
+                ease: "power2.in"
+            })
+            .set(spanRef.current, { y: 25, rotationX: -90 })
+            .to(spanRef.current, {
+                y: 0,
+                opacity: 1,
+                rotationX: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            return () => {
+                splitParas.revert();
+            };
+        }
+    }, [mounted]);
 
     return (
         <main className="flex min-h-screen flex-col items-center bg-white">            {/* Case Studies Hero Section */}
@@ -181,11 +271,11 @@ export default function CaseStudiesPage() {
                     {/* Hero Content Wrapper */}
                     <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-20px] md:pr-0">
                         {/* Title: Centered on Mobile */}
-                        <h1 className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full">
-                            Case <span className="text-[#2197A1]">Studies</span>
+                        <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full" style={{ perspective: "1000px" }}>
+                            Case <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d">Studies</span>
                         </h1>
 
-                        <div className="w-full flex flex-col md:block">
+                        <div ref={paraRef} className="w-full flex flex-col md:block">
                             {/* Short mobile content: Centered as requested */}
                             <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center mb-8">
                                 Discover how Prodbiz Solutions transforms visions into high-impact digital realities through strategic growth and innovation.
@@ -205,7 +295,7 @@ export default function CaseStudiesPage() {
                         </div>
 
                         {/* Mobile Image: Rendered below content on mobile */}
-                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-2 h-[150px] relative">
+                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-2 h-[150px] relative hero-image-animate">
                              {/* Ambient Glow */} 
                             <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
                             <Image
@@ -218,7 +308,7 @@ export default function CaseStudiesPage() {
                         </div>
 
                         {/* Button: Centered on Mobile */}
-                        <div className="w-full flex justify-center md:justify-start">
+                        <div ref={buttonsRef} className="w-full flex justify-center md:justify-start">
                             <Button
                                 href="/contact"
                                 className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
@@ -231,7 +321,7 @@ export default function CaseStudiesPage() {
                     </div>
 
                     {/* Desktop Image - Hidden on Mobile */}
-                    <div className="hidden md:flex w-[40%] md:w-[40%] !mb-20 justify-center items-center h-full min-h-[300px] md:min-h-[400px]">
+                    <div className="hidden md:flex w-[40%] md:w-[40%] !mb-20 justify-center items-center h-full min-h-[300px] md:min-h-[400px] relative hero-image-animate">
                         <Image
                             src="/images/casestudies-hero.png"
                             alt="Case Studies"

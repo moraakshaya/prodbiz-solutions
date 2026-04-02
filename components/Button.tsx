@@ -27,14 +27,14 @@ const Button = ({
 
     if (href) {
         return (
-            <Link href={href} className={baseClasses} onClick={onClick}>
+            <Link href={href} className={baseClasses} onClick={onClick} suppressHydrationWarning>
                 {children}
             </Link>
         );
     }
 
     return (
-        <button type={type} className={baseClasses} onClick={onClick}>
+        <button type={type} className={baseClasses} onClick={onClick} suppressHydrationWarning>
             {children}
         </button>
     );
