@@ -7,6 +7,7 @@ import { ArrowRight, Clock, Calendar, CheckCircle2 } from "lucide-react";
 import { insights } from "../data";
 import Button from "@/components/Button";
 import FinalCTA from "@/components/FinalCTA";
+import gsap from "gsap";
 
 const renderContent = (content: string) => {
     return content.split("\n\n").map((block, blockIdx) => {
@@ -145,6 +146,183 @@ function MobileRelatedCarousel({ items }: { items: InsightItem[] }) {
 export default function BlogDetails() {
     const { slug } = useParams();
     const blog = insights.find((i) => i.slug === slug);
+    const [mounted, setMounted] = React.useState(false);
+
+    const categoryRef = React.useRef<HTMLDivElement>(null);
+    const titleRef = React.useRef<HTMLHeadingElement>(null);
+    const descriptionRef = React.useRef<HTMLParagraphElement>(null);
+    const metadataRef = React.useRef<HTMLDivElement>(null);
+    const buttonRef = React.useRef<HTMLDivElement>(null);
+    const imageRef = React.useRef<HTMLDivElement>(null);
+    const articleContentRef = React.useRef<HTMLElement>(null);
+    const takeawaysImageRef = React.useRef<HTMLDivElement>(null);
+    const takeawaysTitleRef = React.useRef<HTMLHeadingElement>(null);
+    const takeawaysListRef = React.useRef<HTMLDivElement>(null);
+
+    const relatedSectionRef = React.useRef<HTMLElement>(null);
+    const relatedTitleRef = React.useRef<HTMLHeadingElement>(null);
+    const relatedParaRef = React.useRef<HTMLParagraphElement>(null);
+    const relatedViewAllRef = React.useRef<HTMLAnchorElement>(null);
+    const relatedGridRef = React.useRef<HTMLDivElement>(null);
+    const relatedMobileRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        setMounted(true);
+
+        if (categoryRef.current && titleRef.current && descriptionRef.current && 
+            metadataRef.current && buttonRef.current && imageRef.current) {
+            
+            const tl = gsap.timeline();
+
+            // 1. Blog Category: Fade + Slide Up
+            tl.fromTo(categoryRef.current!,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+            );
+
+            // 2. Blog Title: Slide in from left + Fade
+            tl.fromTo(titleRef.current!,
+                { x: -60, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" },
+                "-=0.6" // Starts Before category finishes
+            );
+
+            // 3. Right side Image: Slide in from right
+            tl.fromTo(imageRef.current!,
+                { x: 60, opacity: 0 },
+                { 
+                    x: 0, 
+                    opacity: 1, 
+                    duration: 1.2, 
+                    ease: "power3.out",
+                    onComplete: () => {
+                        if (imageRef.current) {
+                            gsap.set(imageRef.current, { clearProps: "transform,opacity" });
+                        }
+                    }
+                },
+                "-=0.8" // Starts Before title finishes
+            );
+
+            // 4. Description: Fade + Slide Up
+            tl.fromTo(descriptionRef.current!,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+                "-=0.6" // Starts Before title finishes
+            );
+
+            // 5. Blog Date and Time: Popup + Staggered
+            tl.fromTo(metadataRef.current!.children,
+                { scale: 0.8, opacity: 0, y: 10 },
+                { scale: 1, opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "back.out(1.7)" },
+                "-=0.5" // Starts Before description finishes
+            );
+
+            // 6. Button: Fade + Slight Slide Up
+            tl.fromTo(buttonRef.current!,
+                { y: 15, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+                "-=0.4" // Starts Before date/time finishes
+            );
+
+            // 7. Article Content: Fade + Pop Up (ScrollTriggered)
+            if (articleContentRef.current) {
+                gsap.fromTo(articleContentRef.current,
+                    { scale: 0.95, opacity: 0, y: 30 },
+                    {
+                        scale: 1,
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.0,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: articleContentRef.current,
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    }
+                );
+            }
+
+            // 8. Key Takeaways Section (Coordinated Reveal)
+            if (takeawaysImageRef.current && takeawaysTitleRef.current && takeawaysListRef.current) {
+                const takeawaysTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: takeawaysImageRef.current,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                // Left Side: Fade + Pop Up
+                takeawaysTl.fromTo(takeawaysImageRef.current,
+                    { scale: 0.9, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 1.0, ease: "power2.out" }
+                );
+
+                // Right Side H3: Slide Up
+                takeawaysTl.fromTo(takeawaysTitleRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+                    "-=0.6" // Starts just before image finishes
+                );
+
+                // Right Side Points: One by one Fade + Slide Up
+                takeawaysTl.fromTo(takeawaysListRef.current.children,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "power2.out" },
+                    "-=0.4" // Starts just before title finishes
+                );
+            }
+
+            // 9. Related Insights Section (Coordinated Reveal)
+            if (relatedSectionRef.current && relatedTitleRef.current && relatedParaRef.current && 
+                relatedViewAllRef.current && relatedGridRef.current && relatedMobileRef.current) {
+                
+                const relatedTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: relatedSectionRef.current,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                // H2 Title: Slide in from Left
+                relatedTl.fromTo(relatedTitleRef.current,
+                    { x: -50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                );
+
+                // Paragraph: Fade + Slide Up
+                relatedTl.fromTo(relatedParaRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                    "-=0.6" // Starts just before H2 finishes
+                );
+
+                // View All: Slide in from Right
+                relatedTl.fromTo(relatedViewAllRef.current,
+                    { x: 50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+                    "-=0.5" // Starts just before paragraph finishes
+                );
+
+                // Desktop Grid: Fade + Slide Up + Staggered
+                relatedTl.fromTo(relatedGridRef.current.children,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "power3.out" },
+                    "-=0.4" // Starts just before paragraph finishes
+                );
+
+                // Mobile Carousel: Fade + Slide Up
+                relatedTl.fromTo(relatedMobileRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+                    "-=0.4"
+                );
+            }
+        }
+    }, [mounted]);
 
     if (!blog) {
         return (
@@ -189,17 +367,17 @@ export default function BlogDetails() {
                 <div className="z-10 w-full max-w-7xl !mx-auto !px-2 md:!px-6 grid grid-cols-2 gap-1 md:gap-16 items-center !mb-2">
                     {/* Left Column: Text Content */}
                     <div className="flex flex-col items-start">
-                        <div className="inline-block bg-white/30 text-[#2197A1] !px-5 !py-1.5 rounded-full !text-[8px] md:text-xs font-bold uppercase tracking-[0.2em] mb-8 shadow-lg shadow-black/10">
+                        <div ref={categoryRef} className="hidden md:inline-block bg-white/30 text-[#2197A1] !px-5 !py-1.5 rounded-full !text-[8px] md:text-xs font-bold uppercase tracking-[0.2em] mb-8 shadow-lg shadow-black/10">
                             {blog.category}
                         </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white !my-2 md:!my-4 leading-[1.15] tracking-tight">
+                        <h1 ref={titleRef} className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white !my-2 md:!my-4 leading-[1.15] tracking-tight">
                             {blog.title}
                         </h1>
-                        <p className="text-lg md:text-xl text-[#2a2a2a]/80 font-medium mb-10 max-w-xl leading-relaxed">
+                        <p ref={descriptionRef} className="text-lg md:text-xl text-[#2a2a2a]/80 font-medium mb-10 max-w-xl leading-relaxed">
                             {blog.description}
                         </p>
 
-                        <div className="flex flex-wrap items-center gap-2 md:gap-8 !text-[#2a2a2a]/60 text-sm font-semibold !mb-3 md:!mb-8">
+                        <div ref={metadataRef} className="flex flex-wrap items-center gap-2 md:gap-8 !text-[#2a2a2a]/60 text-sm font-semibold !mb-3 md:!mb-8">
                             <div className="flex items-center gap-2.5">
                                 <Calendar size={18} className="text-[#e76038]" />
                                 {blog.date}
@@ -210,17 +388,19 @@ export default function BlogDetails() {
                             </div>
                         </div>
 
-                        <Button
-                            href="/contact"
-                            className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-8 !py-2 md:!py-3.5 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:shadow-[0_10px_30px_rgba(231,96,56,0.3)] transition-all transform hover:-translate-y-1 active:scale-95 leading-tight relative z-10"
-                        >
-                            <span>Start Your Growth</span>
-                            <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
-                        </Button>
+                        <div ref={buttonRef}>
+                            <Button
+                                href="/contact"
+                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-8 !py-2 md:!py-3.5 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:shadow-[0_10px_30px_rgba(231,96,56,0.3)] transition-all transform hover:-translate-y-1 active:scale-95 leading-tight relative z-10"
+                            >
+                                <span>Start Your Growth</span>
+                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
+                            </Button>
+                        </div>
                     </div>
 
                     {/* Right Column: Visual Component */}
-                    <div className="relative group">
+                    <div ref={imageRef} className="relative group">
                         <div className="absolute -inset-4 bg-white/10 rounded-[2.5rem] blur-2xl group-hover:bg-white/15 transition-all"></div>
                         <div className="relative bg-white/10 backdrop-blur-md rounded-[2.5rem] p-4 border-4 border-white/20 shadow-2xl transform lg:rotate-2 hover:rotate-0 transition-all duration-700 overflow-hidden">
                             <img
@@ -248,7 +428,7 @@ export default function BlogDetails() {
             </section>
 
             {/* Article Content Section */}
-            <section className="w-full max-w-7xl mx-auto !px-6 !pb-14">
+            <section ref={articleContentRef} className="w-full max-w-7xl mx-auto !px-6 !pb-14">
                 <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-10">
                     {renderContent(blog.content)}
                 </div>
@@ -261,7 +441,7 @@ export default function BlogDetails() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10">
                         {/* Left Side: Shape Image (40%) */}
-                        <div className="lg:col-span-5 relative">
+                        <div ref={takeawaysImageRef} className="lg:col-span-5 relative">
                             <div className="relative aspect-square overflow-hidden transform group-hover/takeaways:scale-105 transition-all duration-700 shadow-5xl bg-white/50"
                                 style={{ borderRadius: "50px 450px 450px 50px" }}>
                                 <img
@@ -274,14 +454,14 @@ export default function BlogDetails() {
 
                         {/* Right Side: Points (60%) */}
                         <div className="lg:col-span-7">
-                            <h3 className="text-4xl font-extrabold text-[#2A2A2A] mb-10 flex items-center gap-4">
+                            <h3 ref={takeawaysTitleRef} className="text-4xl font-extrabold text-[#2A2A2A] mb-10 flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-2xl bg-[#2197A1] flex items-center justify-center shrink-0 shadow-xl shadow-[#2197A1]/20">
                                     <span className="text-white text-2xl font-bold italic">!</span>
                                 </div>
                                 <span>Key <span className="text-[#2197A1]">Takeaways</span></span>
                             </h3>
 
-                            <div className="grid grid-cols-1 gap-6">
+                            <div ref={takeawaysListRef} className="grid grid-cols-1 gap-6">
                                 {blog.takeaways?.map((takeaway, idx) => (
                                     <div key={idx} className="flex items-start gap-2 md:gap-5 p-6 bg-white rounded-3xl border border-[#2197A1]/10 hover:border-[#2197A1]/40 transition-all hover:shadow-lg hover:-translate-y-1">
                                         <div className="w-15 h-15 md:w-10 md:h-10 rounded-full bg-[#f0f9fa] flex items-center justify-center shrink-0 border border-[#2197A1]/20 shadow-inner">
@@ -297,20 +477,20 @@ export default function BlogDetails() {
             </section>
 
             {/* Related Insights Section */}
-            <section className="w-full !pb-0 md:!py-24">
+            <section ref={relatedSectionRef} className="w-full !pb-0 md:!py-24">
                 <div className="max-w-7xl !mx-auto !px-6">
                     <div className="flex flex-col md:flex-row md:items-end justify-between !mb-8 gap-6">
                         <div>
-                            <h2 className="text-4xl font-bold text-[#2A2A2A] mb-4">Related <span className="text-[#2197A1]">Insights</span></h2>
-                            <p className="text-gray-500 font-medium">Continue reading about {blog.category} and digital innovation.</p>
+                            <h2 ref={relatedTitleRef} className="text-4xl font-bold text-[#2A2A2A] mb-4">Related <span className="text-[#2197A1]">Insights</span></h2>
+                            <p ref={relatedParaRef} className="text-gray-500 font-medium">Continue reading about {blog.category} and digital innovation.</p>
                         </div>
-                        <Link href="/insights" className="text-[#2197A1] font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all">
+                        <Link ref={relatedViewAllRef} href="/insights" className="text-[#2197A1] font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all">
                             View All <ArrowRight size={20} />
                         </Link>
                     </div>
 
                     {/* Desktop Grid */}
-                    <div className="hidden md:grid grid-cols-3 gap-10">
+                    <div ref={relatedGridRef} className="hidden md:grid grid-cols-3 gap-10">
                         {relatedInsights.map((related) => (
                             <div
                                 key={related.id}
@@ -342,7 +522,9 @@ export default function BlogDetails() {
                     </div>
 
                     {/* Mobile Carousel */}
-                    <MobileRelatedCarousel items={relatedInsights} />
+                    <div ref={relatedMobileRef}>
+                        <MobileRelatedCarousel items={relatedInsights} />
+                    </div>
                 </div>
             </section>
 
@@ -350,8 +532,8 @@ export default function BlogDetails() {
             <FinalCTA
                 title={
                     <>
-                        Ready to Grow Your <br />
-                        <span className="text-[#2197A1]">Business Online?</span>
+                        Ready to Grow Your 
+                        <span className="text-[#2197A1]"> Business Online</span> ?
                     </>
                 }
                 description="Let our experts help you build powerful digital experiences that drive results and engage your audience."
