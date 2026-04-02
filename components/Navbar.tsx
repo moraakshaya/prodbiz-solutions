@@ -126,6 +126,7 @@ export default function Navbar() {
                 <button
                     onClick={() => setMobileOpen((p) => !p)}
                     aria-label="Toggle menu"
+                    suppressHydrationWarning
                     className="lg:hidden relative z-50 w-12 h-12 flex items-center justify-center rounded-full border-[2.5px] border-[var(--primary-color)] shadow-[0_4px_10px_rgba(0,0,0,0.1)] bg-white/80 backdrop-blur-md group transition-all duration-300 active:scale-95"
                 >
                     <div className="w-6 h-5 relative flex flex-col justify-between items-start">
@@ -281,6 +282,7 @@ export default function Navbar() {
                     <li className="!my-2 !px-2 !py-1 border border-transparent rounded-md shadow-[20px_20px_20px_rgba(0,0,0,0.15)]">
                         <button
                             onClick={() => setMobileDropdownOpen((p) => !p)}
+                            suppressHydrationWarning
                             className="w-full flex items-center justify-between py-4 text-base font-semibold !text-gray-700 cursor-pointer bg-transparent border-none text-left"
                         >
                             Solutions
