@@ -27,6 +27,19 @@ export default function ContactPage() {
     const buttonsRef = React.useRef<HTMLDivElement>(null);
     const heroImageRef = React.useRef<HTMLDivElement>(null);
 
+    // Form Section Refs (Left)
+    const contactFormTitleRef = React.useRef<HTMLHeadingElement>(null);
+    const contactFormParaRef = React.useRef<HTMLParagraphElement>(null);
+    const contactFormRef = React.useRef<HTMLFormElement>(null);
+    const contactSubmitBtnRef = React.useRef<HTMLDivElement>(null);
+
+    // Info Section Refs (Right)
+    const infoTitleRef = React.useRef<HTMLHeadingElement>(null);
+    const infoParaRef = React.useRef<HTMLParagraphElement>(null);
+    const benefitsListRef = React.useRef<HTMLDivElement>(null);
+    const contactCardsRef = React.useRef<HTMLDivElement>(null);
+    const contactMapRef = React.useRef<HTMLDivElement>(null);
+
     React.useEffect(() => {
         setMounted(true);
 
@@ -97,6 +110,108 @@ export default function ContactPage() {
                 duration: 0.8,
                 ease: "power2.out"
             });
+
+            // --- Contact Section Scroll Animations ---
+            const contactElementsExist = contactFormTitleRef.current && contactFormParaRef.current && 
+                                       contactFormRef.current && contactSubmitBtnRef.current &&
+                                       infoTitleRef.current && infoParaRef.current && 
+                                       benefitsListRef.current;
+
+            if (contactElementsExist) {
+                // Main Section Timeline
+                const sectionTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#contact-form-section",
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                // LEFT SIDE SEQUENCE
+                sectionTl.fromTo(contactFormTitleRef.current!,
+                    { x: -50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                ).fromTo(contactFormParaRef.current!,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                    "-=0.4"
+                );
+
+                // Form Fields (Pop-up staggered)
+                const formFields = contactFormRef.current?.querySelectorAll(".flex-col");
+                if (formFields) {
+                    sectionTl.fromTo(formFields,
+                        { scale: 0.95, y: 15, opacity: 0 },
+                        { scale: 1, y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
+                        "-=0.3"
+                    );
+                }
+
+                sectionTl.fromTo(contactSubmitBtnRef.current!,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" },
+                    "-=0.2"
+                );
+
+                // RIGHT SIDE SEQUENCE (Starts in parallel with left)
+                const rightTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#contact-form-section",
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                rightTl.fromTo(infoTitleRef.current!,
+                    { x: 50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                );
+
+                rightTl.fromTo(infoParaRef.current!,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                    "-=0.4"
+                );
+
+                if (benefitsListRef.current) {
+                    rightTl.fromTo(benefitsListRef.current.children,
+                        { y: 20, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "power2.out" },
+                        "-=0.3"
+                    );
+                }
+
+                // 3. Contact Info Cards & Map (Pop-up staggered + Fade reveal)
+                if (contactCardsRef.current && contactMapRef.current) {
+                    const cardsMapTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: "#contact-info-map-section",
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    });
+
+                    cardsMapTl.fromTo(contactCardsRef.current.children,
+                        { scale: 0.85, y: 30, opacity: 0 },
+                        {
+                            scale: 1,
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            stagger: 0.2,
+                            ease: "back.out(1.7)",
+                            onComplete: function() {
+                                // Clear props to let Tailwind hover work
+                                gsap.set(this.targets(), { clearProps: "transform" });
+                            }
+                        }
+                    ).fromTo(contactMapRef.current,
+                        { y: 40, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+                        "-=0.4" // Starts just before the 3rd card finishes
+                    );
+                }
+            }
 
             return () => {
                 splitParas.revert();
@@ -214,11 +329,11 @@ export default function ContactPage() {
                         <div className="w-full !p-4 md:!p-8">
 
                             <div className="mb-10 text-center sm:text-left">
-                                <h3 className="text-[#2A2A2A] !mb-1 tracking-tight">Send a message</h3>
-                                <p className="text-gray-500 font-medium">We&apos;ll get back to you as soon as possible.</p>
+                                <h3 ref={contactFormTitleRef} className="text-[#2A2A2A] !mb-1 tracking-tight">Send a message</h3>
+                                <p ref={contactFormParaRef} className="text-gray-500 font-medium">We&apos;ll get back to you as soon as possible.</p>
                             </div>
 
-                            <form id="contact-form" className="flex flex-col gap-5 sm:gap-6" onSubmit={(e) => e.preventDefault()}>
+                            <form id="contact-form" ref={contactFormRef} className="flex flex-col gap-5 sm:gap-6" onSubmit={(e) => e.preventDefault()}>
                                 {/* Split row for Name & Phone if desired, or keep stacked. Keeping stacked for simplicity but adjusting spacing */}
 
                                 {/* Name Input */}
@@ -272,7 +387,7 @@ export default function ContactPage() {
                                 </div>
 
                                 {/* 3D Submit Button */}
-                                <div className="mt-4">
+                                <div ref={contactSubmitBtnRef} className="mt-4">
                                     <Button
                                         type="submit"
                                         variant="primary"
@@ -294,17 +409,17 @@ export default function ContactPage() {
                     {/* Right: Info / Value Proposition Section */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-center px-4 md:px-12 py-10 lg:py-0">
                         <div className="max-w-md ml-auto mr-auto lg:mr-0 lg:ml-8">
-                            <h3 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-4 leading-tight">
+                            <h3 ref={infoTitleRef} className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-4 leading-tight">
                                 Let&apos;s talk about<br />
                                 <span className="text-[#2197A1]">your project</span>
                             </h3>
-                            <p className="text-gray-600 mb-10 text-lg">
+                            <p ref={infoParaRef} className="text-gray-600 mb-10 text-lg">
                                 Whether you have a clear vision or need help defining your strategy, we&apos;re here to guide you to success.
                             </p>
 
-                            <div className="flex flex-col gap-2">
+                            <div ref={benefitsListRef} className="flex flex-col gap-2">
                                 {/* Benefit 1 */}
-                                <div className="flex items-start gap-5 group">
+                                <div className="flex items-start gap-5 group cursor-default p-4 rounded-3xl transition-all duration-300 hover:bg-orange-50/50 hover:-translate-y-1">
                                     <div className="flex-shrink-0 w-14 h-14 bg-orange-50 group-hover:bg-[#e76038] transition-colors duration-300 flex items-center justify-center rounded-2xl shadow-sm border border-orange-100">
                                         <span className="text-[#e76038] group-hover:text-white transition-colors duration-300 text-2xl">⚡</span>
                                     </div>
@@ -315,7 +430,7 @@ export default function ContactPage() {
                                 </div>
 
                                 {/* Benefit 2 */}
-                                <div className="flex items-start gap-5 group">
+                                <div className="flex items-start gap-5 group cursor-default p-4 rounded-3xl transition-all duration-300 hover:bg-teal-50/50 hover:-translate-y-1">
                                     <div className="flex-shrink-0 w-14 h-14 bg-teal-50 group-hover:bg-[#2197A1] transition-colors duration-300 flex items-center justify-center rounded-2xl shadow-sm border border-teal-100">
                                         <span className="text-[#2197A1] group-hover:text-white transition-colors duration-300 text-2xl">📩</span>
                                     </div>
@@ -326,7 +441,7 @@ export default function ContactPage() {
                                 </div>
 
                                 {/* Benefit 3 */}
-                                <div className="flex items-start gap-5 group">
+                                <div className="flex items-start gap-5 group cursor-default p-4 rounded-3xl transition-all duration-300 hover:bg-gray-50/50 hover:-translate-y-1">
                                     <div className="flex-shrink-0 w-14 h-14 bg-gray-50 group-hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center rounded-2xl shadow-sm border border-gray-200">
                                         <span className="text-gray-600 group-hover:text-white transition-colors duration-300 text-2xl">🔒</span>
                                     </div>
@@ -344,11 +459,11 @@ export default function ContactPage() {
 
 
             {/* Contact Info & Map Section */}
-            <section className="w-full bg-white !py-5 !px-6 sm:px-12">
+            <section id="contact-info-map-section" className="w-full bg-white !py-5 !px-6 sm:px-12">
                 <div className="w-full !mx-auto flex flex-col !gap-1 items-center">
 
                     {/* LEFT: 3 Redesigned Sticky-Note Cards — 66% */}
-                    <div className="w-full  flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-center flex-wrap !pb-10">
+                    <div ref={contactCardsRef} className="w-full  flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-center flex-wrap !pb-10">
 
                         {/* Card 1: Our Office — Orange Bottom-Left Accent */}
                         <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden">
@@ -411,7 +526,7 @@ export default function ContactPage() {
                     </div>
 
                     {/* RIGHT: Live Map — 30% */}
-                    <div className="w-full lg:w-[88%] min-h-[400px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(33,151,161,0.15)] relative">
+                    <div ref={contactMapRef} className="w-full lg:w-[88%] min-h-[400px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(33,151,161,0.15)] relative">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.244504437476!2d78.37615831484326!3d17.447190988034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dbb1d60e71%3A0x3de8b4c0e7f6e12e!2sMadhapur%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin"
                             className="w-full h-full absolute inset-0"
