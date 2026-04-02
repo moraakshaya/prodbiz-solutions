@@ -130,7 +130,7 @@ const FinalCTA = ({
                 </div>
 
                 <div className="bg-[#2197A1]/28 !p-10 md:p-20 text-center relative overflow-hidden">
-                    <h2 ref={headingRef} className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
+                    <h2 ref={headingRef} className=" text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
                         {title}
                     </h2>
                     <p ref={paraRef} className="text-lg md:text-xl text-gray-600 font-medium mb-10 max-w-2xl !mx-auto relative z-10 leading-relaxed">
