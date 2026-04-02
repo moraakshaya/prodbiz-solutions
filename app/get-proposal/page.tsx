@@ -27,6 +27,27 @@ export default function GetProposalPage() {
     const paraRef = React.useRef<HTMLDivElement>(null);
     const buttonsRef = React.useRef<HTMLDivElement>(null);
     const heroImageRef = React.useRef<HTMLDivElement>(null);
+    
+    // Form Section Refs
+    const formTitleRef = React.useRef<HTMLHeadingElement>(null);
+    const formDescRef = React.useRef<HTMLParagraphElement>(null);
+    const section1Ref = React.useRef<HTMLDivElement>(null);
+    const section2Ref = React.useRef<HTMLDivElement>(null);
+    const section3Ref = React.useRef<HTMLDivElement>(null);
+    const section4Ref = React.useRef<HTMLDivElement>(null);
+    const section5Ref = React.useRef<HTMLDivElement>(null);
+    const formButtonRef = React.useRef<HTMLButtonElement>(null);
+
+    // Right Sidebar Refs
+    const rightSideContainerRef = React.useRef<HTMLDivElement>(null);
+    const rightSideH3Ref = React.useRef<HTMLHeadingElement>(null);
+    const rightSideListRef = React.useRef<HTMLDivElement>(null);
+    const rightSideBottomBoxRef = React.useRef<HTMLDivElement>(null);
+
+    // Final CTA Refs
+    const finalCtaH2Ref = React.useRef<HTMLHeadingElement>(null);
+    const finalCtaPRef = React.useRef<HTMLParagraphElement>(null);
+    const finalCtaButtonRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         setMounted(true);
@@ -113,6 +134,149 @@ export default function GetProposalPage() {
                     duration: 0.8,
                     ease: "power2.out"
                 });
+
+                // --- Form Section Scroll Animations ---
+
+                const formElementsExist = formTitleRef.current && formDescRef.current && 
+                                         section1Ref.current && section2Ref.current && 
+                                         section3Ref.current && section4Ref.current && 
+                                         section5Ref.current && formButtonRef.current;
+
+                if (formElementsExist && rightSideContainerRef.current) {
+                    // 1. Form Header (Title & Description) + Right Sidebar
+                    const formHeaderTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: "#proposal-form-section",
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    });
+
+                    // Left Side Entrance
+                    formHeaderTl.fromTo(formTitleRef.current!,
+                        { x: -60, opacity: 0 },
+                        { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                    ).fromTo(formDescRef.current!,
+                        { y: 20, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                        "-=0.4"
+                    );
+
+                    // Right Side Entrance (Starts just before description finishes)
+                    formHeaderTl.fromTo(rightSideContainerRef.current!,
+                        { scale: 0.95, opacity: 0 },
+                        { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)" },
+                        "-=0.3"
+                    ).fromTo(rightSideH3Ref.current!,
+                        { x: 40, opacity: 0 },
+                        { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                        "-=0.4"
+                    );
+
+                    // List Items (Circle + Text staggered reveal)
+                    if (rightSideListRef.current) {
+                        formHeaderTl.fromTo(rightSideListRef.current.children,
+                            { y: 20, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" },
+                            "-=0.3"
+                        );
+                    }
+
+                    // Bottom Quote Box reveal
+                    if (rightSideBottomBoxRef.current) {
+                        formHeaderTl.fromTo(rightSideBottomBoxRef.current,
+                            { scale: 0.9, opacity: 0 },
+                            { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" },
+                            "-=0.2"
+                        ).fromTo(rightSideBottomBoxRef.current.querySelector("p"),
+                            { y: 10, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.4 },
+                            "-=0.4"
+                        );
+                    }
+
+                    // 2. Section 01 (Reveal with delay after description)
+                    const s1Tl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: section1Ref.current!,
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        },
+                        delay: 0.6
+                    });
+
+                    const s1Title = section1Ref.current?.querySelector("h3");
+                    const s1Items = section1Ref.current?.querySelectorAll(".grid > div");
+
+                    if (s1Title && s1Items) {
+                        s1Tl.fromTo(s1Title,
+                            { y: 20, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
+                        ).fromTo(s1Items,
+                            { scale: 0.95, y: 15, opacity: 0 },
+                            { scale: 1, y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
+                            "-=0.3"
+                        );
+                    }
+
+                    // 3. Sections 02 - 05 (Sequential scroll reveal)
+                    [section2Ref, section3Ref, section4Ref, section5Ref].forEach((ref, idx) => {
+                        const tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: ref.current!,
+                                start: "top 85%",
+                                toggleActions: "play none none none"
+                            }
+                        });
+
+                        const title = ref.current?.querySelector("h3");
+                        const items = ref.current?.querySelectorAll(".flex-col, select, textarea");
+
+                        if (title && items && items.length > 0) {
+                            tl.fromTo(title,
+                                { y: 20, opacity: 0 },
+                                { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
+                            ).fromTo(items,
+                                { scale: 0.95, y: 10, opacity: 0 },
+                                { scale: 1, y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" },
+                                "-=0.3"
+                            );
+                        }
+
+                        // Final Button Animation (Triggers near section 5 end)
+                        if (idx === 3) { // Section 5
+                            tl.fromTo(formButtonRef.current!,
+                                { y: 20, opacity: 0 },
+                                { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" },
+                                "-=0.2"
+                            );
+                        }
+                    });
+                }
+
+                // 4. Final CTA Section (Scroll Reveal)
+                if (finalCtaH2Ref.current && finalCtaPRef.current && finalCtaButtonRef.current) {
+                    const finalCtaTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: finalCtaH2Ref.current,
+                            start: "top 90%",
+                            toggleActions: "play none none none"
+                        }
+                    });
+
+                    finalCtaTl.fromTo(finalCtaH2Ref.current,
+                        { y: 40, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+                    ).fromTo(finalCtaPRef.current,
+                        { y: 20, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+                        "-=0.4"
+                    ).fromTo(finalCtaButtonRef.current,
+                        { y: 15, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+                        "-=0.3"
+                    );
+                }
             }
         });
 
@@ -133,13 +297,13 @@ export default function GetProposalPage() {
                     <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-24px] md:pr-0">
                         {/* Tag: Centered on Mobile */}
                         <div className="w-full flex justify-center md:justify-start">
-                            <div ref={tagRef} className="inline-flex bg-[#fff]/50 text-[#2197A1] !px-4 md:!px-5 !py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] !mb-4 shadow-sm">
+                            <div ref={tagRef} className="hidden md:inline-flex bg-[#fff]/50 text-[#2197A1] !px-4 md:!px-5 !py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] !mb-4 shadow-sm">
                                 Project Inquiries
                             </div>
                         </div>
 
                         {/* Title: Centered on Mobile */}
-                        <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full" style={{ perspective: "1000px" }}>
+                        <h1 ref={h1Ref} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full" style={{ perspective: "1000px" }}>
                             Start Your Project <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d">With Confidence</span>
                         </h1>
 
@@ -232,13 +396,13 @@ export default function GetProposalPage() {
                     {/* Left: Proposal Form */}
                     <div className="w-full lg:w-[60%] flex flex-col">
                         <div className="!mb-5">
-                            <h2 className="text-3xl font-bold text-[#2A2A2A] mb-2">Tell Us About Your Project</h2>
-                            <p className="text-gray-500 font-medium">Please fill in the details below and our team will get back to you with a tailored proposal.</p>
+                            <h2 ref={formTitleRef} className="text-3xl font-bold text-[#2A2A2A] mb-2">Tell Us About Your Project</h2>
+                            <p ref={formDescRef} className="text-gray-500 font-medium">Please fill in the details below and our team will get back to you with a tailored proposal.</p>
                         </div>
 
                         <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
                             {/* Section 1: Basic Info */}
-                            <div className="space-y-6">
+                            <div ref={section1Ref} className="space-y-6">
                                 <h3 className="!text-md font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 pb-2">01. Basic Information</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2">
@@ -261,7 +425,7 @@ export default function GetProposalPage() {
                             </div>
 
                             {/* Section 2: Project Type */}
-                            <div className="space-y-4">
+                            <div ref={section2Ref} className="space-y-4">
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">02. Project Type</h3>
                                 <div className="flex flex-col gap-2">
                                     <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">What are you looking for?</label>
@@ -277,7 +441,7 @@ export default function GetProposalPage() {
                             </div>
 
                             {/* Section 3: Project Details */}
-                            <div className="space-y-4">
+                            <div ref={section3Ref} className="space-y-4">
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">03. Project Details</h3>
                                 <div className="flex flex-col gap-2">
                                     <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">Tell us about your project, goals, and requirements</label>
@@ -287,7 +451,7 @@ export default function GetProposalPage() {
 
                             {/* Section 4 & 5: Budget & Timeline */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-4">
+                                <div ref={section4Ref} className="space-y-4">
                                     <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">04. Budget</h3>
                                     <div className="flex flex-col gap-2">
                                         <select suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
@@ -299,7 +463,7 @@ export default function GetProposalPage() {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="space-y-4">
+                                <div ref={section5Ref} className="space-y-4">
                                     <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">05. Timeline</h3>
                                     <div className="flex flex-col gap-2">
                                         <select suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
@@ -313,7 +477,7 @@ export default function GetProposalPage() {
                                 </div>
                             </div>
 
-                            <button suppressHydrationWarning className="w-full bg-[#2197A1] text-white font-black text-xl !py-3 rounded-3xl shadow-[0_12px_24px_rgba(33,151,161,0.2)] hover:shadow-[0_15px_35px_rgba(33,151,161,0.3)] hover:-translate-y-1 transition-all active:scale-[0.98] !mt-4 tracking-widest">
+                            <button ref={formButtonRef} suppressHydrationWarning className="w-full bg-[#2197A1] text-white font-black text-xl !py-3 rounded-3xl shadow-[0_12px_24px_rgba(33,151,161,0.2)] hover:shadow-[0_15px_35px_rgba(33,151,161,0.3)] hover:-translate-y-1 transition-all active:scale-[0.98] !mt-4 tracking-widest">
                                 Get Proposal
                             </button>
                         </form>
@@ -321,12 +485,12 @@ export default function GetProposalPage() {
 
                     {/* Right: Why Start With Us */}
                     <div className="w-full lg:w-[35%] lg:sticky lg:top-32">
-                        <div className="bg-[#fcfcfc] rounded-[3rem] !p-10 border border-gray-100 shadow-sm relative overflow-hidden group">
+                        <div ref={rightSideContainerRef} className="bg-[#fcfcfc] rounded-[3rem] !p-4 md:!p-10 border border-gray-100 shadow-sm relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-[#2197A1]/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
 
-                            <h3 className="text-2xl font-bold text-[#2A2A2A] mb-8 relative z-10">Why Start a Project With Us?</h3>
+                            <h3 ref={rightSideH3Ref} className="text-2xl font-bold text-[#2A2A2A] mb-8 relative z-10">Why Start a Project With Us?</h3>
 
-                            <div className="space-y-8 relative z-10">
+                            <div ref={rightSideListRef} className="space-y-8 relative z-10">
                                 {[
                                     { title: "Tailored Solutions", desc: "Crafted specifically to meet your unique business goals and challenges." },
                                     { title: "Scalable Development", desc: "Future-ready architecture that grows alongside your business expansion." },
@@ -345,7 +509,7 @@ export default function GetProposalPage() {
                                 ))}
                             </div>
 
-                            <div className="mt-12 !p-6 bg-white rounded-2xl border border-[#2197A1]/10 shadow-inner">
+                            <div ref={rightSideBottomBoxRef} className="mt-12 !p-6 bg-white rounded-2xl border border-[#2197A1]/10 shadow-inner">
                                 <p className="text-sm text-gray-500 italic font-medium">
                                     &quot;Our mission is to empower businesses with innovative digital solutions that drive growth and create lasting value.&quot;
                                 </p>
@@ -359,8 +523,24 @@ export default function GetProposalPage() {
             {/* Final CTA Section */}
             <section className="w-full !py-5 md:!py-10 px-6 bg-[#fcfcfc]">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#2A2A2A] mb-4">Need help before starting?</h2>
-                    <p className="text-lg text-gray-500 font-medium mb-10">Talk to our team and we’ll guide you through the process.</p>
+                    <h2 ref={finalCtaH2Ref} className="text-3xl md:text-4xl font-bold text-[#2A2A2A] mb-4">Need help before starting?</h2>
+                    <p ref={finalCtaPRef} className="text-lg text-gray-500 font-medium mb-10">Talk to our team and we’ll guide you through the process.</p>
+                    <div ref={finalCtaButtonRef} className="inline-block">
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-3 bg-white border-2 border-[#e76038] !text-[#e76038] !px-8 !py-2 rounded-3xl font-bold text-lg hover:bg-[#e76038] hover:!text-white transition-all transform hover:scale-105"
+                        >
+                            Talk to an Expert
+                            <ArrowRight size={22} />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* <section>
+                <div>
+                    <h2 className="text-white font-bold text-2xl">Need support for project</h2>
+                    <p>Talk to our team and we'll take you through the process</p>
                     <Link
                         href="/contact"
                         className="inline-flex items-center gap-3 bg-white border-2 border-[#e76038] !text-[#e76038] !px-8 !py-2 rounded-3xl font-bold text-lg hover:bg-[#e76038] hover:!text-white transition-all transform hover:scale-105"
@@ -369,7 +549,7 @@ export default function GetProposalPage() {
                         <ArrowRight size={22} />
                     </Link>
                 </div>
-            </section>
+            </section> */}
         </main >
     );
 }
