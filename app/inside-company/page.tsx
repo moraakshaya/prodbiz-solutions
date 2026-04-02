@@ -151,6 +151,14 @@ export default function InsideCompanyPage() {
     const videoRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
 
+    // Header Animations
+    const galleryTitleRef = useRef<HTMLHeadingElement>(null);
+    const galleryParaRef = useRef<HTMLParagraphElement>(null);
+    const eventTitleRef = useRef<HTMLHeadingElement>(null);
+    const eventParaRef = useRef<HTMLParagraphElement>(null);
+    const videoTitleRef = useRef<HTMLHeadingElement>(null);
+    const videoParaRef = useRef<HTMLParagraphElement>(null);
+
     React.useEffect(() => {
         setMounted(true);
 
@@ -237,27 +245,61 @@ export default function InsideCompanyPage() {
         }
 
         if (activeTab === "Photo Gallery" && galleryRef.current) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: galleryRef.current,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            if (galleryTitleRef.current && galleryParaRef.current) {
+                tl.fromTo(galleryTitleRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                ).fromTo(galleryParaRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                    "-=0.4"
+                );
+            }
+
             const items = galleryRef.current.querySelectorAll(".gallery-item");
-            gsap.fromTo(items,
+            tl.fromTo(items,
                 { opacity: 0, y: 50 },
                 {
                     opacity: 1,
                     y: 0,
                     duration: 0.8,
                     stagger: 0.1,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: galleryRef.current,
-                        start: "top 80%",
-                        toggleActions: "play none none none"
-                    }
-                }
+                    ease: "power2.out"
+                },
+                "-=0.2"
             );
         }
 
         if (activeTab === "Events & Activities" && eventRef.current) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: eventRef.current,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            if (eventTitleRef.current && eventParaRef.current) {
+                tl.fromTo(eventTitleRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                ).fromTo(eventParaRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                    "-=0.4"
+                );
+            }
+
             const items = eventRef.current.querySelectorAll(".event-item");
-            gsap.fromTo(items,
+            tl.fromTo(items,
                 {
                     opacity: 0,
                     scale: 0.5,
@@ -271,13 +313,33 @@ export default function InsideCompanyPage() {
                     duration: 0.7,
                     stagger: 0.2,
                     ease: "back.out(1.2)",
-                }
+                },
+                "-=0.2"
             );
         }
 
         if (activeTab === "Video Section" && videoRef.current) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: videoRef.current,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            if (videoTitleRef.current && videoParaRef.current) {
+                tl.fromTo(videoTitleRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                ).fromTo(videoParaRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+                    "-=0.4"
+                );
+            }
+
             const items = videoRef.current.querySelectorAll(".video-item");
-            gsap.fromTo(items,
+            tl.fromTo(items,
                 {
                     opacity: 0,
                     scale: 0.5,
@@ -291,7 +353,8 @@ export default function InsideCompanyPage() {
                     duration: 0.7,
                     stagger: 0.2,
                     ease: "back.out(1.2)",
-                }
+                },
+                "-=0.2"
             );
         }
     }, [activeTab]);
@@ -430,10 +493,10 @@ export default function InsideCompanyPage() {
                         <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
                             {/* 10% Text Section (Refactored to Header) */}
                             <div className="w-full text-center flex flex-col items-center">
-                                <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
+                                <h2 ref={galleryTitleRef} className="text-4xl font-bold text-[#2A2A2A] leading-tight">
                                     Life at <span className="text-[#2197A1]">Prodbiz</span>
                                 </h2>
-                                <p className="text-gray-500 text-base font-medium leading-relaxed max-w-2xl mt-4">
+                                <p ref={galleryParaRef} className="text-gray-500 text-base font-medium leading-relaxed max-w-2xl mt-4">
                                     A look into our everyday workspace, team collaborations, and the environment where ideas turn into innovative digital solutions.
                                 </p>
                             </div>
@@ -469,10 +532,10 @@ export default function InsideCompanyPage() {
                                 <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
                                     {/* Centered Header Section */}
                                     <div className="w-full text-center flex flex-col items-center">
-                                        <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
+                                        <h2 ref={eventTitleRef} className="text-4xl font-bold text-[#2A2A2A] leading-tight">
                                             Events & <span className="text-[#2197A1]">Celebrations</span>
                                         </h2>
-                                        <p className="text-gray-500 font-medium text-base leading-relaxed max-w-2xl mt-4">
+                                        <p ref={eventParaRef} className="text-gray-500 font-medium text-base leading-relaxed max-w-2xl mt-4">
                                             At Prodbiz, we celebrate achievements, milestones, and moments that bring our team together. These events strengthen our team spirit and create memorable experiences.
                                         </p>
                                     </div>
@@ -507,10 +570,10 @@ export default function InsideCompanyPage() {
                                 <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
                                     {/* Centered Header Section */}
                                     <div className="w-full text-center flex flex-col items-center">
-                                        <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
+                                        <h2 ref={videoTitleRef} className="text-4xl font-bold text-[#2A2A2A] leading-tight">
                                             Prodbiz in <span className="text-[#2197A1]">Action</span>
                                         </h2>
-                                        <p className="text-gray-500 text-base font-medium leading-relaxed max-w-2xl mt-4">
+                                        <p ref={videoParaRef} className="text-gray-500 text-base font-medium leading-relaxed max-w-2xl mt-4">
                                             Short clips capturing team activities, office culture, and highlights from events. Experience the energy and innovation of Prodbiz in motion.
                                         </p>
                                     </div>
