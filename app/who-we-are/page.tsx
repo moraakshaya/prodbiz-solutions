@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight, HeartPulse, UtensilsCrossed, Cpu, Rocket, Store, Users, Target, Briefcase, Globe as GlobeIcon, Check } from "lucide-react";
+import gsap from "gsap";
+import SplitType from "split-type";
 import { DiscoverIcon, StrategizeIcon, BuildIcon, GrowIcon } from "@/components/icons/ProcessIcons";
 import Button from "@/components/Button";
 import FinalCTA from "@/components/FinalCTA";
@@ -326,13 +328,493 @@ function MobileProcessCarousel({ items }: { items: any[] }) {
 
 export default function WhoWeArePage() {
     const [mounted, setMounted] = React.useState(false);
+    const h1Ref = React.useRef<HTMLHeadingElement>(null);
+    const spanRef = React.useRef<HTMLSpanElement>(null);
+    const paraRef = React.useRef<HTMLDivElement>(null);
+    const buttonsRef = React.useRef<HTMLDivElement>(null);
+    const heroImageRef = React.useRef<HTMLDivElement>(null);
+
+    const storySpanRef = React.useRef<HTMLSpanElement>(null);
+    const storyH2Ref = React.useRef<HTMLHeadingElement>(null);
+    const storyParaRef = React.useRef<HTMLDivElement>(null);
+    const storyImageRef = React.useRef<HTMLDivElement>(null);
+
+    const teamSpanRef = React.useRef<HTMLSpanElement>(null);
+    const teamH2Ref = React.useRef<HTMLHeadingElement>(null);
+    const teamCardsRef = React.useRef<HTMLDivElement>(null);
+    const mobileCardsRef = React.useRef<HTMLDivElement>(null);
+
+    const coreSpanRef = React.useRef<HTMLSpanElement>(null);
+    const coreH2Ref = React.useRef<HTMLHeadingElement>(null);
+    const coreParaRef = React.useRef<HTMLParagraphElement>(null);
+    const corePrinciplesRef = React.useRef<HTMLDivElement>(null);
+
+    const centerCircleRef = React.useRef<HTMLDivElement>(null);
+    const missionLeftRef = React.useRef<HTMLDivElement>(null);
+    const visionRightRef = React.useRef<HTMLDivElement>(null);
+    const mvMobileRef = React.useRef<HTMLDivElement>(null);
+
+    const processSpanRef = React.useRef<HTMLSpanElement>(null);
+    const processH2Ref = React.useRef<HTMLHeadingElement>(null);
+    const processGridRef = React.useRef<HTMLDivElement>(null);
+    const processMobileRef = React.useRef<HTMLDivElement>(null);
+
+    // Industries animation refs
+    const bloomBlobRef = React.useRef<SVGPathElement>(null);
+    const bloomGradientRef = React.useRef<SVGPathElement>(null);
+    const bloomSvgRef = React.useRef<SVGSVGElement>(null);
+    const bloomTitleRef = React.useRef<HTMLDivElement>(null);
+    const bloomParaRef = React.useRef<HTMLParagraphElement>(null);
+    const bloomIconsContainerRef = React.useRef<HTMLDivElement>(null);
+    const bloomCardsContainerRef = React.useRef<HTMLDivElement>(null);
+    const bloomMobileTitleRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         setMounted(true);
+
+        if (h1Ref.current && spanRef.current && paraRef.current && buttonsRef.current) {
+            
+            // Core Entrance Timeline
+            const tl = gsap.timeline();
+
+            // Split all P tags within the container into individual lines
+            const splitParas = new SplitType(paraRef.current.querySelectorAll("p"), { types: "lines" });
+
+            // 1. H1 Slide In
+            tl.fromTo(
+                h1Ref.current,
+                { x: -80, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+                0.2 // Starts at 0.2s absolute
+            );
+
+            // 2. Paragraph (Line-by-line soft fade + slight upward)
+            // Start just before H1 animation completion
+            tl.fromTo(
+                splitParas.lines,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+                "-=0.6" // Starts 0.6s before H1 completes
+            );
+
+            // 3. Buttons (Subtle fade + stagger)
+            // Start just before paragraph animation completion
+            tl.fromTo(
+                buttonsRef.current.children,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+                "-=0.4" // Starts 0.4s before paragraph completes
+            );
+
+            // 4. Hero Image (Slide from right + slight scale)
+            // Start slightly before h1 completes
+            tl.fromTo(
+                ".hero-image-animate",
+                { x: 100, scale: 0.9, opacity: 0 },
+                { x: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" },
+                1.0 // Starts at an absolute timeline position (1.2 duration - 0.2 overlap = 1.0) just before H1 completes
+            );
+
+            // 5. Floating Animation loops after the entrance
+            gsap.to(".hero-image-animate", {
+                y: -15, // Floating upward
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+                delay: 2.2 // Wait securely until entrance slide has completely finished
+            });
+
+            // Span continuous "roll in and roll out" slot-machine loop
+            const loopTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5, delay: 1.0 }); // Starts exactly when H1 finishes
+
+            // 1) Roll out to the top
+            loopTl.to(spanRef.current, {
+                y: -25,
+                opacity: 0,
+                rotationX: 90,
+                duration: 0.6,
+                ease: "power2.in"
+            })
+
+            // 2) Instantly reset to the bottom (invisible)
+            .set(spanRef.current, { y: 25, rotationX: -90 })
+
+            // 3) Roll in from the bottom
+            .to(spanRef.current, {
+                y: 0,
+                opacity: 1,
+                rotationX: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            // Clean up split on unmount
+            return () => {
+                splitParas.revert();
+            };
+        }
     }, []);
 
+    // Our Story Section Animation Effect
+    React.useEffect(() => {
+        if (!mounted || !storySpanRef.current || !storyH2Ref.current || !storyParaRef.current || !storyImageRef.current) return;
+
+        const splitStoryParas = new SplitType(storyParaRef.current.querySelectorAll("p"), { types: "lines" });
+
+        const storyTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: storySpanRef.current,
+                start: "top 85%", // Trigger right as it comes into view
+                toggleActions: "play none none none"
+            }
+        });
+
+        // 1. Span Fade Up
+        storyTl.fromTo(storySpanRef.current,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+        );
+
+        // 2. Both H2 and Image Start just before the span finishes
+        storyTl.add("spanEnd", "-=0.2");
+
+        // H2 Slide from right side
+        storyTl.fromTo(storyH2Ref.current,
+            { x: 60, opacity: 0 },
+            { x: 0, opacity: 1, duration: 1, ease: "power3.out" },
+            "spanEnd"
+        );
+
+        // Image Slide from left + Slight Scale
+        storyTl.fromTo(storyImageRef.current,
+            { x: -60, scale: 0.9, opacity: 0 },
+            { x: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" },
+            "spanEnd"
+        );
+
+        // 3. Paragraph fade + slide up line by line (Start just before H2 completes)
+        storyTl.fromTo(splitStoryParas.lines,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "-=0.4"
+        );
+
+        // Add loop animation after initial load sequence
+        gsap.to(storyImageRef.current, {
+            y: -15, // float motion
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut",
+            delay: 1.5 // Start floating securely after entrance
+        });
+
+        return () => {
+            splitStoryParas.revert();
+        };
+    }, [mounted]);
+
+    // Leadership Team Animation Effect
+    React.useEffect(() => {
+        if (!mounted || !teamSpanRef.current || !teamH2Ref.current || !teamCardsRef.current || !mobileCardsRef.current) return;
+
+        const teamTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: teamSpanRef.current,
+                start: "top 85%", // Trigger right as it comes into view
+                toggleActions: "play none none none"
+            }
+        });
+
+        // 1. Span Fade + Slide Up
+        teamTl.fromTo(teamSpanRef.current,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+        );
+
+        // 2. H2 Slide Up (start just before span ends)
+        teamTl.fromTo(teamH2Ref.current,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+            "-=0.4"
+        );
+
+        // 3. Desktop Cards Stagger (start before H2 ends)
+        teamTl.fromTo(teamCardsRef.current.children,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "-=0.6"
+        );
+
+        // 4. Mobile Cards Carousel Wrapper (synced with desktop entrance)
+        teamTl.fromTo(mobileCardsRef.current,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+            "<"
+        );
+    }, [mounted]);
+
+    // Core Principles Animation Effect
+    React.useEffect(() => {
+        if (!mounted || !coreSpanRef.current || !coreH2Ref.current || !coreParaRef.current || !corePrinciplesRef.current) return;
+
+        const splitCorePara = new SplitType(coreParaRef.current, { types: "lines" });
+
+        const coreTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: coreSpanRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none"
+            }
+        });
+
+        // 1. Span (Fade + Slide Up)
+        coreTl.fromTo(coreSpanRef.current,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+        );
+
+        // 2. H2 Slide in from left (Start just before Span finishes)
+        coreTl.fromTo(coreH2Ref.current,
+            { x: -60, opacity: 0 },
+            { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" },
+            "-=0.4"
+        );
+
+        // 3. Paragraph (Line-by-line stagger, Start just before H2 finishes)
+        coreTl.fromTo(splitCorePara.lines,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "-=0.6"
+        );
+
+        // 4. Principles Grid (Fade + Slide up + Stagger) (Start same time as paragraph / before H2 finishes)
+        coreTl.fromTo(corePrinciplesRef.current.children,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "<" // Locks it to the exact start time of the previously added animation (the paragraph)
+        );
+
+        return () => {
+            splitCorePara.revert();
+        };
+    }, [mounted]);
+
+    // Mission & Vision Infographic Animation
+    React.useEffect(() => {
+        if (!mounted || !centerCircleRef.current || !missionLeftRef.current || !visionRightRef.current) return;
+
+        const mvTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: centerCircleRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none"
+            }
+        });
+
+        // 1. Center Circle Scale + Fade in
+        mvTl.fromTo(centerCircleRef.current,
+            { scale: 0.8, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.0, ease: "back.out(1.5)" }
+        );
+
+        // 2. Mission (Left) Slide from left + fade + stagger children
+        mvTl.fromTo(missionLeftRef.current.children,
+            { x: -50, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "-=0.5" // Start while circle is finishing its pop
+        );
+
+        // 3. Vision (Right) Slide from right + fade + stagger children
+        mvTl.fromTo(visionRightRef.current.children,
+            { x: 50, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "<+0.2" // Start shortly after Mission entrance begins
+        );
+
+    }, [mounted]);
+
+    // Mission & Vision Mobile Animation
+    React.useEffect(() => {
+        if (!mounted || !mvMobileRef.current) return;
+
+        const mvMobileTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: mvMobileRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none"
+            }
+        });
+
+        mvMobileTl.fromTo(mvMobileRef.current.children,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.3, ease: "power2.out" }
+        );
+    }, [mounted]);
+
+    // Our Process Animation Effect
+    React.useEffect(() => {
+        if (!mounted || !processSpanRef.current || !processH2Ref.current || !processGridRef.current || !processMobileRef.current) return;
+
+        const processTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: processSpanRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none"
+            }
+        });
+
+        // 1. Span Fade + Slide Up
+        processTl.fromTo(processSpanRef.current,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+        );
+
+        // 2. H2 Slide Up (start just before span ends)
+        processTl.fromTo(processH2Ref.current,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+            "-=0.4"
+        );
+
+        // 3. Desktop Grid Stagger (start before H2 ends)
+        processTl.fromTo(processGridRef.current.children,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+            "-=0.6"
+        );
+
+        // 4. Mobile Carousel (start with desktop grid)
+        processTl.fromTo(processMobileRef.current,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+            "<"
+        );
+    }, [mounted]);
+
+    // Industries We Serve Animation (Consolidated with MatchMedia)
+    React.useEffect(() => {
+        if (!mounted || !bloomBlobRef.current || !bloomCardsContainerRef.current || !bloomMobileTitleRef.current) return;
+
+        const mm = gsap.matchMedia();
+
+        mm.add({
+            isDesktop: "(min-width: 1024px)",
+            isMobile: "(max-width: 1023px)"
+        }, (context) => {
+            const { isDesktop } = context.conditions as any;
+
+            if (isDesktop) {
+                // DESKTOP ANIMATION (Bloom Effect)
+                if (!bloomBlobRef.current || !bloomGradientRef.current || !bloomTitleRef.current || !bloomParaRef.current || !bloomSvgRef.current || !bloomIconsContainerRef.current || !bloomCardsContainerRef.current) return;
+
+                const splitBloomPara = new SplitType(bloomParaRef.current, { types: "lines" });
+                const iconMarkers = gsap.utils.toArray<HTMLElement>(bloomIconsContainerRef.current.querySelectorAll('[data-bloom-icon]'));
+                const connLines = gsap.utils.toArray<SVGLineElement>(bloomSvgRef.current.querySelectorAll('[data-bloom-line]'));
+                const contentCards = gsap.utils.toArray<HTMLElement>(bloomCardsContainerRef.current.querySelectorAll('[data-bloom-card]'));
+
+                const bloomTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: bloomBlobRef.current,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                bloomTl.fromTo([bloomBlobRef.current, bloomGradientRef.current],
+                    { opacity: 0 },
+                    { opacity: 1, duration: 1.0, ease: "power2.out" }
+                );
+
+                const h3 = bloomTitleRef.current.querySelector('h3');
+                if (h3) {
+                    bloomTl.fromTo(h3,
+                        { y: 30, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+                        "-=0.4"
+                    );
+                }
+
+                bloomTl.fromTo(splitBloomPara.lines,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.7, stagger: 0.15, ease: "power2.out" },
+                    "-=0.4"
+                );
+
+                iconMarkers.forEach((icon, i) => {
+                    const offset = i === 0 ? "-=0.3" : ">";
+                    bloomTl.fromTo(icon,
+                        { scale: 0, opacity: 0 },
+                        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" },
+                        offset
+                    );
+
+                    if (connLines[i]) {
+                        bloomTl.fromTo(connLines[i],
+                            { scaleX: 0, transformOrigin: "left center", opacity: 0 },
+                            { scaleX: 1, opacity: 1, duration: 0.4, ease: "power1.out" },
+                            "-=0.2"
+                        );
+                    }
+
+                    if (contentCards[i]) {
+                        bloomTl.fromTo(contentCards[i],
+                            { y: 20, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+                            "-=0.2"
+                        );
+                    }
+                });
+
+                return () => splitBloomPara.revert();
+            } else {
+                // MOBILE ANIMATION (Staggered Entrance)
+                if (!bloomMobileTitleRef.current || !bloomCardsContainerRef.current) return;
+
+                const mobileTitle = bloomMobileTitleRef.current;
+                const mobileSpan = mobileTitle.querySelector('span');
+                const mobileH2 = mobileTitle.querySelector('h2');
+                const mobileCards = gsap.utils.toArray<HTMLElement>(bloomCardsContainerRef.current.children);
+
+                const bloomMobileTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: mobileTitle,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                if (mobileSpan) {
+                    bloomMobileTl.fromTo(mobileSpan,
+                        { y: 30, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+                    );
+                }
+
+                if (mobileH2) {
+                    bloomMobileTl.fromTo(mobileH2,
+                        { y: 30, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+                        "-=0.4"
+                    );
+                }
+
+                if (mobileCards.length > 0) {
+                    bloomMobileTl.fromTo(mobileCards,
+                        { y: 40, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, stagger: 0.25, ease: "power2.out" },
+                        "-=0.4"
+                    );
+                }
+            }
+        });
+
+        return () => mm.revert();
+    }, [mounted]);
+
     return (
-        <main className="flex min-h-screen flex-col items-center bg-white">
+        <main className="flex min-h-screen flex-col items-center">
             {/* Who We Are Hero Section */}
             <section
                 className="relative w-full min-h-[75vh] min-[340px]:min-h-[60vh] min-[360px]:min-h-[75vh] min-[380px]:min-h-[60vh] min-[400px]:min-h-[58vh] min-[540px]:min-h-[68vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center overflow-hidden"
@@ -344,11 +826,11 @@ export default function WhoWeArePage() {
                     {/* Hero Content Wrapper */}
                     <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-20px] md:pr-0">
                         {/* Title: Centered on Mobile */}
-                        <h1 className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full">
-                            About <span className="text-[#2197A1]">Prodbiz Solutions</span>
+                        <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full" style={{ perspective: "1000px" }}>
+                            About <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d">Prodbiz Solutions</span>
                         </h1>
 
-                        <div className="w-full flex flex-col md:block">
+                        <div ref={paraRef} className="w-full flex flex-col md:block">
                             {/* Short mobile content: Left-aligned as requested */}
                             <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center mb-8">
                                 Prodbiz Solutions delivers modern digital scalable products, intelligent marketing, and creative branding for exponential growth.
@@ -371,7 +853,7 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Mobile Image: Rendered below content on mobile */}
-                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-2 h-[150px] relative">
+                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-2 h-[150px] relative hero-image-animate">
                              {/* Ambient Glow */} 
                             <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
                             <Image
@@ -384,7 +866,7 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Button: Centered on Mobile */}
-                        <div className="w-full flex justify-center md:justify-start">
+                        <div ref={buttonsRef} className="w-full flex justify-center md:justify-start">
                             <Button
                                 href="/contact"
                                 className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
@@ -402,7 +884,7 @@ export default function WhoWeArePage() {
                         <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[80px] opacity-20 pointer-events-none"></div>
                         
                         {/* Floating Image Container */}
-                        <div className="relative w-full h-full flex items-center justify-center">
+                        <div ref={heroImageRef} className="relative w-full h-full flex items-center justify-center hero-image-animate">
                             <Image
                                 src="/images/hero-abt-img.png"
                                 alt="About Prodbiz Solutions"
@@ -441,14 +923,14 @@ export default function WhoWeArePage() {
             </section>
 
             {/* Our Story Section */}
-            <section className="w-full !pt-10 !pb-10 md:!pb-20 !px-6">
+            <section className="w-full md:!pt-10 !pb-10 md:!pb-20 !px-6 overflow-x-hidden">
                 <div className="max-w-7xl !mx-auto flex flex-col md:flex-row items-center md:gap-16 gap-10">
                     <div className="w-full md:w-1/2 flex justify-center items-center relative h-[400px] sm:h-[450px] lg:h-[500px]">
                         {/* Ambient Glow */}
                         <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[80px] opacity-20 pointer-events-none"></div>
 
                         {/* Floating 3D Image Container */}
-                        <div className="relative w-full h-full flex items-center justify-center [animation:float_6s_ease-in-out_infinite]">
+                        <div ref={storyImageRef} className="relative w-full h-full flex items-center justify-center">
                             <Image
                                 src="/images/ourstory-img.png"
                                 alt="Our Story 3D Avatar"
@@ -460,11 +942,11 @@ export default function WhoWeArePage() {
                     </div>
 
                     <div className="w-full md:w-1/2">
-                        <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-1 block">Our Story</span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] !mb-8 leading-tight">
+                        <span ref={storySpanRef} className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-1 block">Our Story</span>
+                        <h2 ref={storyH2Ref} className="text-4xl md:text-5xl font-bold text-[#2A2A2A] md:!mb-8 leading-tight">
                             A Vision to <span className="text-[#2197A1]">Empower</span> Businesses Through Technology
                         </h2>
-                        <div className="space-y-6 text-lg text-[#2A2A2A]/70 leading-relaxed font-medium">
+                        <div ref={storyParaRef} className="space-y-6 text-lg text-[#2A2A2A]/70 leading-relaxed font-medium">
                             <p>
                                 Founded with a vision to merge technology and creative marketing,
                                 Prodbiz Solutions started as a response to the growing need for integrated
@@ -496,19 +978,19 @@ export default function WhoWeArePage() {
                     />
 
                     <div className="max-w-7xl !mx-auto w-full px-6 relative z-10">
-                        <div className="text-center !mb-10 md:!mb-24">
-                            <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-1 block">Expert Leadership</span>
-                            <h2 className="text-4xl md:!text-5xl font-bold text-[#2A2A2A] !mb-4">
+                        <div className="text-center !mt-10 !mb-10 md:!mb-20">
+                            <span ref={teamSpanRef} className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-1 block">Expert Leadership</span>
+                            <h2 ref={teamH2Ref} className="text-4xl md:!text-5xl font-bold text-[#2A2A2A] !mb-4">
                                 Our Leaders
                             </h2>
                         </div>
 
                         {/* Leader Cards (Desktop Grid) */}
-                        <div className="hidden md:flex flex-wrap justify-center gap-y-10 md:gap-y-18 gap-x-12">
+                        <div ref={teamCardsRef} className="hidden md:flex flex-wrap justify-center gap-y-10 md:gap-y-8 gap-x-12">
                             {teamMembers.map((member, idx) => (
                                 <div key={idx} className="w-full sm:w-[calc(50%-24px)] lg:w-[calc(25%-36px)] min-w-[260px] flex flex-col items-center group">
                                     {/* Image Container with Organic Blob */}
-                                    <div className="relative w-52 h-52 !mb-5">
+                                    <div className="relative w-52 h-52 !mb-10">
                                         {/* Organic Blob Background (Floating) */}
                                         <div
                                             className="absolute inset-0 bg-[#e76038] opacity-90 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 shadow-xl"
@@ -533,7 +1015,7 @@ export default function WhoWeArePage() {
 
                                     {/* Text Content */}
                                     <div className="text-center">
-                                        <h3 className="text-2xl font-bold text-[#2A2A2A] mb-3 group-hover:text-[#2197A1] transition-colors tracking-tight">
+                                        <h3 className="text-2xl font-bold text-[#2A2A2A] !mb-1 group-hover:text-[#2197A1] transition-colors tracking-tight">
                                             {member.name}
                                         </h3>
                                         <div className="flex flex-col items-center space-y-2">
@@ -545,7 +1027,9 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Leader Carousel (Mobile) */}
-                        <MobileLeadersCarousel items={teamMembers} />
+                        <div ref={mobileCardsRef} className="md:hidden">
+                            <MobileLeadersCarousel items={teamMembers} />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -556,11 +1040,11 @@ export default function WhoWeArePage() {
                     <div className="flex flex-col lg:flex-row gap-4 md:gap-16 lg:gap-8">
                         {/* Left Side: Title & Intro (1/3) */}
                         <div className="w-full lg:w-[33.33%] lg:pr-12">
-                            <span className="text-[#2197A1] font-black uppercase tracking-widest text-[11px] !mb-3 block">Company Core</span>
-                            <h2 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-8 leading-tight">
+                            <span ref={coreSpanRef} className="text-[#2197A1] font-black uppercase tracking-widest text-[11px] !mb-3 block">Company Core</span>
+                            <h2 ref={coreH2Ref} className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-8 leading-tight">
                                 Our Philosophy
                             </h2>
-                            <p className="text-xl text-[#2A2A2A]/80 leading-relaxed font-medium mb-12">
+                            <p ref={coreParaRef} className="text-xl text-[#2A2A2A]/80 leading-relaxed font-medium mb-12">
                                 At Prodbiz Solutions, we believe that successful digital solutions are
                                 built at the intersection of technology, strategy, and creativity.
                             </p>
@@ -568,7 +1052,7 @@ export default function WhoWeArePage() {
 
                         {/* Right Side: Principles (2/3) */}
                         <div className="w-full lg:w-[66.66%]">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
+                            <div ref={corePrinciplesRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
                                 {principles.map((p, idx) => (
                                     <div key={idx} className="group">
                                         <div className="flex items-center gap-4 mb-4">
@@ -598,7 +1082,7 @@ export default function WhoWeArePage() {
                     <div className="relative w-full max-w-5xl aspect-[16/9] flex items-center justify-center hidden lg:flex">
 
                         {/* Central Circle */}
-                        <div className="relative w-64 h-64 rounded-full bg-white shadow-[0_20px_60px_rgba(0,0,0,0.1)] border border-slate-100 flex items-center justify-center z-30 group overflow-hidden">
+                        <div ref={centerCircleRef} className="relative w-64 h-64 rounded-full bg-white shadow-[0_20px_60px_rgba(0,0,0,0.1)] border border-slate-100 flex items-center justify-center z-30 group overflow-hidden">
                             <div className="absolute inset-2 border-2 border-dashed border-[#2197A1]/20 rounded-full animate-spin-slow" />
                             <div className="text-center p-8">
                                 <p className="text-[10px] font-black uppercase tracking-widest text-[#2197A1] mb-2">Our Foundation</p>
@@ -609,7 +1093,7 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Top Left: Mission Branch */}
-                        <div className="absolute top-10 -left-25 w-1/2 h-1/2 flex flex-col items-end justify-start pr-10 pt-10 group">
+                        <div ref={missionLeftRef} className="absolute top-10 -left-25 w-1/2 h-1/2 flex flex-col items-end justify-start pr-10 pt-10 group">
                             {/* Mission Pill Header */}
                             <div className="flex items-center gap-0 mb-6 bg-[#2197A1] rounded-full !mt-10 !mr-25 pl-6 pr-2 py-2 shadow-lg shadow-[#2197A1]/20 group-hover:scale-105 transition-transform duration-500">
                                 <span className="text-white font-black uppercase tracking-[0.2em] text-sm !pl-2 !mr-1">Our Mission</span>
@@ -639,7 +1123,7 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Bottom Right: Vision Branch */}
-                        <div className="absolute bottom-10 -right-30 w-1/2 h-1/2 flex flex-col items-start justify-end pl-10 pb-10 group">
+                        <div ref={visionRightRef} className="absolute bottom-10 -right-30 w-1/2 h-1/2 flex flex-col items-start justify-end pl-10 pb-10 group">
                             {/* SVG Connection Arc (Vision) */}
                             <svg className="absolute -top-8 -left-8 w-64 h-64 pointer-events-none z-10 overflow-visible">
                                 <path
@@ -670,9 +1154,9 @@ export default function WhoWeArePage() {
                     </div>
 
                     {/* Mobile Version (Vertical) */}
-                    <div className="lg:hidden w-full flex flex-col gap-12">
+                    <div ref={mvMobileRef} className="lg:hidden w-full flex flex-col gap-12">
                         {/* Mission */}
-                        <div className="flex flex-col items-center text-center p-8 bg-[#fcfcfc] border border-[#2197A1]/10 rounded-[2.5rem] shadow-sm">
+                        <div className="flex flex-col items-center text-center !p-2 bg-[#fcfcfc] border border-[#2197A1]/10 rounded-[2.5rem] shadow-sm">
                             <div className="flex items-center gap-4 mb-6 bg-[#2197A1] rounded-full !px-2 !py-2 !-mt-5 shadow-lg shadow-[#2197A1]/20">
                                 <HeartPulse size={20} strokeWidth={2.5} className="text-white" />
                                 <span className="text-white font-black uppercase tracking-widest text-xs">Our Mission</span>
@@ -682,7 +1166,7 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Vision */}
-                        <div className="flex flex-col items-center text-center p-8 bg-[#fcfcfc] border border-[#e76038]/10 rounded-[2.5rem] shadow-sm">
+                        <div className="flex flex-col items-center text-center !p-2 bg-[#fcfcfc] border border-[#e76038]/10 rounded-[2.5rem] shadow-sm">
                             <div className="flex items-center gap-4 mb-6 bg-[#e76038] rounded-full !px-2 !py-2 !-mt-5 shadow-lg shadow-[#e76038]/20">
                                 <Rocket size={20} strokeWidth={2.5} className="text-white" />
                                 <span className="text-white font-black uppercase tracking-widest text-xs">Our Vision</span>
@@ -698,14 +1182,14 @@ export default function WhoWeArePage() {
             <section className="relative w-full md:!pt-14 md:!pb-15 !px-6 overflow-hidden">
                 <div className="max-w-7xl !mx-auto w-full relative z-10">
                     <div className="text-center !mb-10 md:!mb-20">
-                        <span className="text-[#2197A1] font-black uppercase tracking-widest text-[11px] !mb-3 block">Our Workflow</span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] leading-tight">
+                        <span ref={processSpanRef} className="text-[#2197A1] font-black uppercase tracking-widest text-[11px] !mb-3 block">Our Workflow</span>
+                        <h2 ref={processH2Ref} className="text-4xl md:text-5xl font-bold text-[#2A2A2A] leading-tight">
                             How We Work
                         </h2>
                     </div>
 
                     {/* Desktop/Tablet Grid */}
-                    <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div ref={processGridRef} className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {processSteps.map((step, idx) => (
                             <div key={idx} className="relative group">
                                 {/* Connection Line (Desktop) */}
@@ -736,7 +1220,9 @@ export default function WhoWeArePage() {
                     </div>
 
                     {/* Mobile Carousel */}
-                    <MobileProcessCarousel items={processSteps} />
+                    <div ref={processMobileRef} className="lg:hidden">
+                        <MobileProcessCarousel items={processSteps} />
+                    </div>
                 </div>
             </section>
 
@@ -749,7 +1235,7 @@ export default function WhoWeArePage() {
                         <div className="w-full lg:w-[55%] relative flex items-center justify-center min-h-[500px] md:min-h-[600px] hidden md:flex">
 
                             {/* SVG for Organic Shapes & Connections */}
-                            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 600">
+                            <svg ref={bloomSvgRef} className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 600">
                                 <defs>
                                     <linearGradient id="bloomGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stopColor="#2197A1" />
@@ -771,6 +1257,7 @@ export default function WhoWeArePage() {
 
                                 {/* Background White Blob */}
                                 <path
+                                    ref={bloomBlobRef}
                                     d="M 100,100 C 50,150 50,450 100,500 C 150,550 350,550 400,500 C 450,450 450,150 400,100 C 350,50 150,50 100,100 Z"
                                     fill="white"
                                     filter="url(#bloomShadow)"
@@ -778,6 +1265,7 @@ export default function WhoWeArePage() {
 
                                 {/* Foreground Gradient Shape */}
                                 <path
+                                    ref={bloomGradientRef}
                                     d="M 350,100 C 450,50 650,150 700,300 C 750,450 550,550 450,550 C 350,550 300,450 300,300 C 300,150 300,100 350,100 Z"
                                     fill="url(#bloomGradient)"
                                     className="opacity-90"
@@ -790,6 +1278,7 @@ export default function WhoWeArePage() {
                                     return (
                                         <line
                                             key={i}
+                                            data-bloom-line="true"
                                             x1={xStart[i] + 20}
                                             y1={yCoords[i]}
                                             x2="780"
@@ -803,23 +1292,25 @@ export default function WhoWeArePage() {
                             </svg>
 
                             {/* Title Content (Inside White Blob) */}
-                            <div className="absolute left-[8%] md:left-[12%] text-left max-w-[180px] z-20">
+                            <div ref={bloomTitleRef} className="absolute left-[8%] md:left-[12%] text-left max-w-[180px] z-20">
                                 <h3 className="text-4xl font-black text-[#2A2A2A] mb-6 leading-tight uppercase tracking-tight">
                                     Industries <span className="text-[#2197A1]">We Serve</span>
                                 </h3>
                                 {/* <div className="w-16 h-1 bg-[#2197A1] mb-6" /> */}
-                                <p className="text-lg text-[#2A2A2A]/70 leading-relaxed font-medium">
+                                <p ref={bloomParaRef} className="text-lg text-[#2A2A2A]/70 leading-relaxed font-medium">
                                     Tailored digital excellence for diverse sectors worldwide.
                                 </p>
                             </div>
 
                             {/* Icon Markers (Inside Gradient Shape) */}
+                            <div ref={bloomIconsContainerRef} className="absolute inset-0">
                             {industries.map((item, idx) => {
                                 const yCoords = [150, 225, 300, 375, 450];
                                 const xStart = [450, 520, 550, 520, 450];
                                 return (
                                     <div
                                         key={idx}
+                                        data-bloom-icon="true"
                                         className="absolute w-16 h-16 rounded-full bg-white shadow-xl flex items-center justify-center z-30 group transition-all duration-300 hover:scale-125 hover:rotate-6 cursor-pointer"
                                         style={{ top: `${(yCoords[idx] / 600) * 100}%`, left: `${(xStart[idx] / 800) * 100}%`, transform: 'translate(-50%, -50%)' }}
                                     >
@@ -827,21 +1318,24 @@ export default function WhoWeArePage() {
                                     </div>
                                 );
                             })}
+                            </div>
                         </div>
 
                         {/* Right Side: Content Cards */}
                         <div className="w-full lg:w-[45%] flex flex-col gap-2 lg:pl-10 relative z-20 !mt-0">
                             {/* Mobile Title (Only Visible on Mobile) */}
-                            <div className="text-center mb-12 lg:hidden">
+                            <div ref={bloomMobileTitleRef} className="text-center mb-12 lg:hidden">
                                 <span className="text-[#2197A1] font-black uppercase tracking-widest text-[11px] mb-3 block">Expertise Areas</span>
                                 <h2 className="text-4xl font-bold text-[#2A2A2A] leading-tight">
                                     Industries <span className="text-[#2197A1]">We Serve</span>
                                 </h2>
                             </div>
 
+                            <div ref={bloomCardsContainerRef} className="flex flex-col gap-2">
                             {industries.map((item, idx) => (
                                 <div
                                     key={idx}
+                                    data-bloom-card="true"
                                     className="flex items-center gap-4 border border-gray-300 rounded-[2.5rem] transition-all duration-500 group"
                                 >
                                     {/* Desktop badge (Tick in Circle) */}
@@ -857,12 +1351,13 @@ export default function WhoWeArePage() {
                                         <item.icon size={24} style={{ color: item.color }} strokeWidth={2.5} />
                                     </div>
 
-                                    <div className="flex-1">
-                                        <h5 className="text-xl font-bold text-[#2A2A2A] group-hover:text-[#2197A1] transition-colors">{item.name}</h5>
-                                        <p className="text-base text-[#2A2A2A]/60 leading-snug">{item.desc}</p>
+                                    <div className="flex-1 !py-1.5">
+                                        <h4 className="!mb-1 text-xl font-bold text-[#2A2A2A] group-hover:text-[#2197A1] transition-colors">{item.name}</h4>
+                                        <p className="text-sm text-[#2A2A2A]/60 leading-snug !mb-0">{item.desc}</p>
                                     </div>
                                 </div>
                             ))}
+                            </div>
                         </div>
                     </div>
                 </div>

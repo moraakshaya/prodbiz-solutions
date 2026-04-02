@@ -5,6 +5,11 @@ import NextImage from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Button from "@/components/Button";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function GetProposalPage() {
     const scrollToForm = () => {
@@ -13,6 +18,106 @@ export default function GetProposalPage() {
             element.scrollIntoView({ behavior: "smooth" });
         }
     };
+
+    const [mounted, setMounted] = React.useState(false);
+    
+    const h1Ref = React.useRef<HTMLHeadingElement>(null);
+    const tagRef = React.useRef<HTMLDivElement>(null);
+    const spanRef = React.useRef<HTMLSpanElement>(null);
+    const paraRef = React.useRef<HTMLDivElement>(null);
+    const buttonsRef = React.useRef<HTMLDivElement>(null);
+    const heroImageRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        setMounted(true);
+
+        if (!mounted) return;
+
+        const ctx = gsap.context((self) => {
+            if (tagRef.current && h1Ref.current && spanRef.current && paraRef.current && buttonsRef.current) {
+                // Core Entrance Timeline
+                const tl = gsap.timeline();
+
+                // Split all P tags within the container into individual lines
+                const splitParas = new SplitType(paraRef.current.querySelectorAll("p"), { types: "lines" });
+
+                self.add(() => {
+                    return () => splitParas.revert();
+                });
+
+                // 0. Tag Fade In + Slide Up (Smooth Entrance)
+                tl.fromTo(
+                    tagRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+                    0.2 // Starts at 0.2s
+                );
+
+                // 1. H1 Slide In (Overlap with tag animation - starts just before tag finishes)
+                tl.fromTo(
+                    h1Ref.current,
+                    { x: -80, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 1.1, ease: "power3.out" },
+                    "-=0.3" // Starts 0.3s before tag completes (Overlap staircase)
+                );
+
+                // 2. Paragraph (Line-by-line soft fade + slight upward)
+                tl.fromTo(
+                    splitParas.lines,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" },
+                    "-=0.5" // Starts 0.5s before H1 completes
+                );
+
+                // 3. Buttons (Subtle fade + stagger)
+                tl.fromTo(
+                    buttonsRef.current.children,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
+                    "-=0.4"
+                );
+
+                // 4. Hero Image (Slide from right + slight scale)
+                tl.fromTo(
+                    ".hero-image-animate",
+                    { x: 100, scale: 0.9, opacity: 0 },
+                    { x: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" },
+                    1.0
+                );
+
+                // 5. Floating Animation loop (Parallel to timeline)
+                gsap.to(".hero-image-animate", {
+                    y: -15,
+                    duration: 3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut",
+                    delay: 2.2
+                });
+
+                // Slot-machine roll for "With Confidence"
+                const loopTl = gsap.timeline({ repeat: -1, repeatDelay: 1.8, delay: 1.5 });
+
+                loopTl.to(spanRef.current, {
+                    y: -25,
+                    opacity: 0,
+                    rotationX: 90,
+                    duration: 0.6,
+                    ease: "power2.in"
+                })
+                .set(spanRef.current, { y: 25, rotationX: -90 })
+                .to(spanRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    rotationX: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            }
+        });
+
+        return () => ctx.revert();
+    }, [mounted]);
 
     return (
         <main className="flex min-h-screen flex-col items-center bg-white">
@@ -28,17 +133,17 @@ export default function GetProposalPage() {
                     <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-24px] md:pr-0">
                         {/* Tag: Centered on Mobile */}
                         <div className="w-full flex justify-center md:justify-start">
-                            <div className="hidden md:inline-block bg-[#fff]/50 text-[#2197A1] !px-1 md:!px-5 !py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] !mb-4 shadow-sm">
+                            <div ref={tagRef} className="inline-flex bg-[#fff]/50 text-[#2197A1] !px-4 md:!px-5 !py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] !mb-4 shadow-sm">
                                 Project Inquiries
                             </div>
                         </div>
 
                         {/* Title: Centered on Mobile */}
-                        <h1 className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full">
-                            Start Your Project <span className="text-[#2197A1]">With Confidence</span>
+                        <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full" style={{ perspective: "1000px" }}>
+                            Start Your Project <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d">With Confidence</span>
                         </h1>
 
-                        <div className="w-full flex flex-col md:block">
+                        <div ref={paraRef} className="w-full flex flex-col md:block">
                             {/* Short mobile content: Centered as requested */}
                             <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center mb-8">
                                 Share your project details and we&apos;ll craft a customized solution tailored to your goals and budget.
@@ -57,7 +162,7 @@ export default function GetProposalPage() {
                         </div>
 
                         {/* Mobile Image: Rendered below content on mobile */}
-                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-8 h-[100px] relative">
+                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-8 h-[100px] relative hero-image-animate">
                             {/* Ambient Glow */}
                             <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
                             <NextImage
@@ -70,7 +175,7 @@ export default function GetProposalPage() {
                         </div>
 
                         {/* Button: Centered on Mobile */}
-                        <div className="w-full flex justify-center md:justify-start">
+                        <div ref={buttonsRef} className="w-full flex justify-center md:justify-start">
                             <Button
                                 onClick={scrollToForm}
                                 className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
@@ -82,7 +187,7 @@ export default function GetProposalPage() {
                     </div>
 
                     {/* Right Side Image Section - Hidden on Mobile */}
-                    <div className="hidden md:flex w-[40%] md:w-[20%] !mb-20 justify-center items-center h-full min-h-[300px] md:min-h-[200px]">
+                    <div className="hidden md:flex w-[40%] md:w-[20%] !mb-20 justify-center items-center h-full min-h-[300px] md:min-h-[200px] relative hero-image-animate">
                         <NextImage
                             src="/images/get-proposal-hero.png"
                             alt="Start Project"
@@ -138,19 +243,19 @@ export default function GetProposalPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2">
                                         <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">Full Name</label>
-                                        <input type="text" className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="Enter your name" />
+                                        <input type="text" suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="Enter your name" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">Email Address</label>
-                                        <input type="email" className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="name@company.com" />
+                                        <input type="email" suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="name@company.com" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">Phone Number</label>
-                                        <input type="tel" className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="+91 XXX XXX XXXX" />
+                                        <input type="tel" suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="+91 XXX XXX XXXX" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">Company Name</label>
-                                        <input type="text" className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="Your organization" />
+                                        <input type="text" suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="Your organization" />
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +265,7 @@ export default function GetProposalPage() {
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">02. Project Type</h3>
                                 <div className="flex flex-col gap-2">
                                     <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">What are you looking for?</label>
-                                    <select className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
+                                    <select suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
                                         <option value="">Select a service...</option>
                                         <option value="web-design">Website Design & Development</option>
                                         <option value="web-app">Web Application Development</option>
@@ -176,7 +281,7 @@ export default function GetProposalPage() {
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">03. Project Details</h3>
                                 <div className="flex flex-col gap-2">
                                     <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-tighter">Tell us about your project, goals, and requirements</label>
-                                    <textarea rows={5} className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="Describe your vision..."></textarea>
+                                    <textarea rows={5} suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none transition-all" placeholder="Describe your vision..."></textarea>
                                 </div>
                             </div>
 
@@ -185,7 +290,7 @@ export default function GetProposalPage() {
                                 <div className="space-y-4">
                                     <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">04. Budget</h3>
                                     <div className="flex flex-col gap-2">
-                                        <select className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
+                                        <select suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
                                             <option value="">Expected Budget Range</option>
                                             <option value="10k-25k">₹10K – ₹25K</option>
                                             <option value="25k-50k">₹25K – ₹50K</option>
@@ -197,7 +302,7 @@ export default function GetProposalPage() {
                                 <div className="space-y-4">
                                     <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b-1 border-[#2197A1]/20 !pb-2">05. Timeline</h3>
                                     <div className="flex flex-col gap-2">
-                                        <select className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
+                                        <select suppressHydrationWarning className="w-full bg-[#2197A1]/10 border-2 border-gray-100 rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:outline-none appearance-none transition-all text-gray-500 font-medium">
                                             <option value="">Expected Launch</option>
                                             <option value="asap">ASAP</option>
                                             <option value="2-4weeks">2–4 Weeks</option>
@@ -208,7 +313,7 @@ export default function GetProposalPage() {
                                 </div>
                             </div>
 
-                            <button className="w-full bg-[#2197A1] text-white font-black text-xl !py-3 rounded-3xl shadow-[0_12px_24px_rgba(33,151,161,0.2)] hover:shadow-[0_15px_35px_rgba(33,151,161,0.3)] hover:-translate-y-1 transition-all active:scale-[0.98] !mt-4 tracking-widest">
+                            <button suppressHydrationWarning className="w-full bg-[#2197A1] text-white font-black text-xl !py-3 rounded-3xl shadow-[0_12px_24px_rgba(33,151,161,0.2)] hover:shadow-[0_15px_35px_rgba(33,151,161,0.3)] hover:-translate-y-1 transition-all active:scale-[0.98] !mt-4 tracking-widest">
                                 Get Proposal
                             </button>
                         </form>
