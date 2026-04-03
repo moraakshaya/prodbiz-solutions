@@ -297,7 +297,7 @@ export default function Navbar() {
                         </button>
 
                         {/* Mobile Accordion Items */}
-                        <div className={`overflow-hidden transition-all duration-300 ${mobileDropdownOpen ? "max-h-46 opacity-100" : "max-h-0 opacity-0"}`}>
+                        <div className={`transition-all duration-300 ${mobileDropdownOpen ? "max-h-[148px] overflow-y-auto opacity-100 custom-scrollbar-hide" : "max-h-0 overflow-hidden opacity-0"}`}>
                             <ul className="!pt-4 flex flex-col list-none !m-0">
                                 {solutionsDropdown.map((item) => (
                                     <li key={item.href} className="m-0 p-0">

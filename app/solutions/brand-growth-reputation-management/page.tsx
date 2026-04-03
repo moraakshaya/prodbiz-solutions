@@ -14,6 +14,13 @@ import Button from "@/components/Button";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import HeroVisual3D from "@/components/HeroVisual3D";
 import { Megaphone, ShieldCheck, Handshake, MessageSquare, Heart } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 const services = [
     {
@@ -88,16 +95,249 @@ const brandIcons = [
 export default function BrandGrowthReputationManagementPage() {
     const [mounted, setMounted] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
-    const scrollRef = useRef<HTMLDivElement>(null);
+
+    const heroSubtitleRef = useRef<HTMLSpanElement>(null);
+    const heroTitleRef = useRef<HTMLHeadingElement>(null);
+    const heroParaMobileRef = useRef<HTMLParagraphElement>(null);
+    const heroParaDesktopRef = useRef<HTMLParagraphElement>(null);
+    const heroButtonsRef = useRef<HTMLDivElement>(null);
+
+    const servicesSectionRef = useRef<HTMLElement>(null);
+    const servicesSubtitleRef = useRef<HTMLSpanElement>(null);
+    const servicesTitleRef = useRef<HTMLHeadingElement>(null);
+    const servicesGridRef = useRef<HTMLDivElement>(null);
+
+    const timelineSectionRef = useRef<HTMLElement>(null);
+    const timelineTitleRef = useRef<HTMLHeadingElement>(null);
+    const timelineParaRef = useRef<HTMLParagraphElement>(null);
+    const timelineDesktopStepsRef = useRef<HTMLDivElement>(null);
+    const timelineMobileStepsRef = useRef<HTMLDivElement>(null);
+
+    const techSectionRef = useRef<HTMLElement>(null);
+    const techSubtitleRef = useRef<HTMLSpanElement>(null);
+    const techTitleRef = useRef<HTMLHeadingElement>(null);
+    const techParaRef = useRef<HTMLParagraphElement>(null);
+    const techItemsRef = useRef<HTMLDivElement>(null);
+    const techBloomContainerRef = useRef<HTMLDivElement>(null);
+    const techCenterHubRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setMounted(true);
-    }, []);
+
+        // --- Hero Entrance Sequence ---
+        if (heroSubtitleRef.current && heroTitleRef.current && heroParaMobileRef.current && heroParaDesktopRef.current && heroButtonsRef.current) {
+            const splitMobilePara = new SplitType(heroParaMobileRef.current, { types: "lines" });
+            const splitDesktopPara = new SplitType(heroParaDesktopRef.current, { types: "lines" });
+            const heroTl = gsap.timeline();
+
+            // 1. Subtitle reveal: Fade + Slide Up
+            heroTl.fromTo(heroSubtitleRef.current,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+            );
+
+            // 2. H1 reveal: Slide In Left
+            heroTl.fromTo(heroTitleRef.current,
+                { x: -100, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" },
+                "-=0.6"
+            );
+
+            // 3. Subtitle effect: Rotate In and Rotate Out (3D Flip)
+            heroTl.to(heroSubtitleRef.current,
+                { 
+                    rotationX: 360, 
+                    duration: 1.2, 
+                    ease: "power2.inOut",
+                    transformOrigin: "center center"
+                },
+                "-=0.8"
+            );
+
+            // 4. Paragraph reveal: Line-by-line fade + slide up (Targeting both mobile and desktop lines)
+            heroTl.fromTo([splitMobilePara.lines, splitDesktopPara.lines] as any,
+                { y: 20, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.8, 
+                    stagger: 0.1, 
+                    ease: "power2.out" 
+                },
+                "-=1.2"
+            );
+
+            // 5. Button reveal: Subtle fade + slide up
+            heroTl.fromTo(heroButtonsRef.current,
+                { y: 15, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.8, 
+                    ease: "power2.out" 
+                },
+                "-=0.6"
+            );
+        }
+
+        if (servicesSectionRef.current && servicesSubtitleRef.current && 
+            servicesTitleRef.current && servicesGridRef.current) {
+            
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: servicesSectionRef.current,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            tl.fromTo(servicesSubtitleRef.current,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+            );
+
+            tl.fromTo(servicesTitleRef.current,
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.0, ease: "power3.out" },
+                "-=0.6"
+            );
+
+            tl.fromTo(servicesGridRef.current.children,
+                { y: 50, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 1.0, 
+                    stagger: 0.2, 
+                    ease: "power3.out" 
+                },
+                "-=0.7"
+            );
+        }
+
+        if (timelineSectionRef.current && timelineTitleRef.current && timelineParaRef.current) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: timelineSectionRef.current,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            tl.fromTo(timelineTitleRef.current,
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.0, ease: "power3.out" }
+            );
+
+            tl.fromTo(timelineParaRef.current,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+                "-=0.6"
+            );
+
+            if (timelineDesktopStepsRef.current) {
+                const desktopSteps = gsap.utils.toArray(timelineDesktopStepsRef.current.children).map(child => (child as HTMLElement).querySelector(":scope > div"));
+                tl.fromTo(desktopSteps,
+                    { y: 30, opacity: 0, scale: 0.9 },
+                    { 
+                        y: 0, 
+                        opacity: 1, 
+                        scale: 1, 
+                        duration: 0.8, 
+                        stagger: 0.2, 
+                        ease: "power2.out" 
+                    },
+                    "-=0.5"
+                );
+            }
+
+            if (timelineMobileStepsRef.current) {
+                const mobileSteps = gsap.utils.toArray(timelineMobileStepsRef.current.children).map(child => (child as HTMLElement).querySelector(":scope > .flex"));
+                tl.fromTo(mobileSteps,
+                    { x: -20, opacity: 0 },
+                    { 
+                        x: 0, 
+                        opacity: 1, 
+                        duration: 0.8, 
+                        stagger: 0.15, 
+                        ease: "power2.out" 
+                    },
+                    "-=0.5"
+                );
+            }
+        }
+
+        if (techSectionRef.current && techSubtitleRef.current && techTitleRef.current && 
+            techParaRef.current && techItemsRef.current && techBloomContainerRef.current && techCenterHubRef.current) {
+            
+            const splitContent = new SplitType(techParaRef.current, { types: "lines" });
+            
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: techSectionRef.current,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            tl.fromTo(techSubtitleRef.current,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+            );
+
+            tl.fromTo(techTitleRef.current,
+                { x: -100, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" },
+                "-=0.6"
+            );
+
+            tl.fromTo(splitContent.lines,
+                { y: 20, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.8, 
+                    stagger: 0.1, 
+                    ease: "power2.out" 
+                },
+                "-=0.6"
+            );
+
+            tl.fromTo([techItemsRef.current.children, techCenterHubRef.current],
+                { y: 30, opacity: 0, scale: (i: number, el: HTMLElement) => el === techCenterHubRef.current ? 0.6 : 1 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1,
+                    duration: 0.8, 
+                    stagger: 0.1, 
+                    ease: "power2.out" 
+                },
+                "-=0.5"
+            );
+
+            tl.fromTo(techBloomContainerRef.current.children,
+                { scale: 0.5, opacity: 0 },
+                { 
+                    scale: 1, 
+                    opacity: 1, 
+                    duration: 0.8, 
+                    stagger: 0.1, 
+                    ease: "back.out(1.7)" 
+                },
+                "-=0.4"
+            );
+
+            return () => {
+                splitContent.revert();
+            };
+        }
+    }, [mounted]);
 
     const handleScroll = () => {
-        if (scrollRef.current) {
-            const scrollLeft = scrollRef.current.scrollLeft;
-            const cardWidth = scrollRef.current.offsetWidth;
+        if (servicesGridRef.current) {
+            const scrollLeft = servicesGridRef.current.scrollLeft;
+            const cardWidth = servicesGridRef.current.offsetWidth;
             const newIndex = Math.round(scrollLeft / cardWidth);
             if (newIndex !== activeIndex) {
                 setActiveIndex(newIndex);
@@ -106,9 +346,9 @@ export default function BrandGrowthReputationManagementPage() {
     };
 
     const scrollToCard = (index: number) => {
-        if (scrollRef.current) {
-            const cardWidth = scrollRef.current.offsetWidth;
-            scrollRef.current.scrollTo({
+        if (servicesGridRef.current) {
+            const cardWidth = servicesGridRef.current.offsetWidth;
+            servicesGridRef.current.scrollTo({
                 left: index * cardWidth,
                 behavior: "smooth"
             });
@@ -117,55 +357,45 @@ export default function BrandGrowthReputationManagementPage() {
 
     return (
         <main className="flex min-h-screen flex-col items-center">
-            {/* Brand Growth Hero Section - Matched to About Page */}
             <section
                 className="relative w-full min-h-[75vh] min-[340px]:min-h-[60vh] min-[360px]:min-h-[80vh] min-[380px]:min-h-[62vh] min-[400px]:min-h-[58vh] min-[540px]:min-h-[68vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center overflow-hidden"
                 style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
             >
-                {/* Content Container */}
                 <div className="z-10 w-full max-w-7xl !mx-auto flex flex-col lg:flex-row items-center !px-4 md:px-6 !pt-3 sm:!pt-15 lg:!pt-10 gap-1 sm:gap-10 lg:gap-5">
-
-                    {/* Left Side: Heading and Paragraph */}
                     <div className="w-full lg:w-[60%] flex flex-col items-center lg:items-start text-center lg:text-left lg:translate-y-[-20px] pr-0">
-                        <span className="hidden md:block text-[#e76038]/80 font-bold text-sm uppercase tracking-widest md:!mb-4">Authority & Scale</span>
-                        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words">
+                        <span ref={heroSubtitleRef} className="hidden md:block text-[#e76038]/80 font-bold text-sm uppercase tracking-widest md:!mb-4">Authority & Scale</span>
+                        <h1 ref={heroTitleRef} className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words">
                             Brand Growth & <br />
                             <span className="text-[#2197A1]">Reputation Management</span>
                         </h1>
                         <div className="space-y-4 max-w-3xl !mb-0 md:!mb-8">
-                            <p className="block md:hidden text-sm sm:text-base text-[#2A2A2A]/80 font-medium leading-snug">
-                                We build brands that people trust and competitors admire. Our strategic approach combines reputation defense with growth tactics.
+                            <p ref={heroParaMobileRef} className="block md:hidden text-sm sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center">
+                                We help you build and protect your brand reputation through strategic storytelling and proactive engagement.
                             </p>
                             <div className="hidden md:block">
-                                <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium leading-relaxed">
-                                    We build brands that people trust and competitors admire. Our strategic approach
-                                    combines proactive reputation defense with high-velocity growth tactics to win
-                                    the hearts and minds of your audience.
+                                <p ref={heroParaDesktopRef} className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium leading-relaxed">
+                                    We protect your identity and amplify your presence. Our strategic approach combines
+                                    data-driven growth with proactive reputation management to build lasting market authority.
                                 </p>
                             </div>
                         </div>
-
-                        {/* Mobile 3D Visual - Visible only on mobile */}
                         <div className="lg:hidden w-full flex justify-center items-center !my-0 relative">
                             <HeroVisual3D icons={brandIcons} />
                         </div>
-
-                        <Button
-                            href="/contact"
-                            className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-2.5 md:!px-6 !py-2 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-sm md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
-                        >
-                            <span>Elevate Your Brand</span>
-                            <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
-                        </Button>
+                        <div ref={heroButtonsRef}>
+                            <Button
+                                href="/contact"
+                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-2.5 md:!px-6 !py-2 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-sm md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                            >
+                                <span>Get Expert Strategy</span>
+                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
+                            </Button>
+                        </div>
                     </div>
-
-                    {/* Right Side: 3D Visual - Visible only on Desktop */}
                     <div className="hidden lg:flex lg:w-[40%] justify-center items-center h-full lg:min-h-[600px] relative">
                         <HeroVisual3D icons={brandIcons} />
                     </div>
                 </div>
-
-                {/* Bottom 3D Drip Border (Standardized) */}
                 <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] flex justify-center">
                     <svg
                         className="relative block w-[300%] sm:w-[200%] lg:w-[150%] xl:w-[calc(100%+1.3px)] h-[70px] md:h-[100px] lg:h-[140px] flex-shrink-0"
@@ -200,16 +430,15 @@ export default function BrandGrowthReputationManagementPage() {
                 }
             `}} />
 
-            {/* Services Section */}
-            <section className="relative w-full bg-white !pt-10 md:!py-20 !px-3 md:px-12 lg:px-24 overflow-hidden">
+            <section ref={servicesSectionRef} className="relative w-full bg-white !pt-10 md:!py-20 !px-3 md:px-12 lg:px-24 overflow-hidden">
                 <div className="relative z-10 max-w-7xl !mx-auto">
                     <div className="text-center !mb-5">
-                        <span className="text-[#2197A1] font-bold text-sm uppercase tracking-widest mb-4 block">Strategic Management</span>
-                        <h2 className="text-4xl md:text-6xl font-bold text-[#2A2A2A] mb-8">Our Growth Services</h2>
+                        <span ref={servicesSubtitleRef} className="text-[#2197A1] font-bold text-sm uppercase tracking-widest mb-4 block">Strategic Management</span>
+                        <h2 ref={servicesTitleRef} className="text-4xl md:text-6xl font-bold text-[#2A2A2A] mb-8">Our Growth Services</h2>
                     </div>
 
                     <div
-                        ref={scrollRef}
+                        ref={servicesGridRef}
                         onScroll={handleScroll}
                         className="flex flex-nowrap md:flex-wrap justify-start md:justify-center md:!pt-10 gap-5 md:gap-10 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-8 md:pb-0"
                     >
@@ -250,7 +479,6 @@ export default function BrandGrowthReputationManagementPage() {
                         ))}
                     </div>
 
-                    {/* Pagination Dots (Mobile Only) */}
                     <div className="flex md:hidden justify-center items-center gap-2 !mt-5">
                         {services.map((_, index) => (
                             <button
@@ -267,18 +495,16 @@ export default function BrandGrowthReputationManagementPage() {
                 </div>
             </section>
 
-            {/* Serpentine Milestone Timeline */}
-            <section className="relative w-full bg-white !py-20 !px-10 md:px-12 lg:px-24 overflow-hidden">
+            <section ref={timelineSectionRef} className="relative w-full bg-white !py-20 !px-10 md:px-12 lg:px-24 overflow-hidden">
                 <div className="max-w-7xl !mx-auto">
                     <div className="text-center !mb-10">
-                        <h2 className="text-4xl md:text-6xl font-black text-[#2A2A2A] mb-4 tracking-tight uppercase">Strategy TIMELINE</h2>
-                        <p className="text-gray-400 text-lg max-w-2xl !mx-auto font-medium">
+                        <h2 ref={timelineTitleRef} className="text-4xl md:text-6xl font-black text-[#2A2A2A] mb-4 tracking-tight uppercase">Strategy TIMELINE</h2>
+                        <p ref={timelineParaRef} className="text-gray-400 text-lg max-w-2xl !mx-auto font-medium">
                             Our roadmap to establishing and scaling your market authority.
                         </p>
                     </div>
 
                     <div className="relative max-w-5xl !mx-auto pt-20 pb-40">
-                        {/* Desktop Serpentine Timeline (SVG) */}
                         <div className="hidden md:block">
                             <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 1000 600" preserveAspectRatio="none">
                                 <defs>
@@ -307,9 +533,8 @@ export default function BrandGrowthReputationManagementPage() {
                                 />
                             </svg>
 
-                            <div className="relative z-10 w-full h-[600px]">
-                                {/* Step 1 */}
-                                <div className="absolute top-[125px] left-[25%] -translate-x-1/2 -translate-y-1/2 group">
+                            <div ref={timelineDesktopStepsRef} className="relative z-10 w-full h-[600px]">
+                                <div className="absolute top-[130px] left-[25%] -translate-x-1/2 -translate-y-1/2 group">
                                     <div className="flex flex-col items-center">
                                         <div className="text-[#2197A1] font-bold text-sm !mb-4">Phase 01</div>
                                         <div className="w-6 h-6 rounded-full border-4 border-[#2197A1] bg-white shadow-md transition-transform duration-500 group-hover:scale-100 relative">
@@ -322,8 +547,7 @@ export default function BrandGrowthReputationManagementPage() {
                                     </div>
                                 </div>
 
-                                {/* Step 2 */}
-                                <div className="absolute top-[125px] left-[75%] -translate-x-1/2 -translate-y-1/2 group">
+                                <div className="absolute top-[120px] left-[75%] -translate-x-1/2 -translate-y-1/2 group">
                                     <div className="flex flex-col items-center">
                                         <div className="text-[#2197A1] font-bold text-sm !mb-4">Phase 02</div>
                                         <div className="w-6 h-6 rounded-full border-4 border-[#2197A1] bg-white shadow-md transition-transform duration-500 group-hover:scale-100 relative">
@@ -336,8 +560,7 @@ export default function BrandGrowthReputationManagementPage() {
                                     </div>
                                 </div>
 
-                                {/* Step 3 */}
-                                <div className="absolute top-[315px] left-[50%] -translate-x-1/2 -translate-y-1/2 group">
+                                <div className="absolute top-[310px] left-[50%] -translate-x-1/2 -translate-y-1/2 group">
                                     <div className="flex flex-col items-center">
                                         <div className="text-[#2197A1] font-bold text-sm !mb-4">Phase 03</div>
                                         <div className="w-6 h-6 rounded-full border-4 border-[#2197A1] bg-white shadow-md transition-transform duration-500 group-hover:scale-100 relative">
@@ -350,8 +573,7 @@ export default function BrandGrowthReputationManagementPage() {
                                     </div>
                                 </div>
 
-                                {/* Step 4 */}
-                                <div className="absolute top-[540px] left-[80%] -translate-x-1/2 -translate-y-1/2 group">
+                                <div className="absolute top-[520px] left-[80%] -translate-x-1/2 -translate-y-1/2 group">
                                     <div className="flex flex-col items-center">
                                         <div className="text-[#2197A1] font-bold text-sm !mb-4">Phase 04</div>
                                         <div className="w-6 h-6 rounded-full border-4 border-[#2197A1] bg-white shadow-md transition-transform duration-500 group-hover:scale-100 relative">
@@ -366,13 +588,10 @@ export default function BrandGrowthReputationManagementPage() {
                             </div>
                         </div>
 
-                        {/* Mobile Vertical Timeline */}
-                        <div className="md:hidden relative mt-10 !ml-1 border-l-2 border-dashed border-[#2197A1]/30 !pl-8 space-y-12">
+                        <div ref={timelineMobileStepsRef} className="md:hidden relative mt-10 !ml-1 border-l-2 border-dashed border-[#2197A1]/30 !pl-8 space-y-12">
                             {processSteps.map((step, index) => (
                                 <div key={index} className="relative">
-                                    {/* Dot on the line */}
                                     <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full border-4 border-[#2197A1] bg-white shadow-sm z-10" />
-
                                     <div className="flex flex-col items-start translate-y-[-4px] !mb-5">
                                         <span className="text-[#2197A1] font-bold text-xs mb-1 uppercase tracking-wider">Phase {step.number}</span>
                                         <h4 className="text-xl font-bold text-[#2A2A2A] !mb-3 uppercase italic">{step.title}</h4>
@@ -385,8 +604,7 @@ export default function BrandGrowthReputationManagementPage() {
                 </div>
             </section>
 
-            {/* Technologies Infographic Hub */}
-            <section className="relative w-full bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960] !pt-20 !pb-10 md:!py-20 !px-6 md:px-12 lg:px-24 overflow-hidden">
+            <section ref={techSectionRef} className="relative w-full bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960] !pt-20 !pb-10 md:!py-20 !px-6 md:px-12 lg:px-24 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20">
                     <svg className="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[120px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
                         <path d="M0,0 C480,100 720,0 1200,80 L1200,0 L0,0 Z" fill="#ffffff" opacity="0.3"></path>
@@ -406,15 +624,15 @@ export default function BrandGrowthReputationManagementPage() {
 
                 <div className="relative z-10 max-w-7xl !mx-auto flex flex-col lg:flex-row items-center gap-0 md:gap-20">
                     <div className="w-full lg:w-[40%] text-left">
-                        <span className="text-white/80 font-bold text-sm uppercase tracking-widest mb-6 block drop-shadow-sm">Tech Stack</span>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 leading-tight drop-shadow-lg">
+                        <span ref={techSubtitleRef} className="text-white/80 font-bold text-sm uppercase tracking-widest mb-6 block drop-shadow-sm">Tech Stack</span>
+                        <h2 ref={techTitleRef} className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 leading-tight drop-shadow-lg">
                             Powerful <br />
                             <span className="text-[#e76038]">Strategic Stack</span>
                         </h2>
-                        <p className="text-lg text-white/90 font-medium leading-relaxed mb-10 max-w-lg drop-shadow-md">
+                        <p ref={techParaRef} className="text-lg text-white/90 font-medium leading-relaxed mb-10 max-w-lg drop-shadow-md">
                             We use industry-leading tools for monitoring, automation, and analytics to ensure your brand&apos;s growth is data-driven and scalable.
                         </p>
-                        <div className="flex flex-col gap-5">
+                        <div ref={techItemsRef} className="flex flex-col gap-5">
                             {["Global Media Monitoring", "Growth Automation Hub", "Social Sentiment Radar"].map((item, i) => (
                                 <div key={i} className="flex items-center gap-4 group">
                                     <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-[#e76038] group-hover:border-[#e76038] transition-all duration-300 shadow-lg">
@@ -426,14 +644,12 @@ export default function BrandGrowthReputationManagementPage() {
                         </div>
                     </div>
 
-                    {/* ── Bloom / Flower layout — single responsive component ── */}
                     <div className="w-full lg:w-[60%] flex items-center justify-center !mt-10 lg:!mt-0">
-                        {/* Designed at 500×500 — scale down on smaller screens via CSS transform */}
                         <div
                             className="h-[350px] lg:h-[500px] scale-[0.62] xs:scale-[0.68] sm:scale-75 md:scale-90 lg:scale-100 origin-top"
                             style={{ width: 500, flexShrink: 0 }}
                         >
-                            <div className="relative" style={{ width: 500, height: 500 }}>
+                            <div ref={techBloomContainerRef} className="relative" style={{ width: 500, height: 500 }}>
                                 {(() => {
                                     const CONTAINER = 250;
                                     const RADIUS = 155;
@@ -525,6 +741,7 @@ export default function BrandGrowthReputationManagementPage() {
 
                                 {/* Center Hub — z-index 20, always on top */}
                                 <div
+                                    ref={techCenterHubRef}
                                     style={{
                                         position: "absolute",
                                         left: 250 - 90,
