@@ -6,31 +6,48 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Button from "./Button";
 
-const caseStudies = [
+const solutionCategories = [
     {
-        client: "Ricchhotel Restaurant",
-        problem: "Ricchhotel struggled with zero digital footprint. Without an official website, potential customers couldn't find their menu, location, or even confirm their existence online.",
-        solution: "We engineered their first digital flagship—a mobile-responsive platform with structured menu discovery, local SEO, and integrated reservation touchpoints.",
-        results: [
-            { label: "Online Presence", value: "First Website" },
-            { label: "Visiblity", value: "SEO Improved" },
+        title: "Branding & Design",
+        desc: "We helped them create a professional look for their business.",
+        points: [
+            "We designed a logo so people can recognize their brand",
+            "We created posters to promote offers and attract customers",
+            "We designed menu cards so customers can easily see their items",
+            "We made social media posts (carousels) to post regularly and engage people",
+            "We kept the same design style everywhere so the brand looks clean and professional"
         ],
-        accent: "#2197A1",
-        polaroidAngle: "-rotate-2",
-        polaroidAngle2: "rotate-3",
+        short: "BRAND"
     },
     {
-        client: "Shriswara Hospital",
-        problem: "A legacy WordPress site hindered patient access. Slow loading speeds and poor mobile responsiveness made it difficult to find critical care and doctor information.",
-        solution: "A complete architectural overhaul into a scalable healthcare platform with intuitive patient-centric navigation and optimized doctor directories.",
-        results: [
-            { label: "Patient UX", value: "Redesigned" },
-            { label: "Accessibility", value: "Full Mobile" },
+        title: "Website",
+        desc: "We built a simple and easy-to-use website for their restaurant.",
+        points: [
+            "Customers can see the menu and details",
+            "Website works well on mobile phones",
+            "Easy for customers to contact or place orders"
         ],
-        accent: "#1b7a82",
-        polaroidAngle: "rotate-2",
-        polaroidAngle2: "-rotate-3",
+        short: "WEB"
     },
+    {
+        title: "Marketing",
+        desc: "We helped them grow on social media and reach more people.",
+        points: [
+            "Created and managed their Instagram, Facebook, YouTube, Twitter pages",
+            "Posted regular content and designs",
+            "Ran ads to bring more customers",
+            "Used WhatsApp to send updates and offers directly"
+        ],
+        short: "SOCIAL"
+    }
+];
+
+import FlyingPosters from "./FlyingPosters";
+
+const caseImages = [
+    "/images/flyers-1.webp",
+    "/images/logo-1.webp",
+    "/images/poster-1.avif"
 ];
 
 const TimelineItem = ({
@@ -38,11 +55,13 @@ const TimelineItem = ({
     value,
     icon,
     delay = 0,
+    children
 }: {
     label: string;
-    value: string;
+    value?: string;
     icon: React.ReactNode;
     delay?: number;
+    children?: React.ReactNode;
 }) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -59,7 +78,7 @@ const TimelineItem = ({
                     observer.disconnect();
                 }
             },
-            { threshold: 0.2 }
+            { threshold: 0.1 }
         );
         observer.observe(el);
         return () => observer.disconnect();
@@ -84,21 +103,23 @@ const TimelineItem = ({
             </div>
 
             {/* Content */}
-            <div className="pb-8">
-                <span className="text-[14px] font-black uppercase font-semibold tracking-[0.15em] text-primary/70 mb-1 block">
+            <div className="pb-8 w-full pr-4 !pt-2">
+                <span className="text-[14px] font-black uppercase font-semibold tracking-[0.15em] text-primary/70 !mb-2 block" style={{ fontFamily: 'var(--font-garamond)' }}>
                     {label}
                 </span>
-                <p className="text-gray-800 font-medium leading-relaxed text-sm">
-                    {value}
-                </p>
+                {value && (
+                    <p className="text-gray-500 leading-relaxed text-sm">
+                        {value}
+                    </p>
+                )}
+                {children && <div className="!mt-4">{children}</div>}
             </div>
         </div>
     );
 };
 
-
-
 const CaseStudiesPreview = () => {
+    const sectionRef = useRef<HTMLElement>(null);
     const headingRef = useRef<HTMLHeadingElement>(null);
     const paraRef = useRef<HTMLParagraphElement>(null);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -106,202 +127,174 @@ const CaseStudiesPreview = () => {
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
-        if (!headingRef.current || !paraRef.current || !buttonRef.current) return;
+        if (!headingRef.current || !paraRef.current || !buttonRef.current || !sectionRef.current) return;
 
-        // Split paragraph into lines
         const split = new SplitType(paraRef.current, { types: "lines" });
         const lines = split.lines;
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: headingRef.current,
-                start: "top 85%", // Trigger when top of heading is 85% down the viewport
-                toggleActions: "play none none none", // Only play once
+                start: "top 85%",
+                toggleActions: "play none none none",
             },
         });
 
-        // Step 1: Heading slide up + fade
-        tl.fromTo(
-            headingRef.current,
-            { y: 30, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out",
+        tl.fromTo(headingRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" });
+        tl.fromTo(lines, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" }, "-=0.6");
+        tl.fromTo(buttonRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.1");
+
+        return () => { split.revert(); };
+    }, []);
+
+    const [planeSize, setPlaneSize] = React.useState(340);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setPlaneSize(250);
+            } else {
+                setPlaneSize(340);
             }
-        );
-
-        // Step 2: Line-by-line paragraph animation
-        tl.fromTo(
-            lines,
-            { y: 20, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power2.out",
-            },
-            "-=0.6" // Start paragraph slightly before heading finishes
-        );
-
-        // Step 3: Button slide up + fade
-        tl.fromTo(
-            buttonRef.current,
-            { y: 30, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out",
-            },
-            "-=0.1" // Start slightly before paragraph ends
-        );
-
-        return () => {
-            split.revert();
         };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     return (
-        <section className="relative w-full !py-12 lg:!py-20 !px-6 lg:!py-6 overflow-hidden flex items-center justify-center">
+        <section ref={sectionRef} className="relative w-full !py-24 !px-6 overflow-hidden flex items-center justify-center">
             {/* Decorative blob */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl -mr-48 -mt-48 pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto w-full">
                 {/* Section Header */}
-                <div className="mb-20 text-center flex flex-col items-center">
-                    <h2 ref={headingRef} className="font-bold text-gray-900 mb-6 tracking-tight">
-                        Case Studies
+                <div className="mb-16 text-center flex flex-col items-center">
+                    <h2 ref={headingRef} className="font-bold text-gray-900 !mb-3 tracking-tight">
+                        Our Work Speaks for Itself
                     </h2>
                     <p ref={paraRef} className="max-w-3xl text-lg text-gray-500 font-medium leading-relaxed">
-                        Real problems solved with innovative digital strategies — turning complex challenges into measurable success.
+                       Real projects. Real results. Real business growth.
                     </p>
                 </div>
 
-                {/* Case Study Rows */}
-                <div className="!space-y-14 !mt-6 lg:!mt-10 ">
-                    {caseStudies.map((cs, idx) => {
-                        const isReversed = idx % 2 !== 0;
+                {/* Case Study Entry */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-stretch !mt-10">
+                    
+                    {/* Left: Content Timeline */}
+                    <div className="relative z-10 w-full max-w-[500px] mx-auto lg:mx-0">
+                        {/* Client Name Header */}
+                        <div className="!mb-8 pl-2">
+                            <span className="inline-block bg-primary/10 text-primary text-xs font-black uppercase tracking-widest !px-4 !py-1.5 rounded-full mb-3" style={{ fontFamily: 'var(--font-garamond)' }}>
+                                Case Study 01
+                            </span>
+                            <h3 className="!mt-4 !ml-2 font-bold text-gray-900 text-3xl">
+                                Ricchhotel Restaurant
+                            </h3>
+                        </div>
 
-                        const timeline = (
-                            <div className="relative">
-                                {/* Client Name Header */}
-                                <div className="!mb-8">
-                                    <span className="inline-block bg-primary/10 text-primary text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
-                                        Case Study {String(idx + 1).padStart(2, "0")}
-                                    </span>
-                                    <h3 className="!mt-2 font-bold text-gray-900">
-                                        {cs.client}
-                                    </h3>
-                                </div>
-
-                                {/* Timeline */}
-                                <div className="pl-2">
-                                    <TimelineItem
-                                        delay={idx * 200 + 100}
-                                        label="Problem"
-                                        value={cs.problem}
-                                        icon={
-                                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <circle cx="12" cy="12" r="10" />
-                                                <path d="M12 8v4M12 16h.01" />
-                                            </svg>
-                                        }
-                                    />
-                                    <TimelineItem
-                                        delay={idx * 200 + 250}
-                                        label="Solution"
-                                        value={cs.solution}
-                                        icon={
-                                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
-                                            </svg>
-                                        }
-                                    />
-
-                                    {/* Results */}
-                                    <div className="!mt-6 pl-2">
-                                        <span className="text-[14px] font-black uppercase font-semibold tracking-[0.15em] text-primary/70 !mb-1 block">Results</span>
-                                        <ul className="space-y-2 ml-0 mb-0">
-                                            {cs.results.map((r, rIdx) => (
-                                                <li key={rIdx} className="flex items-start text-sm font-medium mb-0">
-                                                    <span className="mr-2 text-primary font-bold">•&nbsp;</span>
-                                                    <span className="text-gray-600"><span className="font-semibold text-gray-600">{r.value}</span> {r.label}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-
-                        const polaroid = (
-                            <div className="relative h-[380px] flex items-center justify-center">
-                                {/* Back polaroid */}
-                                <div
-                                    className={`absolute w-56 h-64 bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-gray-100 p-3 ${cs.polaroidAngle2} top-6 left-1/2 -translate-x-1/2 transition-transform duration-500 hover:scale-105`}
-                                >
-                                    <div className="w-full h-44 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                        <svg className="w-10 h-10 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" />
-                                            <circle cx="8.5" cy="8.5" r="1.5" />
-                                            <path d="M21 15l-5-5L5 21" />
-                                        </svg>
-                                    </div>
-                                    <div className="mt-3 flex flex-col items-center gap-1">
-                                        <div className="h-2 w-24 bg-gray-100 rounded-full" />
-                                        <div className="h-2 w-16 bg-gray-100 rounded-full" />
-                                    </div>
-                                </div>
-
-                                {/* Front polaroid */}
-                                <div
-                                    className={`absolute w-60 h-72 bg-white rounded-xl shadow-[0_30px_80px_rgba(33,151,161,0.18)] border border-gray-100 p-3 ${cs.polaroidAngle} top-4 left-1/2 -translate-x-1/3 transition-transform duration-500 hover:scale-105 hover:rotate-0 z-10`}
-                                >
-                                    <div className="w-full h-52 rounded-lg bg-gradient-to-br from-[#2197A1]/10 to-[#125960]/20 flex items-center justify-center relative overflow-hidden">
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="text-primary/20 font-black text-6xl select-none">
-                                                {cs.client.split(" ").map(w => w[0]).join("").slice(0, 3)}
+                        {/* Timeline */}
+                        <div className="pl-2">
+                            <TimelineItem
+                                delay={200}
+                                label="Client Problem :"
+                                value="The client wanted to grow their restaurant business, attract more customers, and build a strong online presence."
+                                icon={
+                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 8v4M12 16h.01" />
+                                    </svg>
+                                }
+                            />
+                            
+                            <TimelineItem
+                                delay={400}
+                                label="What we did:"
+                                icon={
+                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                }
+                            >
+                                {/* Static Categories List */}
+                                <div className="space-y-4 w-full">
+                                    {solutionCategories.map((cat, idx) => (
+                                        <div 
+                                            key={idx}
+                                            className="rounded-xl overflow-hidden shadow-[0_10px_10px_2px_rgba(0,0,0,0.05)] !p-4 !my-4"
+                                        >
+                                            {/* Header */}
+                                            <div className="px-4 py-3 flex flex-col items-start bg-gray-50/40">
+                                                <h5 className="text-[15px] font-bold text-gray-800">
+                                                    {cat.title}
+                                                </h5>
+                                                {cat.desc && (
+                                                    <p className="text-[13px] text-gray-500 mt-1 leading-relaxed">
+                                                        {cat.desc}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            
+                                            {/* Content (always visible) */}
+                                            <div className="px-5 pb-5 pt-3 border-t border-gray-50">
+                                                <ul className="!space-y-1 ">
+                                                    {cat.points.map((pt, pIdx) => (
+                                                        <li key={pIdx} className="flex items-start leading-relaxed">
+                                                            <svg className="w-3.5 h-3.5 text-primary !mt-1.5 !mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                                            <p className="text-[14px] md:text-[17px] text-gray-700 leading-relaxed !mb-0">{pt}</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
                                         </div>
-                                        <svg className="w-12 h-12 text-primary/30 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" />
-                                            <circle cx="8.5" cy="8.5" r="1.5" />
-                                            <path d="M21 15l-5-5L5 21" />
-                                        </svg>
-                                    </div>
-                                    <div className="mt-3 px-1">
-                                        <div className="h-2 w-28 bg-gray-100 rounded-full mb-1.5" />
-                                        <div className="h-2 w-20 bg-gray-100 rounded-full" />
-                                    </div>
+                                    ))}
                                 </div>
-                            </div>
-                        );
+                            </TimelineItem>
 
-                        return (
-                            <div
-                                key={idx}
-                                className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 items-center"
+                            <TimelineItem
+                                delay={600}
+                                label="Results:"
+                                value="Because of this work:"
+                                icon={
+                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                }
                             >
-                                {/* Timeline - always on top for mobile */}
-                                <div className={`order-1 ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                                    {timeline}
+                                <div className="!space-y-1 md:!space-y-2 !mt-3">
+                                    {[
+                                        "More people started knowing about the restaurant",
+                                        "Their social media engagement increased",
+                                        "They started getting more customer inquiries and orders"
+                                    ].map((res, i) => (
+                                        <div key={i} className="flex items-start gap-3">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-primary !mt-[10px] shrink-0" />
+                                            <span className="text-gray-700 text-[13px] md:!text-[15px] leading-relaxed">{res}</span>
+                                        </div>
+                                    ))}
                                 </div>
+                            </TimelineItem>
+                        </div>
+                    </div>
 
-                                {/* Polaroid - always on bottom for mobile */}
-                                <div className={`order-2 ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
-                                    {polaroid}
-                                </div>
-                            </div>
-                        );
-                    })}
+                    {/* Right: Flying Posters WebGL */}
+                    <div className="relative w-full flex items-start justify-center lg:mt-0 mt-8 overflow-hidden min-h-[350px] lg:min-h-[500px]">
+                        <FlyingPosters 
+                            items={caseImages}
+                            planeWidth={planeSize}
+                            planeHeight={planeSize}
+                            distortion={3}
+                            scrollEase={0.01}
+                            cameraFov={45}
+                            cameraZ={20}
+                        />
+                    </div>
+
                 </div>
 
                 {/* CTA */}
-                <div ref={buttonRef} className="flex justify-center lg:!mt-20 !mt-2">
+                <div ref={buttonRef} className="flex justify-center lg:!mt-45 !mt-8">
                     <Button href="/case-studies" variant="primary" size="lg">
                         View All Case Studies
                     </Button>
@@ -312,3 +305,17 @@ const CaseStudiesPreview = () => {
 };
 
 export default CaseStudiesPreview;
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

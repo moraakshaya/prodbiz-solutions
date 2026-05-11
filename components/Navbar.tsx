@@ -8,11 +8,11 @@ import Button from "./Button";
 import { usePathname } from "next/navigation";
 
 const solutionsDropdown = [
-    { label: "Digital Product & Software Development", href: "/solutions/digital-product-software-development" },
-    { label: "Performance Marketing", href: "/solutions/performance-marketing" },
-    { label: "Brand Growth & Reputation Management", href: "/solutions/brand-growth-reputation-management" },
-    { label: "Data, Analytics & Campaign Intelligence", href: "/solutions/data-analytics-campaign-intelligence" },
-    { label: "Creative Media & Brand Production", href: "/solutions/creative-media-brand-production" },
+    { label: "Branding & Designing", href: "/solutions/branding-designing" },
+    { label: "Website Development", href: "/solutions/website-development" },
+    { label: "Content Creation & Video Marketing", href: "/solutions/content-creation-video-marketing" },
+    { label: "Digital Marketing", href: "/solutions/digital-marketing" },
+    { label: "Complete Business Growth", href: "/solutions/complete-business-growth" },
 ];
 
 export default function Navbar() {
@@ -151,10 +151,10 @@ export default function Navbar() {
                 <ul className="hidden lg:flex items-stretch justify-center gap-8 list-none !m-0 !p-0 flex-1 h-full">
                     <li className="flex items-center !m-0 !p-0 h-full">
                         <Link
-                            href="/who-we-are"
-                            className="relative group text-sm font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
+                            href="/about-us"
+                            className="relative group !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                         >
-                            Who We Are
+                            About Us
                             <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
                         </Link>
                     </li>
@@ -168,7 +168,7 @@ export default function Navbar() {
                         <div className="flex items-center gap-1 cursor-pointer group h-full">
                             <Link
                                 href="/solutions"
-                                className="relative text-sm font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
+                                className="relative !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                             >
                                 Solutions
                                 <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
@@ -207,7 +207,7 @@ export default function Navbar() {
                                     <Link
                                         href={item.href}
                                         onClick={closeMobileMenu}
-                                        className="block !px-4 !py-2 text-sm font-medium !text-gray-600 rounded-xl
+                                        className="block !px-4 !py-2 !text-[1.09rem] font-medium !text-gray-600 rounded-xl
                                             hover:bg-[var(--secondary-color)]/15 hover:!text-[var(--secondary-color)] transition-all duration-200 no-underline"
                                     >
                                         {item.label}
@@ -220,7 +220,7 @@ export default function Navbar() {
                     <li className="flex items-center !m-0 !p-0 h-full">
                         <Link
                             href="/case-studies"
-                            className="relative group text-sm font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
+                            className="relative group !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                         >
                             Case Studies
                             <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
@@ -229,7 +229,7 @@ export default function Navbar() {
                     <li className="flex items-center !m-0 !p-0 h-full">
                         <Link
                             href="/insights"
-                            className="relative group text-sm font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
+                            className="relative group !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                         >
                             Insights
                             <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
@@ -237,17 +237,17 @@ export default function Navbar() {
                     </li>
                     <li className="flex items-center !m-0 !p-0 h-full">
                         <Link
-                            href="/inside-company"
-                            className="relative group text-sm font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
+                            href="/gallery"
+                            className="relative group !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                         >
-                            Inside ProdBiz
+                            Gallery
                             <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
                         </Link>
                     </li>
                     <li className="flex items-center !m-0 !p-0 h-full">
                         <Link
                             href="/contact"
-                            className="relative group text-sm font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
+                            className="relative group !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                         >
                             Contact
                             <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
@@ -270,11 +270,11 @@ export default function Navbar() {
                 <ul className="flex flex-col !p-2 list-none !m-0 overflow-y-auto max-h-[80vh]">
                     <li className="!my-2 !px-2 !py-1 border border-transparent rounded-md shadow-[20px_20px_20px_rgba(0,0,0,0.15)]">
                         <Link
-                            href="/who-we-are"
+                            href="/about-us"
                             onClick={closeMobileMenu}
                             className="flex items-center justify-between py-4 text-base font-semibold !text-gray-700 no-underline hover:text-[var(--primary-color)] transition-colors group"
                         >
-                            Who We Are
+                            About Us
                         </Link>
                     </li>
 
@@ -337,11 +337,11 @@ export default function Navbar() {
                     </li>
                     <li className="!my-2 !px-2 !py-1 border border-transparent rounded-md shadow-[20px_20px_20px_rgba(0,0,0,0.15)]">
                         <Link
-                            href="/inside-company"
+                            href="/gallery"
                             onClick={closeMobileMenu}
                             className="flex items-center justify-between py-4 text-base font-semibold !text-gray-700 no-underline hover:text-[var(--primary-color)] transition-colors group"
                         >
-                            Inside ProdBiz
+                            Gallery
                         </Link>
                     </li>
                     <li className="!my-2 !px-2 !py-1 border border-transparent rounded-md shadow-[20px_20px_20px_rgba(0,0,0,0.15)]">

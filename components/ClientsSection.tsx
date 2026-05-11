@@ -183,7 +183,7 @@ const ClientsSection = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
         </section>
     );

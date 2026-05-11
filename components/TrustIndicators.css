@@ -1,5 +1,4 @@
 .trust-strip {
-    padding: 2.5rem 1rem;
     background: var(--bg-color);
     position: relative;
     z-index: 5;
@@ -46,21 +45,24 @@
 }
 
 .trust-card__icon-wrapper {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #1b7a82 100%);
-    border-radius: 14px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(145deg, #4edbd6, #167a84);
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-shadow: 0 4px 12px rgba(33, 151, 161, 0.3);
     flex-shrink: 0;
 }
 
+/* Extruded SVG look */
+.trust-card__icon-wrapper svg {
+    filter: drop-shadow(2px 4px 3px rgba(0, 0, 0, 0.4));
+}
+
 .trust-card:nth-child(even) .trust-card__icon-wrapper {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, #d4522e 100%);
-    box-shadow: 0 4px 12px rgba(231, 96, 56, 0.3);
+    background: linear-gradient(145deg, #ff9b71, #c8401c);
 }
 
 .trust-card__content {
@@ -82,13 +84,54 @@
     margin-top: 2px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .trust-strip {
-        padding: 2rem 0.5rem;
+        padding: 30px 0px;
     }
 
     .trust-strip__container {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem; /* Proper gap between each one */
+        padding: 0 1rem;
+        align-items: flex-start;
+    }
+
+    .trust-card {
+        padding: 0.85rem 1rem;
+        border-radius: 15px;
+        gap: 1rem;
+        width: fit-content;
+        min-width: 200px;
+    }
+
+    /* Staggered Layout with Gaps */
+    .trust-card:nth-child(1) {
+        margin-left: 0;
+    }
+    .trust-card:nth-child(2) {
+        margin-left: 20%;
+    }
+    .trust-card:nth-child(3) {
+        margin-left: 40%;
+    }
+
+    .trust-card:hover {
+        transform: none;
+    }
+
+    .trust-card__icon-wrapper {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+    }
+
+    .trust-card__value {
+        font-size: 1rem;
+    }
+
+    .trust-card__label {
+        font-size: 0.75rem;
+        margin-top: -1px;
     }
 }

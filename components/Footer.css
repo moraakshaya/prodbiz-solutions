@@ -37,7 +37,7 @@
 
 /* ── Brand column ── */
 .footer__description {
-    font-size: 0.9rem;
+    font-size: 1rem;
     line-height: 1.7;
     color: #b0b0b0;
     margin-bottom: 1.5rem;
@@ -70,7 +70,7 @@
 /* ── Column headings ── */
 .footer__heading {
     font-family: var(--font-garamond), serif;
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #fff;
     margin-bottom: 1.2rem;
@@ -102,7 +102,7 @@
 }
 
 .footer__list a {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #b0b0b0;
     text-decoration: none;
     transition: color 0.2s ease, padding-left 0.2s ease;
@@ -137,7 +137,7 @@
 
 .footer__contact a,
 .footer__contact span {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #b0b0b0;
     text-decoration: none;
     transition: color 0.2s ease;
@@ -164,7 +164,7 @@
 }
 
 .footer__copyright {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     color: #888;
     margin: 0;
 }
@@ -183,7 +183,7 @@
 }
 
 .footer__legal a {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     color: #888;
     text-decoration: none;
     transition: color 0.2s ease;

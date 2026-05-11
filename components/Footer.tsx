@@ -4,19 +4,19 @@ import Link from "next/link";
 import "./Footer.css";
 
 const quickLinks = [
-    { label: "Who We Are", href: "/who-we-are" },
+    { label: "About Us", href: "/about-us" },
     { label: "Case Studies", href: "/case-studies" },
     { label: "Insights", href: "/insights" },
-    { label: "Inside ProdBiz", href: "/inside-company" },
+    { label: "Gallery", href: "/gallery" },
     { label: "Contact", href: "/contact" },
 ];
 
 const services = [
-    { label: "Digital Product & Software Development", href: "/solutions/digital-product-software-development" },
-    { label: "Performance Marketing", href: "/solutions/performance-marketing" },
-    { label: "Brand Growth & Reputation Management", href: "/solutions/brand-growth-reputation-management" },
-    { label: "Data, Analytics & Campaign Intelligence", href: "/solutions/data-analytics-campaign-intelligence" },
-    { label: "Creative Media & Brand Production", href: "/solutions/creative-media-brand-production" },
+    { label: "Branding & Designing", href: "/solutions/branding-designing" },
+    { label: "Website Development", href: "/solutions/website-development" },
+    { label: "Content Creation & Video Marketing", href: "/solutions/content-creation-video-marketing" },
+    { label: "Digital Marketing", href: "/solutions/digital-marketing" },
+    { label: "Complete Business Growth", href: "/solutions/complete-business-growth" },
 ];
 
 const socialLinks = [

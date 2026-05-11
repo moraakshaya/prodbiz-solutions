@@ -10,6 +10,7 @@ interface ButtonProps {
     variant?: "primary" | "secondary";
     size?: "md" | "lg";
     className?: string;
+    style?: React.CSSProperties;
     onClick?: () => void;
     type?: "button" | "submit" | "reset";
 }
@@ -20,6 +21,7 @@ const Button = ({
     variant = "primary",
     size = "md",
     className = "",
+    style,
     onClick,
     type = "button",
 }: ButtonProps) => {
@@ -27,14 +29,14 @@ const Button = ({
 
     if (href) {
         return (
-            <Link href={href} className={baseClasses} onClick={onClick} suppressHydrationWarning>
+            <Link href={href} className={baseClasses} style={style} onClick={onClick} suppressHydrationWarning>
                 {children}
             </Link>
         );
     }
 
     return (
-        <button type={type} className={baseClasses} onClick={onClick} suppressHydrationWarning>
+        <button type={type} className={baseClasses} style={style} onClick={onClick} suppressHydrationWarning>
             {children}
         </button>
     );

@@ -3,41 +3,50 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Users, Rocket, TrendingUp, Star } from "lucide-react";
+import { useState } from "react";
 import "./TrustIndicators.css";
 
 const indicators = [
     {
-        value: "150+",
-        label: "Projects Delivered",
-        icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" /><path d="m9 12 2 2 4-4" /></svg>
-        )
+        target: 50,
+        decimals: 0,
+        prefix: "",
+        suffix: "+",
+        staticText: null,
+        label: "Happy Clients",
+        icon: Users,
     },
     {
-        value: "98%",
-        label: "Client Satisfaction",
-        icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
-        )
+        target: 100,
+        decimals: 0,
+        prefix: "",
+        suffix: "+",
+        staticText: null,
+        label: "Projects Completed",
+        icon: Rocket,
     },
     {
-        value: "5+",
-        label: "Years Experience",
-        icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20" /><path d="m4.93 4.93 14.14 14.14" /><path d="M2 12h20" /><path d="m19.07 4.93-14.14 14.14" /></svg>
-        )
-    },
-    {
-        value: "Global",
-        label: "Serving Clients",
-        icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
-        )
+        target: 4.8,
+        decimals: 1,
+        prefix: "",
+        suffix: "/5",
+        staticText: null,
+        label: "Client Rating",
+        icon: Star,
     }
 ];
 
 const TrustIndicators = () => {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -45,36 +54,133 @@ const TrustIndicators = () => {
         if (!sectionRef.current) return;
 
         const cards = sectionRef.current.querySelectorAll(".trust-card");
+        const counters = sectionRef.current.querySelectorAll(".counter-val");
 
+        // 3D Card Intro Animation
         gsap.fromTo(
             cards,
-            { y: 60, opacity: 0 },
+            { y: 60, opacity: 0, rotateX: 15, transformPerspective: 1000 },
             {
                 y: 0,
                 opacity: 1,
+                rotateX: 0,
                 duration: 1,
                 stagger: 0.15,
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: "top 85%", // Trigger when top of section is 85% down the viewport
-                    toggleActions: "play none none none", // Only play once
+                    start: "top 85%",
+                    toggleActions: "play none none none",
                 },
             }
         );
+
+        // Counter Animation
+        counters.forEach((counter) => {
+            const target = parseFloat(counter.getAttribute("data-target") || "0");
+            const decimals = parseInt(counter.getAttribute("data-decimals") || "0");
+            const obj = { val: 0 };
+            
+            gsap.to(obj, {
+                val: target,
+                duration: 2.5,
+                ease: "power2.out",
+                onUpdate: () => {
+                    if (counter) {
+                        counter.innerHTML = obj.val.toFixed(decimals);
+                    }
+                },
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 85%",
+                    toggleActions: "play none none none",
+                }
+            });
+        });
+
+        // 3D Mouse Move Effect on Desktop
+        const handleMouseMove = (e: MouseEvent, card: Element) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; // x position within the element.
+            const y = e.clientY - rect.top;  // y position within the element.
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
+            const rotateY = ((x - centerX) / centerX) * 10;
+            
+            gsap.to(card, {
+                rotateX,
+                rotateY,
+                transformPerspective: 1000,
+                duration: 0.4,
+                ease: "power1.out"
+            });
+        };
+
+        const handleMouseLeave = (card: Element) => {
+            gsap.to(card, {
+                rotateX: 0,
+                rotateY: 0,
+                duration: 0.7,
+                ease: "power3.out"
+            });
+        };
+
+        const isMobile = window.innerWidth <= 768;
+        if (!isMobile) {
+            cards.forEach(card => {
+                const onMove = (e: Event) => handleMouseMove(e as MouseEvent, card);
+                const onLeave = () => handleMouseLeave(card);
+                
+                card.addEventListener("mousemove", onMove);
+                card.addEventListener("mouseleave", onLeave);
+                
+                // Cleanup attached to DOM element
+                (card as any)._cleanup = () => {
+                    card.removeEventListener("mousemove", onMove);
+                    card.removeEventListener("mouseleave", onLeave);
+                };
+            });
+        }
+
+        return () => {
+            cards.forEach(card => {
+                if ((card as any)._cleanup) {
+                    (card as any)._cleanup();
+                }
+            });
+        };
     }, []);
 
     return (
         <section ref={sectionRef} className="trust-strip">
             <div className="trust-strip__container">
                 {indicators.map((item, index) => (
-                    <div key={index} className="trust-card">
-                        <div className="trust-card__icon-wrapper">
-                            {item.icon}
+                    <div key={index} className="trust-card" style={{ transformStyle: 'preserve-3d' }}>
+                        <div className="trust-card__icon-wrapper" style={{ transform: 'translateZ(30px)' }}>
+                            <item.icon size={isMobile ? 22 : 32} strokeWidth={2.5} {...(item.label === "Client Rating" ? { fill: "currentColor" } : {})} />
                         </div>
-                        <div className="trust-card__content">
-                            <span className="trust-card__value">{item.value}</span>
-                            <span className="trust-card__label">{item.label}</span>
+                        <div className="trust-card__content" style={{ transform: 'translateZ(20px)' }}>
+                            {item.staticText ? (
+                                <span className="trust-card__value" style={{ fontSize: '1.1rem' }}>{item.staticText}</span>
+                            ) : (
+                                <>
+                                    <span className="trust-card__value">
+                                        {item.prefix}
+                                        <span 
+                                            className="counter-val" 
+                                            data-target={item.target} 
+                                            data-decimals={item.decimals}
+                                        >
+                                            0
+                                        </span>
+                                        {item.suffix}
+                                    </span>
+                                    <span className="trust-card__label">{item.label}</span>
+                                </>
+                            )}
                         </div>
                     </div>
                 ))}

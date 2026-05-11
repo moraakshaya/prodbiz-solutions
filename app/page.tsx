@@ -7,179 +7,313 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import TrustIndicators from "@/components/TrustIndicators";
 import SolutionsSection from "@/components/SolutionsSection";
+import AboutSection from "@/components/AboutSection";
+import HowWeWork from "@/components/HowWeWork";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import CaseStudiesPreview from "@/components/CaseStudiesPreview";
 import ClientsSection from "@/components/ClientsSection";
 import FinalCTA from "@/components/FinalCTA";
+import dynamic from "next/dynamic";
+import NextImage from "next/image";
+import { useState } from "react";
+
+const LiquidEther = dynamic(() => import("@/components/LiquidEther"), { ssr: false });
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const paraRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
 
-  const paraText = "We deliver scalable IT solutions and data-driven digital marketing strategies to help your business grow and thrive online.";
+  const paraText = "At Prodbiz Solutions, we provide complete digital marketing services including branding, website development, video creation, SEO services, and online advertising to help your business attract more customers and grow online.";
 
   useEffect(() => {
-    if (!titleRef.current || !paraRef.current || !buttonsRef.current) return;
-
-    const words = paraRef.current.querySelectorAll(".para-word");
-    const chars = titleRef.current.querySelectorAll(".char");
-    const buttons = buttonsRef.current.children;
-    
-    const tl = gsap.timeline({ delay: 0.5 });
-
-    // H1 Animation
-    tl.fromTo(
-      chars,
-      { y: -100, opacity: 0, rotateX: -45 },
-      {
-        y: 0,
-        opacity: 1,
-        rotateX: 0,
-        duration: 1.2,
-        stagger: 0.03,
-        ease: "expo.out",
-      }
-    );
-
-    // Paragraph Animation (Manual Word-by-Word)
-    tl.fromTo(
-      words,
-      { y: 20, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.05,
-        ease: "power2.out",
-      },
-      "-=1.0" // Overlap H1's ending 
-    );
-
-    // Buttons Animation (Fade + Slight Up + Stagger)
-    tl.fromTo(
-      buttons,
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
-      },
-      "-=0.5" // Overlap Paragraph's ending 
-    );
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const titleText = "Empower Your Business With ProdBiz";
+  useEffect(() => {
+    if (!mounted || !titleRef.current || !buttonsRef.current) return;
+
+    const elTitle = titleRef.current;
+    const elButtons = buttonsRef.current;
+
+    const ctx = gsap.context(() => {
+      const titleChars = elTitle.querySelectorAll(".char");
+      const buttons = elButtons.children;
+      const sphere = document.getElementById("home-half-sphere");
+      const mobileImg = document.getElementById("home-mobile-img");
+      const subtitle = document.getElementById("home-hero-subtitle");
+
+      const tl = gsap.timeline({ delay: 0.3 });
+
+      // 1. Sphere Fades in Smoothly & Above Content Slides in from Left
+      tl.fromTo(sphere, 
+        { opacity: 0, scale: 0.96, y: 30 }, 
+        { opacity: 1, scale: 1, y: 0, duration: 1.8, ease: "power2.out" }
+      );
+
+      tl.fromTo(subtitle, 
+        { opacity: 0, x: -60 }, 
+        { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" }, 
+        "<"
+      );
+
+      tl.fromTo(titleChars,
+        { x: -40, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.02,
+          ease: "power4.out",
+        },
+        "<0.2"
+      );
+
+      // 2. Mobile (Phone) Slides in from Bottom
+      tl.fromTo(mobileImg, 
+        { y: 150, opacity: 0, scale: 0.95 }, 
+        { y: 0, opacity: 1, scale: 1, duration: 1.5, ease: "expo.out" }, 
+        "-=0.8"
+      );
+
+      // 4. Buttons Animation (Along with mobile)
+      tl.fromTo(
+        buttons,
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: "power3.out",
+        },
+        "-=0.9"
+      );
+    });
+
+    return () => ctx.revert();
+  }, [mounted]);
+
+
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[75vh] min-[340px]:min-h-[70vh] min-[400px]:min-h-[55vh] min-[760px]:min-h-[75vh] min-[1024px]:min-h-screen flex items-center justify-center overflow-hidden pt-16 min-[760px]:pt-0">
-        {/* Teal Gradient Background via Tailwind */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960] -z-20" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent -z-10" />
-        <div className="absolute inset-0 bg-[radial-gra dient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-black/20 via-transparent to-transparent -z-10" />
+    <main className="flex min-h-screen flex-col md:items-center justify-between">
+      {/* Redesigned Hero Section */}
+      <section className="relative w-full min-h-[65vh] md:min-h-[100vh] lg:min-h-[100vh] !mb-10 md:!mb-28 flex flex-col items-center overflow-hidden bg-black">
+        {/* LiquidEther Background Overlay */}
+        <div className="absolute inset-0 -z-20">
+          {!isMobile ? (
+            /* Desktop Version */
+            <LiquidEther
+              colors={[ '#2197a1', '#2197A1', '#2197a1' ]}
+              mouseForce={20}
+              cursorSize={100}
+              isViscous
+              viscous={30}
+              iterationsViscous={32}
+              iterationsPoisson={32}
+              resolution={0.5}
+              isBounce={false}
+              autoDemo
+              autoSpeed={0.5}
+              autoIntensity={2.2}
+              takeoverDuration={0.25}
+              autoResumeDelay={3000}
+              autoRampDuration={0.6}
+              style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+            />
+          ) : (
+            /* Optimized Mobile Version */
+            <LiquidEther
+              colors={[ '#2197a1', '#2197A1', '#2197a1' ]}
+              mouseForce={15}
+              cursorSize={80}
+              isViscous
+              viscous={40}
+              iterationsViscous={16}
+              iterationsPoisson={16}
+              resolution={0.4}
+              isBounce={false}
+              autoDemo
+              autoSpeed={0.4}
+              autoIntensity={2.5}
+              takeoverDuration={0.2}
+              autoResumeDelay={2000}
+              autoRampDuration={0.4}
+              style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+            />
+          )}
+        </div>
 
-        {/* Content */}
-        <div className="z-10 text-center !px-4 md:!px-6 max-w-5xl mx-auto flex flex-col items-center">
-          <h1 ref={titleRef} className="font-bold text-white md:!mb-6 drop-shadow-md text-4xl lg:text-5xl perspective-1000">
-            {titleText.split(" ").map((word, wordIndex) => (
-              <span key={wordIndex} className="word inline-block whitespace-nowrap">
-                {word.split("").map((char, charIndex) => (
-                  <span
-                    key={charIndex}
-                    className="char inline-block"
-                  >
-                    {char}
-                  </span>
+        {/* ── TOP AREA: Title & Subtitle ── */}
+        <div 
+          className="relative z-20 w-full max-w-7xl flex flex-col items-center text-center !px-4 md:!px-6"
+          style={{ paddingTop: "clamp(5rem, 8vw, 8rem)", paddingBottom: "1rem" }}
+        >
+          <span 
+            id="home-hero-subtitle"
+            className="inline-block font-bold text-xs md:text-sm uppercase tracking-[0.25em] !mb-4"
+            style={{ color: "#5eead4", textShadow: "0 0 18px rgba(94,234,212,0.7)", opacity: 0 }}
+          >
+            Award-Winning Digital Growth Agency
+          </span>
+
+          {isMobile ? (
+            <h2
+              ref={titleRef}
+              className="font-black !text-white leading-[1.1] max-w-7xl md:!mb-0 perspective-1000"
+              style={{
+                fontSize: "clamp(1rem, 3.5vw, 4rem)",
+                textShadow: "0 4px 24px rgba(0,0,0,0.55)"
+              }}
+            >
+              {"Grow Your Business Online with ".split(" ").map((word, wordIndex) => (
+                <span key={wordIndex} className="word inline-block whitespace-nowrap">
+                  {word.split("").map((char, charIndex) => (
+                    <span key={charIndex} className="char inline-block">{char}</span>
+                  ))}
+                  {word !== "" && <span className="inline-block">&nbsp;</span>}
+                </span>
+              ))}
+              <span className="word inline-block whitespace-nowrap text-[#ff8c00]" style={{ textShadow: "0 0 30px rgba(255,140,0,0.4)" }}>
+                {"Prodbiz".split("").map((char, charIndex) => (
+                  <span key={charIndex} className="char inline-block">{char}</span>
+                ))} &nbsp;
+              </span>
+              <span className="word inline-block whitespace-nowrap text-[#ff8c00]" style={{ textShadow: "0 0 30px rgba(255,140,0,0.4)" }}>
+                {"Solutions".split("").map((char, charIndex) => (
+                  <span key={charIndex} className="char inline-block">{char}</span>
                 ))}
-                {wordIndex < titleText.split(" ").length - 1 && (
-                  <span className="inline-block">&nbsp;</span>
-                )}
               </span>
-            ))}
-          </h1>
-          <p ref={paraRef} className="text-white/90 md:!mb-8 max-w-2xl drop-shadow">
-            {paraText.split(" ").map((word, wordIndex) => (
-              <span key={wordIndex} className="para-word inline-block">
-                {word}{wordIndex < paraText.split(" ").length - 1 ? "\u00A0" : ""}
+            </h2>
+          ) : (
+            <h1
+              ref={titleRef}
+              className="font-black !text-white leading-[1.1] max-w-7xl md:!mb-0 perspective-1000"
+              style={{
+                fontSize: "clamp(1rem, 3.5vw, 4rem)",
+                textShadow: "0 4px 24px rgba(0,0,0,0.55)"
+              }}
+            >
+              {"Grow Your Business Online with ".split(" ").map((word, wordIndex) => (
+                <span key={wordIndex} className="word inline-block whitespace-nowrap">
+                  {word.split("").map((char, charIndex) => (
+                    <span key={charIndex} className="char inline-block">{char}</span>
+                  ))}
+                  {word !== "" && <span className="inline-block">&nbsp;</span>}
+                </span>
+              ))}
+              <span className="word inline-block whitespace-nowrap text-[#ff8c00]" style={{ textShadow: "0 0 30px rgba(255,140,0,0.4)" }}>
+                {"Prodbiz".split("").map((char, charIndex) => (
+                  <span key={charIndex} className="char inline-block">{char}</span>
+                ))} &nbsp;
               </span>
-            ))}
-          </p>
-          <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-0 lg:gap-4">
-            <Button
-              href="/get-proposal"
-              variant="primary"
-              size="md"
-            >
-              Get Started
-            </Button>
-            <Button
-              href="/solutions"
-              variant="secondary"
-              size="md"
-            >
-              Explore Services
-            </Button>
+              <span className="word inline-block whitespace-nowrap text-[#ff8c00]" style={{ textShadow: "0 0 30px rgba(255,140,0,0.4)" }}>
+                {"Solutions".split("").map((char, charIndex) => (
+                  <span key={charIndex} className="char inline-block">{char}</span>
+                ))}
+              </span>
+            </h1>
+          )}
+        </div>
+
+        {/* ── SPHERE WRAP: Dome & Mobile Visual ── */}
+        <div 
+          className="relative z-10 w-full flex justify-center"
+          style={{ marginTop: "auto", paddingTop: "clamp(44px, 6vw,40px)" }}
+        >
+          {/* Floating Phone Visual */}
+          <div 
+            id="home-mobile-img"
+            className="absolute z-30 wd-bob"
+            style={{ 
+              top: isMobile ? "clamp(10px, 4vw, 30px)" : "clamp(100px, 18vw, 100px)",
+              left: "50%",
+              width: isMobile ? "clamp(180px, 45vw, 240px)" : "clamp(480px, 32vw, 560px)",
+              filter: "drop-shadow(0 0 50px rgba(26,133,149,1)) drop-shadow(0 25px 60px rgba(0,0,0,0.9))",
+              borderRadius: "32px",
+              opacity: 0
+            }}
+          >
+            <NextImage 
+              src="/images/website-dev-hero-img.png" 
+              alt="Digital Growth Solutions"
+              width={500}
+              height={900}
+              className="w-full h-auto"
+            />
+          </div>
+
+          {/* Glass Dome */}
+          <div 
+            id="home-half-sphere"
+            style={{
+              width: "100%",
+              height: isMobile ? "240px" : "clamp(380px, 60vh, 700px)",
+              borderRadius: "50% 50% 0 0 / 100% 100% 0 0",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(26,133,149,0.42) 45%, rgba(7,27,36,0.85) 100%)",
+              backdropFilter: "blur(28px) saturate(180%)",
+              WebkitBackdropFilter: "blur(28px) saturate(180%)",
+              border: "1.5px solid rgba(255,255,255,0.35)",
+              borderBottom: "none",
+              boxShadow: "0 -24px 100px rgba(26,133,149,0.7), inset 0 28px 80px rgba(255,255,255,0.15)",
+              position: "relative",
+              overflow: "hidden",
+              opacity: 0
+            }}
+          >
+            {/* Specular highlights & Glow dots (same as website-dev) */}
+            <div className="absolute pointer-events-none" style={{ top: "3%", left: "15%", right: "15%", height: "40%", borderRadius: "50% 50% 0 0 / 100% 100% 0 0", background: "linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 100%)" }} />
+            <div className="absolute w-3 h-3 rounded-full animate-pulse" style={{ top: "15%", left: "10%", background: "#5eead4", boxShadow: "0 0 20px #5eead4" }} />
+            <div className="absolute w-2 h-2 rounded-full animate-pulse" style={{ top: "35%", right: "12%", background: "#ffffff", boxShadow: "0 0 15px #fff", animationDelay: "0.5s" }} />
+
+            {/* Dome Content: Paragraph & Two Buttons */}
+            <div className="absolute bottom-15 left-0 right-0 z-40 flex flex-col items-center px-4 text-center">
+
+              
+              <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 lg:gap-6">
+                <Button
+                  href="/get-proposal"
+                  variant="primary"
+                  className="!px-6 md:!px-8 !py-2.5 md:!py-4 !text-sm md:!text-lg font-bold rounded-xl md:rounded-2xl shadow-xl transition-all active:scale-95 text-black"
+                  style={{ background: "#e76038", border: "none", boxShadow: "0 10px 30px rgba(231,96,56,0.5)" }}
+                >
+                  Get Free Consultation
+                </Button>
+                <Button
+                  href="/solutions"
+                  variant="secondary"
+                  className="!px-6 md:!px-8 !py-2.5 md:!py-4 !text-sm md:!text-lg font-bold rounded-xl md:rounded-2xl border-white/30 backdrop-blur-md transition-all active:scale-95 text-white"
+                  style={{ background: "rgba(255,255,255,0.1)" }}
+                >
+                  Explore Services
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Wavy/Dripping Bottom Border */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
-          {/* Desktop Wavy Border */}
-          <svg
-            className="hidden md:block relative block w-[calc(100%+1.3px)] h-[120px]"
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,120V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.4,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z"
-              className="fill-white/10"
-              opacity="0.3"
-            ></path>
-            <path
-              d="M0,120V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.94,9.42,105.9,20.44,59.26,18.68,113.55,43.37,172.55,59.22,44,11.82,102.62,14.07,131.73-24.57s11.53-73.69,11.53-73.69V120H0Z"
-              className="fill-white/20"
-              opacity="0.5"
-            ></path>
-            <path
-              d="M0,120V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V120H0Z"
-              className="fill-white"
-            ></path>
-          </svg>
-
-          {/* Mobile Wavy Border - Aspect Ratio Preserved */}
-          <svg
-            className="block md:hidden relative block w-[calc(100%+1.3px)] h-[80px]"
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="xMidYMax slice"
-          >
-            <path
-              d="M0,120V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.4,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z"
-              className="fill-white/10"
-              opacity="0.3"
-            ></path>
-            <path
-              d="M0,120V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.94,9.42,105.9,20.44,59.26,18.68,113.55,43.37,172.55,59.22,44,11.82,102.62,14.07,131.73-24.57s11.53-73.69,11.53-73.69V120H0Z"
-              className="fill-white/20"
-              opacity="0.5"
-            ></path>
-            <path
-              d="M0,120V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V120H0Z"
-              className="fill-white"
-            ></path>
-          </svg>
-        </div>
+        {/* ── Keyframes ── */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes wd-bob {
+            0%,100% { transform: translateX(-50%) translateY(-45%); }
+            50%     { transform: translateX(-50%) translateY(calc(-45% - 20px)); }
+          }
+          .wd-bob { animation: wd-bob 4.5s ease-in-out infinite; }
+        `}} />
       </section>
 
       <TrustIndicators />
       <SolutionsSection />
+      <AboutSection />
+      <HowWeWork />
       <WhyChooseUs />
       <CaseStudiesPreview />
       <ClientsSection />

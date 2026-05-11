@@ -129,7 +129,7 @@ const FinalCTA = ({
                     </svg>
                 </div>
 
-                <div className="bg-[#2197A1]/28 !p-10 md:p-20 text-center relative overflow-hidden">
+                <div className="bg-[#2197A1]/28 !px-2 !py-10 md:!p-10  text-center relative overflow-hidden">
                     <h2 ref={headingRef} className=" text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
                         {title}
                     </h2>
@@ -139,7 +139,7 @@ const FinalCTA = ({
                     <Link
                         ref={buttonRef}
                         href={buttonHref}
-                        className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-6 !py-3 lg:!px-10 lg:!py-4 rounded-3xl font-bold text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
+                        className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-3 !py-2 md:!px-6 md:!py-3 rounded-3xl font-bold !text-[13px] md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
                     >
                         {buttonText}
                         <ArrowRight size={22} />

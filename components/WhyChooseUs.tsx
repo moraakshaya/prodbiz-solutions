@@ -1,273 +1,350 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitType from "split-type";
 
-const whyChooseUsData = [
-    {
-        step: "01",
-        title: "Data-Driven Strategies",
-        description: "We use advanced analytics to fuel every decision and maximize ROI.",
-        icon: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7" />
-                <path d="M3 10h18" />
-                <path d="M15 11l2 2 4-4" />
-            </svg>
-        ),
-        color: "from-cyan-400 to-blue-500",
-    },
-    {
-        step: "02",
-        title: "Custom Solutions",
-        description: "Tailored IT projects designed specifically for your unique business needs.",
-        icon: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2v4" />
-                <path d="M12 18v4" />
-                <path d="M4.93 4.93l2.83 2.83" />
-                <path d="M16.24 16.24l2.83 2.83" />
-                <path d="M2 12h4" />
-                <path d="M18 12h4" />
-                <path d="M4.93 19.07l2.83-2.83" />
-                <path d="M16.24 7.76l2.83-2.83" />
-            </svg>
-        ),
-        color: "from-blue-500 to-indigo-600",
-    },
-    {
-        step: "03",
-        title: "Transparent Reporting",
-        description: "Clear, honest communication and real-time performance tracking.",
-        icon: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 20V10" />
-                <path d="M18 20V4" />
-                <path d="M6 20v-4" />
-            </svg>
-        ),
-        color: "from-indigo-600 to-purple-600",
-    },
-    {
-        step: "04",
-        title: "Dedicated Team",
-        description: "Expert professionals committed to your long-term success.",
-        icon: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-        ),
-        color: "from-purple-600 to-pink-500",
-    },
+const features = [
+    { title: "Affordable Pricing", description: "Get high-quality work at prices that fit your budget.", side: "left", row: 0 },
+    { title: "Creative & Modern Designs", description: "We create clean, attractive designs that match your brand and grab attention.", side: "right", row: 0 },
+    { title: "Fast Delivery", description: "We complete your work on time without compromising quality.", side: "left", row: 1 },
+    { title: "Result-Oriented Approach", description: "We focus on real results — more customers, better reach, and business growth.", side: "right", row: 1 },
 ];
 
-interface WhyChooseUsItem {
-    step: string;
-    title: string;
-    description: string;
-    icon: React.ReactNode;
-    color: string;
-}
-
-const WhyChooseUsCard = ({ item, idx, isDesktop }: { item: WhyChooseUsItem; idx: number; isDesktop?: boolean }) => {
-    return (
-        <div className={`group relative flex flex-col items-center why-card-anim ${isDesktop ? "" : "min-w-full w-full flex-shrink-0 snap-center pb-2 px-4"}`}>
-            {/* Circular Card with 3D effect */}
-            <div className="relative w-48 md:w-64 h-48 md:h-64 !my-3">
-                {/* Outer Rotating Arc Background */}
-                <div className={`absolute inset-0 rounded-full border-[8px] border-white/10 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]`} />
-
-                {/* Colored Gradient Arc */}
-                <div className={`absolute inset-0 rounded-full border-[8px] border-transparent border-t-white/40 border-r-white/40 rotate-45 group-hover:rotate-180 transition-transform duration-1000`} />
-
-                {/* Main Circle - Glassmorphism 3D effect */}
-                <div className="absolute inset-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl flex flex-col items-center justify-center p-6 transition-all duration-300 group-hover:bg-white group-hover:scale-100 group-hover:-translate-y-0 text-center">
-                    <div className={`mb-3 transition-colors duration-300 group-hover:text-primary text-white`}>
-                        {item.icon}
-                    </div>
-                    <span className={`text-xs font-black !mb-1 transition-colors duration-300 group-hover:text-primary/70 text-white/60 tracking-widest uppercase`}>
-                        Step {item.step}
-                    </span>
-                    <h4 className={`font-bold transition-colors duration-300 group-hover:text-gray-900 text-white leading-tight text-balance break-words w-full`}>
-                        {item.title}
-                    </h4>
-                </div>
-
-                {/* Animated Arrow for desktop connectors */}
-                {isDesktop && idx < 3 && (
-                    <div className="hidden lg:block absolute top-1/2 -right-8 -translate-y-1/2 z-20">
-                        <svg className="w-8 h-8 text-white/30 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                )}
-            </div>
-
-            {/* Description below circle */}
-            <p className="text-white/70 font-medium leading-relaxed max-w-[200px] transition-colors duration-300 group-hover:text-white mt-4 text-center">
-                {item.description}
-            </p>
-        </div>
-    );
-};
-
 const WhyChooseUs = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const headingRef = useRef<HTMLHeadingElement>(null);
-    const paraRef = useRef<HTMLParagraphElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
+        if (!sectionRef.current) return;
 
-        if (!headingRef.current || !paraRef.current || !sectionRef.current) return;
-
-        // Split paragraph into lines
-        const split = new SplitType(paraRef.current, { types: "lines" });
-        const lines = split.lines;
-
-        // Find cards
-        const cards = sectionRef.current.querySelectorAll(".why-card-anim");
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: headingRef.current,
-                start: "top 85%", // Trigger when top of heading is 85% down the viewport
-                toggleActions: "play none none none", // Only play once
-            },
-        });
-
-        // Step 1: Heading slide up + fade
-        tl.fromTo(
-            headingRef.current,
-            { y: 30, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out",
-            }
-        );
-
-        // Step 2: Line-by-line paragraph animation
-        tl.fromTo(
-            lines,
-            { y: 20, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power2.out",
-            },
-            "-=0.6" // Start paragraph slightly before heading finishes
-        );
-
-        // Step 3: Card stagger animation
-        tl.fromTo(
-            cards,
-            { y: 40, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                stagger: 0.5,
-                ease: "power2.out",
-            },
-            "-=0.8" // Start cards slightly before paragraph finishes
-        );
-
-        return () => {
-            split.revert();
+        const st = {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            toggleActions: "play none none reverse",
         };
+
+        // Animate cards in
+        gsap.fromTo(
+            ".branch-card-inner",
+            { opacity: 0, y: 28, scale: 0.92 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.15, ease: "back.out(1.5)", scrollTrigger: st }
+        );
+
+        // Animate orb rings
+        gsap.to(".orb-ellipse", {
+            scaleX: 1.05,
+            duration: 2.5,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1,
+            stagger: { each: 0.4, from: "start" },
+        });
     }, []);
 
-    const handleScroll = () => {
-        if (!scrollRef.current) return;
-        const scrollPosition = scrollRef.current.scrollLeft;
-        const cardWidth = scrollRef.current.offsetWidth;
-        if (cardWidth === 0) return;
-        const index = Math.round(scrollPosition / cardWidth);
-        if (index !== activeIndex && index >= 0 && index < whyChooseUsData.length) {
-            setActiveIndex(index);
-        }
-    };
-
-    const scrollToCard = (index: number) => {
-        if (!scrollRef.current) return;
-        const cardWidth = scrollRef.current.offsetWidth;
-        scrollRef.current.scrollTo({
-            left: cardWidth * index,
-            behavior: "smooth"
-        });
-        setActiveIndex(index);
-    };
-
     return (
-        <section ref={sectionRef} className="relative w-full !py-10 lg:!py-20 px-6 flex items-center justify-center overflow-hidden">
-            {/* Background Gradient matching hero */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1] via-[#1b7a82] to-[#125960] -z-20" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent -z-10" />
+        <section
+            ref={sectionRef}
+            className="relative w-full overflow-hidden md:!px-10"
+            style={{ background: "linear-gradient(170deg, #081214 0%, #0a1a1c 50%, #071010 100%)" }}
+        >
+            {/* Ambient glows */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(33,151,161,0.12) 0%, transparent 70%)", filter: "blur(60px)" }} />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(95,204,214,0.08) 0%, transparent 70%)", filter: "blur(80px)" }} />
 
-            <div className="max-w-7xl !mx-auto w-full text-center">
-                {/* Header Text */}
-                <div className="mb-20 flex flex-col items-center">
-                    <h2 ref={headingRef} className="font-bold text-white mb-6 tracking-tight">
-                        Why Choose ProdBiz ?
+            <div className="max-w-6xl !mx-auto px-6 md:!py-24 !py-10 relative z-10">
+
+                {/* Header */}
+                <div className="!text-center !mb-0">
+                    <span className="inline-block !px-5 !py-2 !mb-6 !text-[10px] font-bold tracking-[0.25em] uppercase rounded-full"
+                        style={{ color: "#5fccd6", background: "rgba(95,204,214,0.08)", border: "1px solid rgba(95,204,214,0.22)" }}>
+                        Why Choose Us
+                    </span>
+                    <h2 className="font-bold !text-white leading-tight max-w-5xl !mx-auto !text-xl md:!text-3xl">
+                        We help businesses grow with{" "}
+                        <span style={{ color: "#5fccd6" }}>smart design</span>,{" "}
+                        strong websites, and{" "}
+                        <span style={{ color: "#5fccd6" }}>effective digital marketing</span>{" "}
+                        — all in one place.
                     </h2>
-                    {/* <div className="w-24 h-1.5 bg-white mx-auto mb-6 rounded-full opacity-80"></div> */}
-                    <p ref={paraRef} className="max-w-3xl text-lg text-white/80 font-medium">
-                        We empower businesses with cutting-edge technology and strategic vision. Our commitment to excellence drives everything we do.
-                    </p>
+                    <div className="w-24 h-1.5 bg-[#E76038]/80 !mx-auto rounded-full"></div>
                 </div>
 
-                {/* Desktop 3D Circular Infographic Grid */}
-                <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-12 relative w-full items-start justify-items-center">
-                    {whyChooseUsData.map((item, idx) => (
-                        <WhyChooseUsCard key={idx} item={item} idx={idx} isDesktop={true} />
-                    ))}
-                </div>
+                {/* ─────────── DESKTOP LAYOUT ─────────── */}
+                <div className="hidden lg:block">
+                    {/* Fixed height canvas for absolute positioning */}
+                    <div className="relative w-full top-[-70px]" style={{ height: 640 }}>
 
-                {/* Mobile Carousel */}
-                <div className="md:hidden flex flex-col w-full relative">
-                    <style dangerouslySetInnerHTML={{
-                        __html: `
-                        .no-scrollbar::-webkit-scrollbar {
-                            display: none;
-                        }
-                    `}} />
-                    <div
-                        ref={scrollRef}
-                        onScroll={handleScroll}
-                        className="flex overflow-x-auto snap-x snap-mandatory flex-nowrap !pb-4 pt-4 px-2 no-scrollbar"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                        {whyChooseUsData.map((item, idx) => (
-                            <WhyChooseUsCard key={idx} item={item} idx={idx} isDesktop={false} />
-                        ))}
-                    </div>
+                        {/* SVG Layer — 4 individual curves from orb to each card */}
+                        <svg
+                            className="absolute inset-0 w-full h-full pointer-events-none"
+                            viewBox="0 0 1000 640"
+                            preserveAspectRatio="none"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style={{ zIndex: 1 }}
+                        >
+                            <defs>
+                                <linearGradient id="gtl" x1="470" y1="510" x2="235" y2="165" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.15" />
+                                    <stop offset="100%" stopColor="#5fccd6" stopOpacity="0.7" />
+                                </linearGradient>
+                                <linearGradient id="gbl" x1="440" y1="510" x2="235" y2="385" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.15" />
+                                    <stop offset="100%" stopColor="#5fccd6" stopOpacity="0.7" />
+                                </linearGradient>
+                                <linearGradient id="gtr" x1="530" y1="510" x2="765" y2="165" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.15" />
+                                    <stop offset="100%" stopColor="#5fccd6" stopOpacity="0.7" />
+                                </linearGradient>
+                                <linearGradient id="gbr" x1="560" y1="510" x2="765" y2="385" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stopColor="#2197A1" stopOpacity="0.15" />
+                                    <stop offset="100%" stopColor="#5fccd6" stopOpacity="0.7" />
+                                </linearGradient>
+                            </defs>
 
-                    {/* Pagination Dots */}
-                    <div className="flex justify-center gap-2 mt-2">
-                        {whyChooseUsData.map((_, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => scrollToCard(idx)}
-                                className={`h-2.5 rounded-full transition-all duration-300 ${activeIndex === idx ? 'w-8 bg-white' : 'w-2.5 bg-white/30'}`}
-                                aria-label={`Go to slide ${idx + 1}`}
+                            {/* ── Orb emission glow points ── */}
+                            <circle cx="470" cy="510" r="4" fill="#5fccd6" opacity="0.3" />
+                            <circle cx="440" cy="510" r="4" fill="#5fccd6" opacity="0.3" />
+                            <circle cx="530" cy="510" r="4" fill="#5fccd6" opacity="0.3" />
+                            <circle cx="560" cy="510" r="4" fill="#5fccd6" opacity="0.3" />
+
+                            {/* ── TOP-LEFT: straight up from orb (inner track), then curves left at card height ── */}
+                            <path
+                                d="M 470,510 C 470,135 265,165 235,165"
+                                stroke="url(#gtl)" strokeWidth="1.5" fill="none" strokeLinecap="round"
                             />
-                        ))}
+
+                            {/* ── BOTTOM-LEFT: straight up from orb (outer track), then curves left at card height ── */}
+                            <path
+                                d="M 440,510 C 440,390 265,385 235,385"
+                                stroke="url(#gbl)" strokeWidth="1.5" fill="none" strokeLinecap="round"
+                            />
+
+                            {/* ── TOP-RIGHT: straight up from orb (inner track), then curves right at card height ── */}
+                            <path
+                                d="M 530,510 C 530,135 735,165 765,165"
+                                stroke="url(#gtr)" strokeWidth="1.5" fill="none" strokeLinecap="round"
+                            />
+
+                            {/* ── BOTTOM-RIGHT: straight up from orb (outer track), then curves right at card height ── */}
+                            <path
+                                d="M 560,510 C 560,390 735,385 765,385"
+                                stroke="url(#gbr)" strokeWidth="1.5" fill="none" strokeLinecap="round"
+                            />
+
+                            {/* Card-end dots */}
+                            <circle cx="235" cy="165" r="3.5" fill="#5fccd6" opacity="0.6" />
+                            <circle cx="235" cy="385" r="3.5" fill="#5fccd6" opacity="0.6" />
+                            <circle cx="765" cy="165" r="3.5" fill="#5fccd6" opacity="0.6" />
+                            <circle cx="765" cy="385" r="3.5" fill="#5fccd6" opacity="0.6" />
+                        </svg>
+
+                        {/* ─── 4 CARDS absolutely positioned ─── */}
+                        {/* Top-left */}
+                        <div className="branch-card-inner" style={{ position: "absolute", top: 120, left: 0, width: 260, zIndex: 3 }}>
+                            <GlassCard feature={features[0]} align="right" />
+                        </div>
+                        {/* Top-right */}
+                        <div className="branch-card-inner" style={{ position: "absolute", top: 120, right: 0, width: 260, zIndex: 3 }}>
+                            <GlassCard feature={features[1]} align="left" />
+                        </div>
+                        {/* Bottom-left */}
+                        <div className="branch-card-inner" style={{ position: "absolute", top: 340, left: 0, width: 260, zIndex: 3 }}>
+                            <GlassCard feature={features[2]} align="right" />
+                        </div>
+                        {/* Bottom-right */}
+                        <div className="branch-card-inner" style={{ position: "absolute", top: 340, right: 0, width: 260, zIndex: 3 }}>
+                            <GlassCard feature={features[3]} align="left" />
+                        </div>
+
+                        {/* ─── 3D Orb at bottom center ─── */}
+                        <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 2, width: 380 }}>
+                            <div style={{ position: "relative", height: 180 }}>
+                                {/* Concentric ellipse rings stacked top to bottom */}
+                                {[5, 4, 3, 2, 1, 0].map((i) => {
+                                    const w = 60 + i * 60;
+                                    const h = 14 + i * 12;
+                                    const bottom = i * 14;
+                                    const a = (0.95 - i * 0.06);
+                                    return (
+                                        <div key={i} className="orb-ellipse"
+                                            style={{
+                                                position: "absolute",
+                                                width: w,
+                                                height: h,
+                                                bottom,
+                                                left: "50%",
+                                                transform: "translateX(-50%)",
+                                                borderRadius: "50%",
+                                                background: `radial-gradient(ellipse at 40% 35%, rgba(120,220,220,${a * 0.55}) 0%, rgba(33,151,161,${a * 0.85}) 50%, rgba(10,70,75,${a}) 100%)`,
+                                                boxShadow: `0 0 ${12 + i * 8}px rgba(33,151,161,${0.35 - i * 0.03}), inset 0 1px 0 rgba(255,255,255,${0.18 - i * 0.02})`,
+                                                border: `1px solid rgba(95,204,214,${0.5 - i * 0.07})`,
+                                            }}
+                                        />
+                                    );
+                                })}
+                                {/* Core glow */}
+                                <div style={{
+                                    position: "absolute",
+                                    width: 100,
+                                    height: 40,
+                                    bottom: 60,
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                    background: "radial-gradient(ellipse at 50% 50%, rgba(150,240,240,0.9) 0%, rgba(33,151,161,0.4) 60%, transparent 100%)",
+                                    filter: "blur(12px)",
+                                    borderRadius: "50%",
+                                }} />
+                                {/* Floor glow spread */}
+                                <div style={{
+                                    position: "absolute",
+                                    width: 300,
+                                    height: 50,
+                                    bottom: 0,
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                    background: "radial-gradient(ellipse at 50% 100%, rgba(33,151,161,0.22) 0%, transparent 70%)",
+                                    filter: "blur(20px)",
+                                }} />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+                {/* ─────────── MOBILE BRANCHING LAYOUT (Staggered & Refined) ─────────── */}
+                <div className="lg:hidden relative w-full !pt-0" style={{ height: 720 }}>
+                    {/* SVG Branching Lines (Optimized Staggered mapping) */}
+                    <svg
+                        className="absolute inset-0 w-full h-full pointer-events-none"
+                        viewBox="0 0 375 720"
+                        preserveAspectRatio="none"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style={{ zIndex: 1 }}
+                    >
+                        <defs>
+                            <linearGradient id="gm_teal" x1="187" y1="360" x2="187" y2="100" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stopColor="#2197A1" stopOpacity="0.1" />
+                                <stop offset="100%" stopColor="#5fccd6" stopOpacity="0.6" />
+                            </linearGradient>
+                        </defs>
+
+                        {/* Bottom Left Branch (Higher Depth) - Upward then Outward Wrapping */}
+                        <path d="M 175,360 C 175,280 40,280 60,480" stroke="url(#gm_teal)" strokeWidth="1.2" fill="none" />
+                        <circle cx="60" cy="480" r="2.5" fill="#5fccd6" opacity="0.6" />
+
+                        {/* Top Left Branch (Lower) */}
+                        <path d="M 165,360 C 165,100 60,70 60,40" stroke="url(#gm_teal)" strokeWidth="1.2" fill="none" />
+                        <circle cx="60" cy="40" r="2.5" fill="#5fccd6" opacity="0.6" />
+
+                        {/* Bottom Right Branch (Higher Depth) - Upward then Outward Wrapping */}
+                        <path d="M 199,360 C 209,280 335,230 315,600" stroke="url(#gm_teal)" strokeWidth="1.2" fill="none" />
+                        <circle cx="315" cy="600" r="2.5" fill="#5fccd6" opacity="0.6" />
+
+                        {/* Top Right Branch (Lower) */}
+                        <path d="M 209,360 C 200,200 315,200 315,170" stroke="url(#gm_teal)" strokeWidth="1.2" fill="none" />
+                        <circle cx="315" cy="170" r="2.5" fill="#5fccd6" opacity="0.6" />
+                        
+                        {/* Orb emission dots (staggered for depth) */}
+                        <circle cx="165" cy="360" r="3" fill="#5fccd6" opacity="0.3" />
+                        <circle cx="209" cy="360" r="3" fill="#5fccd6" opacity="0.3" />
+                        <circle cx="175" cy="360" r="2" fill="#5fccd6" opacity="0.2" />
+                        <circle cx="199" cy="360" r="2" fill="#5fccd6" opacity="0.2" />
+                    </svg>
+
+                    {/* Mobile Cards (Staggered Positioning) */}
+                    {/* Top Left (Slightly Up) */}
+                    <div className="branch-card-inner !p-2" style={{ position: "absolute", top: 30, left: 0, width: "56%", zIndex: 3 }}>
+                        <div className="bg-[#0c1f22]/70 backdrop-blur-md border border-[#5fccd6]/25 !p-1 rounded-xl min-h-[115px] flex flex-col items-center justify-center text-center">
+                            <h5 className="text-[13px] font-bold mb-2 !text-[#5fccd6] leading-tight">{features[0].title}</h5>
+                            <p className="!text-[13px] text-white/60 leading-normal">{features[0].description}</p>
+                        </div>
+                    </div>
+                    {/* Top Right (Lowered) */}
+                    <div className="branch-card-inner !p-2" style={{ position: "absolute", top: 150, right: 0, width: "52%", zIndex: 3 }}>
+                        <div className="bg-[#0c1f22]/70 backdrop-blur-md border border-[#5fccd6]/25 !p-1 rounded-xl min-h-[115px] flex flex-col items-center justify-center text-center">
+                            <h5 className="text-[13px] font-bold mb-2 !text-[#5fccd6] leading-tight">{features[1].title}</h5>
+                            <p className="!text-[13px] text-white/60 leading-normal">{features[1].description}</p>
+                        </div>
+                    </div>
+
+                    {/* Bottom Left (Slightly Down) */}
+                    <div className="branch-card-inner !p-2" style={{ position: "absolute", bottom: 160, left: 0, width: "54%", zIndex: 3 }}>
+                        <div className="bg-[#0c1f22]/70 backdrop-blur-md border border-[#5fccd6]/25 !p-1 rounded-xl min-h-[115px] flex flex-col items-center justify-center text-center">
+                            <h5 className="text-[13px] font-bold mb-2 !text-[#5fccd6] leading-tight">{features[2].title}</h5>
+                            <p className="!text-[13px] text-white/60 leading-normal">{features[2].description}</p>
+                        </div>
+                    </div>
+                    {/* Bottom Right (Slightly Up from end) */}
+                    <div className="branch-card-inner !p-2" style={{ position: "absolute", bottom: 40, right: 0, width: "56%", zIndex: 3 }}>
+                        <div className="bg-[#0c1f22]/70 backdrop-blur-md border border-[#5fccd6]/25 !p-1 rounded-xl min-h-[115px] flex flex-col items-center justify-center text-center">
+                            <h5 className="text-[13px] font-bold mb-2 !text-[#5fccd6] leading-tight">{features[3].title}</h5>
+                            <p className="!text-[13px] text-white/60 leading-normal">{features[3].description}</p>
+                        </div>
+                    </div>
+
+                    {/* Mobile Orb (Centered Vertically) */}
+                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: 220 }}>
+                        <div style={{ position: "relative", height: 110 }}>
+                            {[4, 3, 2, 1, 0].map((i) => {
+                                const w = 40 + i * 40;
+                                const h = 8 + i * 8;
+                                const bottom = i * 10;
+                                const a = (0.9 - i * 0.1);
+                                return (
+                                    <div key={i} className="orb-ellipse"
+                                        style={{
+                                            position: "absolute", width: w, height: h, bottom, left: "50%", transform: "translateX(-50%)",
+                                            borderRadius: "50%", background: `radial-gradient(ellipse at 40% 35%, rgba(120,220,220,${a * 0.4}) 0%, rgba(33,151,161,${a * 0.7}) 50%, rgba(10,70,75,${a}) 100%)`,
+                                            border: `1px solid rgba(95,204,214,${0.4 - i * 0.05})`,
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+
+                {/* CTA */}
+                <p className="text-center text-lg md:text-xl font-medium italic !mt-1 pt-6"
+                    style={{ color: "rgba(255,255,255,0.65)" }}>
+                    👉 We don't just create — we help your business succeed online.
+                </p>
             </div>
         </section>
     );
 };
+
+// ── Individual Glass Card ────────────────────────────────────────────────────
+const GlassCard = ({ feature, align }: { feature: typeof features[0]; align: "left" | "right" }) => (
+    <div
+        className="group relative !p-2 rounded-2xl w-full transition-all duration-400 hover:-translate-y-1"
+        style={{
+            background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(33,151,161,0.08) 100%)",
+            border: "1px solid rgba(95,204,214,0.22)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
+            textAlign: align,
+        }}
+    >
+        {/* Top shine */}
+        <div className="absolute top-0 left-6 right-6 h-px opacity-50 rounded-full"
+            style={{ background: "linear-gradient(90deg,transparent,rgba(95,204,214,0.9),transparent)" }} />
+
+        <h4 className="font-bold mb-1.5" style={{ color: "#5fccd6" }}>
+            {feature.title}
+        </h4>
+        <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.58)" }}>
+            {feature.description}
+        </p>
+
+        {/* Hover glow border */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+            style={{ boxShadow: "0 0 28px rgba(33,151,161,0.2), inset 0 0 16px rgba(33,151,161,0.05)" }} />
+    </div>
+);
 
 export default WhyChooseUs;

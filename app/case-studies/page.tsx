@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Button from "@/components/Button";
 import Image from "next/image";
@@ -8,6 +8,11 @@ import FinalCTA from "@/components/FinalCTA";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import dynamic from "next/dynamic";
+
+const WhoWeAreHero3D = dynamic(() => import("@/components/WhoWeAreHero3D"), { ssr: false });
+import FolderAnimation from "@/components/FolderAnimation";
+import Stack from "@/components/Stack";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -166,14 +171,13 @@ const TimelineItem = ({
 };
 
 export default function CaseStudiesPage() {
-    const [currentPage, setCurrentPage] = React.useState(1);
-    const [mounted, setMounted] = React.useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [mounted, setMounted] = useState(false);
     
-    const h1Ref = React.useRef<HTMLHeadingElement>(null);
-    const spanRef = React.useRef<HTMLSpanElement>(null);
-    const paraRef = React.useRef<HTMLDivElement>(null);
-    const buttonsRef = React.useRef<HTMLDivElement>(null);
-    const heroImageRef = React.useRef<HTMLDivElement>(null);
+    const h1Ref = useRef<HTMLHeadingElement>(null);
+    const spanRef = useRef<HTMLSpanElement>(null);
+    const paraRef = useRef<HTMLDivElement>(null);
+    const buttonsRef = useRef<HTMLDivElement>(null);
 
     const itemsPerPage = 2;
 
@@ -183,7 +187,7 @@ export default function CaseStudiesPage() {
         currentPage * itemsPerPage
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         setMounted(true);
 
         if (h1Ref.current && spanRef.current && paraRef.current && buttonsRef.current) {
@@ -217,24 +221,6 @@ export default function CaseStudiesPage() {
                 "-=0.4" // Starts 0.4s before paragraph completes
             );
 
-            // 4. Hero Image (Slide from right + slight scale)
-            tl.fromTo(
-                ".hero-image-animate",
-                { x: 100, scale: 0.9, opacity: 0 },
-                { x: 0, scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" },
-                1.0 // Matches Who We Are timing
-            );
-
-            // 5. Floating Animation loops after the entrance
-            gsap.to(".hero-image-animate", {
-                y: -15,
-                duration: 3,
-                repeat: -1,
-                yoyo: true,
-                ease: "power1.inOut",
-                delay: 2.2
-            });
-
             // Slot-machine roll for "Studies"
             const loopTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5, delay: 1.0 });
 
@@ -261,57 +247,53 @@ export default function CaseStudiesPage() {
     }, [mounted]);
 
     return (
-        <main className="flex min-h-screen flex-col items-center bg-white">            {/* Case Studies Hero Section */}
+        <main className="flex min-h-screen flex-col items-center bg-white">
+            {/* Case Studies Hero Section */}
             <section
-                className="relative w-full min-h-[75vh] min-[340px]:min-h-[60vh] min-[360px]:min-h-[75vh] min-[380px]:min-h-[60vh] min-[400px]:min-h-[58vh] min-[540px]:min-h-[68vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center overflow-hidden"
-                style={{ background: "radial-gradient(circle at top, #FFFFFF 0%, #2197A1 100%)" }}
-            >                {/* Content Container */}
-                <div className="z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
- 
-                    {/* Hero Content Wrapper */}
-                    <div className="w-full md:w-[70%] flex flex-col items-center md:items-start translate-y-[-20px] md:pr-0">
-                        {/* Title: Centered on Mobile */}
-                        <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full" style={{ perspective: "1000px" }}>
-                            Case <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d">Studies</span>
-                        </h1>
+                className="hero-section-standard"
+            >
+                {/* ── 3D Glassmorphism Background ── */}
+                <WhoWeAreHero3D />
+                
+                {/* Mobile Folder Animation (Centered Background) */}
+                <div className="block md:hidden absolute inset-0 z-0 opacity-40 flex items-center justify-center">
+                    <div className="w-[300px] h-[300px]">
+                        <FolderAnimation />
+                    </div>
+                </div>
 
+                {/* Gradient overlay: ensures left-side text stays readable */}
+                <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "linear-gradient(105deg, rgba(3,14,18,0.72) 0%, rgba(3,14,18,0.45) 50%, transparent 100%)" }} />
+                
+                {/* Content Container */}
+                <div className="relative z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
+  
+                    {/* Hero Content Wrapper */}
+                    <div className="w-full md:w-[60%] flex flex-col items-center md:items-start translate-y-[-20px] !mt-20 md:pr-8 md:!pl-8">
+                        {/* Title: Centered on Mobile */}
+                        <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold !text-white !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full drop-shadow-lg" style={{ perspective: "1000px" }}>
+                            Case <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d" style={{ textShadow: "0 0 30px rgba(33,151,161,0.6)" }}>Studies</span>
+                        </h1>
+ 
                         <div ref={paraRef} className="w-full flex flex-col md:block">
-                            {/* Short mobile content: Centered as requested */}
-                            <p className="block md:hidden text-base sm:text-base text-[#2A2A2A]/80 font-medium leading-snug text-center mb-8">
+                            {/* Short mobile content */}
+                            <p className="block md:hidden text-base sm:text-base text-white/80 font-medium leading-relaxed text-center mb-8">
                                 Discover how Prodbiz Solutions transforms visions into high-impact digital realities through strategic growth and innovation.
                             </p>
-
-                            {/* Desktop long content */}
-                            <div className="hidden md:block">
-                                <p className="text-lg md:text-xl text-[#2A2A2A]/80 font-medium leading-relaxed max-w-3xl mb-1 md:mb-8">
-                                    At Prodbiz Solutions, we specialize in bridging the gap between innovative technology and
-                                    impactful marketing. Our expertise lies in engineering custom website architectures
-                                    that serve as high-performance digital flagships, integrated with strategic digital
-                                    marketing campaigns that drive measurable growth. Whether it’s transforming a legacy
-                                    WordPress site or building a brand&apos;s first-ever digital presence, we deliver
-                                    tailored solutions that blend creative excellence with technical precision.
+ 
+                            {/* Desktop content */}
+                            <div className="hidden md:block space-y-4 max-w-3xl mb-1 md:mb-8">
+                                <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed">
+                                    Discover how Prodbiz Solutions transforms visions into high-impact digital realities. We bridging the gap between innovative technology and impactful marketing with strategic growth and innovation.
                                 </p>
                             </div>
                         </div>
-
-                        {/* Mobile Image: Rendered below content on mobile */}
-                        <div className="md:hidden w-full flex justify-center !mt-4 !mb-2 h-[150px] relative hero-image-animate">
-                             {/* Ambient Glow */} 
-                            <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[60px] opacity-20 pointer-events-none"></div>
-                            <Image
-                                src="/images/casestudies-hero.png"
-                                alt="Case Studies"
-                                fill
-                                className="object-contain drop-shadow-xl scale-125"
-                                priority
-                            />
-                        </div>
-
+ 
                         {/* Button: Centered on Mobile */}
-                        <div ref={buttonsRef} className="w-full flex justify-center md:justify-start">
+                        <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
                                 href="/contact"
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-6 md:!px-6 !py-3 md:!py-3 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[16px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
                             >
                                 <span className="max-sm:hidden">Work With Us</span>
                                 <span className="sm:hidden">Get Started</span>
@@ -319,64 +301,31 @@ export default function CaseStudiesPage() {
                             </Button>
                         </div>
                     </div>
-
-                    {/* Desktop Image - Hidden on Mobile */}
-                    <div className="hidden md:flex w-[40%] md:w-[40%] !mb-20 justify-center items-center h-full min-h-[300px] md:min-h-[400px] relative hero-image-animate">
-                        <Image
-                            src="/images/casestudies-hero.png"
-                            alt="Case Studies"
-                            width={500}
-                            height={500}
-                            priority
-                            className="w-full h-auto object-contain drop-shadow-xl md:scale-125 transition-transform duration-700 hover:scale-130"
-                        />
+ 
+                    {/* Desktop Right Side: Folder Animation */}
+                    <div className="hidden md:flex w-[40%] justify-center items-center h-full">
+                        <FolderAnimation />
                     </div>
-                </div>
-
-                {/* Bottom 3D Drip Border */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] flex justify-center">
-                    <svg
-                        className="relative block w-[300%] sm:w-[200%] lg:w-[150%] xl:w-[calc(100%+1.3px)] h-[70px] md:h-[100px] lg:h-[140px] flex-shrink-0"
-                        viewBox="0 0 1200 120"
-                        preserveAspectRatio="none"
-                    >
-                        <defs>
-                            <filter id="inner-shadow">
-                                <feOffset dx="0" dy="5" />
-                                <feGaussianBlur stdDeviation="4" result="offset-blur" />
-                                <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-                                <feFlood floodColor="black" floodOpacity="0.3" result="color" />
-                                <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-                                <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-                            </filter>
-                        </defs>
-                        <path
-                            d="M 0,120 L 0,0 C 10,0 20,10 20,30 C 18,50 32,50 30,30 C 30,10 40,0 50,0 C 60,0 70,40 70,80 C 68,100 82,100 80,80 C 80,40 90,0 100,0 C 110,0 120,20 120,40 C 118,60 132,60 130,40 C 130,20 140,0 150,0 C 160,0 170,50 170,100 C 168,120 182,120 180,100 C 180,50 190,0 200,0 C 210,0 220,10 220,20 C 218,40 232,40 230,20 C 230,10 240,0 250,0 C 260,0 270,30 270,60 C 268,80 282,80 280,60 C 280,30 290,0 300,0 C 310,0 320,45 320,90 C 318,110 332,110 330,90 C 330,45 340,0 350,0 C 360,0 370,10 370,30 C 368,50 382,50 380,30 C 380,10 390,0 400,0 C 410,0 420,35 420,70 C 418,90 432,90 430,70 C 430,35 440,0 450,0 C 460,0 470,25 470,50 C 468,70 482,70 480,50 C 480,25 490,0 500,0 C 510,0 520,50 520,95 C 518,115 532,115 530,95 C 530,50 540,0 550,0 C 560,0 570,20 570,40 C 568,60 582,60 580,40 C 580,20 590,0 600,0 C 610,0 620,40 620,80 C 618,100 632,100 630,80 C 630,40 640,0 650,0 C 660,0 670,10 670,20 C 668,40 682,40 680,20 C 680,10 690,0 700,0 C 710,0 720,35 720,70 C 718,90 732,90 730,70 C 730,35 740,0 750,0 C 760,0 770,45 770,90 C 768,110 782,110 780,90 C 780,45 790,0 800,0 C 810,0 820,20 820,40 C 818,60 832,60 830,40 C 830,20 840,0 850,0 C 860,0 870,50 870,100 C 868,120 882,120 880,100 C 880,50 890,0 900,0 C 910,0 920,10 920,30 C 918,50 932,50 930,30 C 930,10 940,0 950,0 C 960,0 970,40 970,80 C 968,100 982,100 980,80 C 980,40 990,0 1000,0 C 1010,0 1020,25 1020,50 C 1018,70 1032,70 1030,50 C 1030,25 1040,0 1050,0 C 1060,0 1070,10 1070,20 C 1068,40 1082,40 1080,20 C 1080,10 1090,0 1100,0 C 1110,0 1120,35 1120,70 C 1118,90 1132,90 1130,70 C 1130,35 1140,0 1150,0 C 1160,0 1170,45 1170,90 C 1168,110 1182,110 1180,90 C 1180,45 1190,0 1200,0 L 1200,120 Z"
-                            fill="#ffffff"
-                            filter="url(#inner-shadow)"
-                        ></path>
-                    </svg>
                 </div>
             </section>
 
             {/* Case Study Rows */}
-            <section className="relative w-full !pb-0 md:!py-20 !px-6 md:!px-0 overflow-hidden flex items-center justify-center">
+            <section className="relative w-full !pb-0 md:!py-20 !px-6 md:!px-8 overflow-hidden flex items-center justify-center">
                 {/* Decorative blob */}
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#2197A1]/5 blur-3xl -mr-48 -mt-48 pointer-events-none" />
-
+ 
                 <div className="max-w-7xl mx-auto w-full">
                     <div className="!space-y-14 !mt-10 ">
                         {paginatedCaseStudies.map((cs, idx) => {
                             const isReversed = idx % 2 !== 0;
-
-                            const timeline = (
+                                 const timeline = (
                                 <div className="relative">
                                     {/* Client Name Header */}
                                     <div className="!mb-8">
                                         <h4 className="text-[#2197A1] font-bold text-lg mb-2 italic">
                                             &quot;{cs.headline}&quot;
                                         </h4>
-                                        <span className="inline-block bg-[#2197A1]/10 text-[#2197A1] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+                                        <span className="inline-block bg-[#2197A1]/10 text-[#2197A1] text-xs font-black uppercase tracking-widest !px-4 !py-1.5 rounded-full mb-3">
                                             Case Study {String((currentPage - 1) * itemsPerPage + idx + 1).padStart(2, "0")}
                                         </span>
                                         <h3 className="text-3xl !mt-2 font-bold text-gray-900">
@@ -435,51 +384,48 @@ export default function CaseStudiesPage() {
                                 </div>
                             );
 
-                            const polaroid = (
-                                <div className="relative h-[380px] flex items-center justify-center">
-                                    {/* Back polaroid - BEFORE */}
-                                    <div
-                                        className={`absolute w-56 h-64 bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-gray-100 p-3 ${cs.polaroidAngle2} top-6 left-1/2 -translate-x-1/2 transition-transform duration-500 hover:scale-105`}
-                                    >
-                                        <div className="w-full h-44 rounded-lg bg-gray-50 flex items-center justify-center overflow-hidden">
-                                            {cs.images?.before ? (
-                                                <img src={cs.images.before} alt="Before Design" className="w-full h-full object-cover opacity-60" />
-                                            ) : (
-                                                <svg className="w-10 h-10 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                                                    <circle cx="8.5" cy="8.5" r="1.5" />
-                                                    <path d="M21 15l-5-5L5 21" />
-                                                </svg>
-                                            )}
-                                        </div>
-                                        <div className="mt-3 flex flex-col items-center gap-1">
-                                            <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Before Design</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Front polaroid - AFTER */}
-                                    <div
-                                        className={`absolute w-60 h-72 bg-white rounded-xl shadow-[0_30px_80px_rgba(33,151,161,0.18)] border border-gray-100 p-3 ${cs.polaroidAngle} top-4 left-1/2 -translate-x-1/3 transition-transform duration-500 hover:scale-105 hover:rotate-0 z-10`}
-                                    >
-                                        <div className="w-full h-52 rounded-lg bg-gradient-to-br from-[#2197A1]/5 to-[#2197A1]/10 flex items-center justify-center relative overflow-hidden">
-                                            {cs.images?.after ? (
-                                                <img src={cs.images.after} alt="After Design" className="w-full h-full object-cover" />
-                                            ) : (
-                                                <>
-                                                    <div className="absolute inset-0 flex items-center justify-center text-[#2197A1]/10 font-black text-6xl select-none">
-                                                        {cs.client.split(" ").map(w => w[0]).join("").slice(0, 3)}
+                             const polaroid = (
+                                <div className="relative h-[480px] w-full flex items-center justify-center">
+                                    <div className="w-[300px] h-[400px] md:w-[340px] md:h-[440px]">
+                                        <Stack
+                                            randomRotation={true}
+                                            sensitivity={180}
+                                            sendToBackOnClick={true}
+                                            autoplay={true}
+                                            autoplayDelay={3500 + idx * 400}
+                                            cards={[
+                                                // After Card (Primary)
+                                                <div key="after" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100">
+                                                    <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50">
+                                                        <img 
+                                                            src={cs.images.after} 
+                                                            alt={`${cs.client} After`} 
+                                                            className="w-full h-full object-cover" 
+                                                        />
                                                     </div>
-                                                    <svg className="w-12 h-12 text-[#2197A1]/30 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                                                        <circle cx="8.5" cy="8.5" r="1.5" />
-                                                        <path d="M21 15l-5-5L5 21" />
-                                                    </svg>
-                                                </>
-                                            )}
-                                        </div>
-                                        <div className="mt-3 flex flex-col items-center gap-1">
-                                            <span className="text-[10px] font-black uppercase text-[#2197A1] tracking-widest">Premium After</span>
-                                        </div>
+                                                    <div className="mt-4 pb-2 text-center">
+                                                        <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-widest italic flex items-center justify-center gap-2">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> Premium After
+                                                        </span>
+                                                    </div>
+                                                </div>,
+                                                // Before Card
+                                                <div key="before" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100">
+                                                    <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                                        <img 
+                                                            src={cs.images.before} 
+                                                            alt={`${cs.client} Before`} 
+                                                            className="w-full h-full object-cover" 
+                                                        />
+                                                    </div>
+                                                    <div className="mt-4 pb-2 text-center">
+                                                        <span className="text-[11px] font-black uppercase text-gray-400 tracking-widest flex items-center justify-center gap-2">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-300" /> Initial Design
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ]}
+                                        />
                                     </div>
                                 </div>
                             );
@@ -489,17 +435,15 @@ export default function CaseStudiesPage() {
                                     key={idx}
                                     className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                                 >
-                                    {isReversed ? (
-                                        <>
-                                            {polaroid}
-                                            {timeline}
-                                        </>
-                                    ) : (
-                                        <>
-                                            {timeline}
-                                            {polaroid}
-                                        </>
-                                    )}
+                                    {/* Content Column */}
+                                    <div className={`${isReversed ? "lg:order-2" : "lg:order-1"} order-1`}>
+                                        {timeline}
+                                    </div>
+
+                                    {/* Image Column */}
+                                    <div className={`${isReversed ? "lg:order-1" : "lg:order-2"} order-2`}>
+                                        {polaroid}
+                                    </div>
                                 </div>
                             );
                         })}

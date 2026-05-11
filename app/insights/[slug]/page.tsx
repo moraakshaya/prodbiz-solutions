@@ -45,7 +45,7 @@ const renderContent = (content: string) => {
                                         <div className="mt-1.5 shrink-0">
                                             <CheckCircle2 className="text-[#2197A1]" size={18} />
                                         </div>
-                                        <span className="text-gray-700 font-medium">{item}</span>
+                                        <span className="text-gray-700">{item}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -67,7 +67,7 @@ const renderContent = (content: string) => {
                                 <div className="mt-1.5 shrink-0">
                                     <CheckCircle2 className="text-[#2197A1]" size={18} />
                                 </div>
-                                <span className="text-gray-700 font-medium">{item}</span>
+                                <span className="text-gray-700">{item}</span>
                             </li>
                         ))}
                     </ul>
@@ -463,11 +463,11 @@ export default function BlogDetails() {
 
                             <div ref={takeawaysListRef} className="grid grid-cols-1 gap-6">
                                 {blog.takeaways?.map((takeaway, idx) => (
-                                    <div key={idx} className="flex items-start gap-2 md:gap-5 p-6 bg-white rounded-3xl border border-[#2197A1]/10 hover:border-[#2197A1]/40 transition-all hover:shadow-lg hover:-translate-y-1">
+                                    <div key={idx} className="flex items-center gap-2 md:gap-5 p-6 bg-white rounded-3xl border border-[#2197A1]/10 hover:border-[#2197A1]/40 transition-all hover:shadow-lg hover:-translate-y-1">
                                         <div className="w-15 h-15 md:w-10 md:h-10 rounded-full bg-[#f0f9fa] flex items-center justify-center shrink-0 border border-[#2197A1]/20 shadow-inner">
                                             <CheckCircle2 className="text-[#e76038]" size={22} />
                                         </div>
-                                        <p className="font-bold text-[#2A2A2A]/80 leading-relaxed !pt-1.5">{takeaway}</p>
+                                        <p className="text-[#2A2A2A]/80 leading-relaxed !pt-0 md:!pt-1.5 !m-0">{takeaway}</p>
                                     </div>
                                 ))}
                             </div>
