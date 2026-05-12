@@ -342,10 +342,10 @@ export default function WebsiteDevelopmentPage() {
                     <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-0 lg:gap-4">
                         <Button
                             href="/contact"
-                            className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-2.5 md:!px-10 !py-2 md:!py-3 rounded-xl md:rounded-2xl font-bold !text-[12px] md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                            className="hero-btn"
                         >
                             <span>Start Your Project</span>
-                            <ArrowRight size={18} />
+                            <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
                         </Button>
                     </div>
                 </div>

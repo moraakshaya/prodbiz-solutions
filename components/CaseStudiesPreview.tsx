@@ -295,8 +295,9 @@ const CaseStudiesPreview = () => {
 
                 {/* CTA */}
                 <div ref={buttonRef} className="flex justify-center lg:!mt-45 !mt-8">
-                    <Button href="/case-studies" variant="primary" size="lg">
-                        View All Case Studies
+                    <Button href="/case-studies" className="about-section-btn !py-2 !px-6">
+                        <span>View All Case Studies</span>
+                        <span className="arrow-icon">→</span>
                     </Button>
                 </div>
             </div>

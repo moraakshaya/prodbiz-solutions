@@ -248,7 +248,7 @@ export default function ContactPage() {
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
                                 onClick={scrollToContactForm}
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[16px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                                className="hero-btn"
                             >
                                 <span>Ready to talk?</span>
                                 <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
@@ -264,7 +264,7 @@ export default function ContactPage() {
             </section>
 
             {/* Split Interaction Section */}
-            <section id="contact-form-section" className="relative w-full min-h-[80vh] bg-white py-20 !px-6 lg:px-24 flex justify-center -mt-10 lg:-mt-20 z-20">
+            <section id="contact-form-section" className="relative w-full min-h-[80vh] bg-white !pt-20 !px-6 lg:px-24 flex justify-center -mt-10 lg:-mt-20 z-20">
                 <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch">
 
                     {/* Left: Contact Form */}
@@ -324,14 +324,10 @@ export default function ContactPage() {
                                 <div ref={contactSubmitBtnRef} className="mt-4">
                                     <Button
                                         type="submit"
-                                        variant="primary"
-                                        size="md"
-                                        className="w-full group shadow-[0_10px_20px_rgba(231,96,56,0.3)] !rounded-2xl"
+                                        className="contact-submit-btn"
                                     >
-                                        <span className="relative z-10 flex items-center gap-2 text-md md:text-lg">
-                                            Send Message
-                                            <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-                                        </span>
+                                        <span>Send Message</span>
+                                        <ArrowRight className="arrow-icon" />
                                     </Button>
                                 </div>
                             </form>
@@ -386,7 +382,7 @@ export default function ContactPage() {
             {/* Contact Info & Map Section */}
             <section id="contact-info-map-section" className="w-full bg-white !py-5 !px-6 sm:px-12">
                 <div className="w-full !mx-auto flex flex-col !gap-1 items-center">
-                    <div ref={contactCardsRef} className="w-full  flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-center flex-wrap !pb-10">
+                    <div ref={contactCardsRef} className="w-full  flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-center flex-wrap !py-20">
                         <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden">
                             <div className="absolute bottom-0 left-0 w-16 h-16 border-b-[6px] border-l-[6px] border-[#e76038] rounded-bl-[3rem]"></div>
                             <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">01 OUR OFFICE</p>

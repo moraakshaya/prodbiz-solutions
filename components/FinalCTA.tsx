@@ -139,10 +139,10 @@ const FinalCTA = ({
                     <Link
                         ref={buttonRef}
                         href={buttonHref}
-                        className="inline-flex items-center gap-3 bg-[#e76038] !text-white !px-3 !py-2 md:!px-6 md:!py-3 rounded-3xl font-bold !text-[13px] md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-105 active:scale-95 shadow-2xl relative z-10"
+                        className="inline-flex items-center gap-3 bg-[#e76038] hover:bg-[transparent] !text-white hover:!text-[#e76038] !px-3 !py-2 md:!px-6 md:!py-3 rounded-3xl font-bold !text-[13px] md:!text-[15px] transition-all transform hover:scale-105 active:scale-95 shadow-2xl hover:shadow-[10px_10px_20px_rgba(0,0,0,0.5)] relative z-10 animate-btn-and-arrow"
                     >
-                        {buttonText}
-                        <ArrowRight size={22} />
+                        <span>{buttonText}</span>
+                        <ArrowRight size={22} className="arrow-icon" />
                     </Link>
                 </div>
             </div>

@@ -129,7 +129,7 @@ export default function CompleteBusinessGrowthPage() {
             const smallWords = smallLineRef.current.querySelectorAll(".para-word");
             const chars = titleRef.current.querySelectorAll(".char");
             const buttons = buttonsRef.current.children;
-            
+
             const tl = gsap.timeline({ delay: 0.5 });
 
             tl.fromTo(
@@ -289,7 +289,7 @@ export default function CompleteBusinessGrowthPage() {
                 {/* LiquidEther Background Overlay */}
                 <div className="absolute inset-0 -z-20 bg-black">
                     <LiquidEther
-                        colors={[ '#2197a1', '#2197A1', '#2197a1' ]}
+                        colors={['#2197a1', '#2197A1', '#2197a1']}
                         mouseForce={20}
                         cursorSize={100}
                         isViscous
@@ -344,7 +344,7 @@ export default function CompleteBusinessGrowthPage() {
                     <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-0 lg:gap-4">
                         <Button
                             href="/contact"
-                            className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-2.5 md:!px-6 !py-2 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:text-lg hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                            className="hero-btn"
                         >
                             <span>Get Growth Consultation</span>
                             <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
@@ -429,7 +429,7 @@ export default function CompleteBusinessGrowthPage() {
                             Why Choose <br /><span className="text-[#2197A1]">Prodbiz Solutions</span>
                         </h2>
                         <div className="w-12 h-1.5 bg-[#e76038] !mb-8 rounded-full shadow-sm shadow-[#e76038]/30"></div>
-                        
+
                         {/* Mobile Image - Only shown on mobile between Title and Description */}
                         <div className="block md:hidden w-full relative h-[250px] !mb-8">
                             <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[2rem] blur-[60px] opacity-10 pointer-events-none"></div>
@@ -457,7 +457,7 @@ export default function CompleteBusinessGrowthPage() {
                 {/* Background Glassmorphism Blobs */}
                 {/* <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-[#2197A1]/20 rounded-full blur-[140px] pointer-events-none"></div>
                 <div className="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-[#2197A1]/10 rounded-full blur-[140px] pointer-events-none"></div> */}
-                
+
                 {/* Decorative Grid Overlay */}
                 <div className="absolute inset-0 md:bg-[url('/grid.svg')] md:bg-center md:[mask-image:radial-gradient(black,transparent_85%)] opacity-[0.03] invert pointer-events-none"></div>
 
@@ -472,10 +472,10 @@ export default function CompleteBusinessGrowthPage() {
 
                     <div ref={offerCardsRef} className="hidden md:flex flex-wrap justify-center items-start gap-x-12 gap-y-24">
                         {growthServicesData.map((service, index) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className="relative w-full sm:w-[300px] lg:w-[calc(30%-1rem)] flex flex-col items-center group"
-                            > 
+                            >
                                 {/* Floating Icon Sphere */}
                                 <div className="relative z-20 !mb-[-35px] animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
                                     <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-[#2197A1]/5 backdrop-blur-md border-[1.5px] border-[#2197A1] flex items-center justify-center text-[#2197A1] shadow-[0_0_30px_rgba(33,151,161,0.2)] transition-all duration-700 group-hover:scale-105">
@@ -545,22 +545,22 @@ export default function CompleteBusinessGrowthPage() {
 
                 {/* Circular Gallery Container */}
                 <div className="hidden md:block relative top-[-100px] w-full h-[750px] cursor-grab active:cursor-grabbing">
-                    <CircularGallery 
+                    <CircularGallery
                         items={portfolioItems.map(item => ({ image: item.image, text: item.title }))}
-                        bend={3} 
-                        textColor="#ffffff" 
-                        borderRadius={0.05} 
+                        bend={3}
+                        textColor="#ffffff"
+                        borderRadius={0.05}
                         scrollEase={0.02}
                         scrollSpeed={2}
                     />
-                    
+
                     {/* Floating Glows for Depth */}
                     <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] h-[300px] bg-[#2197A1]/10 rounded-full blur-[100px] pointer-events-none"></div>
                     <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[300px] h-[300px] bg-[#2197A1]/10 rounded-full blur-[100px] pointer-events-none"></div>
                 </div>
 
                 <div className="md:hidden block relative w-full h-[600px] top-[-30px]">
-                    <DomeGallery 
+                    <DomeGallery
                         images={portfolioItems}
                         fit={0.8}
                         minRadius={600}
@@ -593,27 +593,27 @@ export default function CompleteBusinessGrowthPage() {
                     <div ref={whyChooseUsCardsRef} className="hidden md:grid grid-cols-1 md:grid-cols-2 min-[1150px]:!grid-cols-4 xl:!grid-cols-4 gap-12 gap-y-16 min-[1150px]:max-[1299px]:!gap-4 lg:gap-8 justify-items-center" style={{ perspective: "1500px" }}>
                         {whyChooseUsData.map((item, index) => (
                             <div key={index} className="group relative w-full max-w-[310px] aspect-square rounded-full flex flex-col items-center justify-center text-center cursor-default transition-all duration-700 transform-gpu hover:[transform:rotateX(10deg)rotateY(10deg)translateZ(30px)] shadow-lg hover:shadow-2xl">
-                                
+
                                 {/* Inner Clipped Container for Background and Right Shape */}
                                 <div className="absolute inset-0 rounded-full overflow-hidden z-0 bg-white border border-[#2197A1]/10 shadow-inner">
                                     <div className="absolute inset-0 bg-gradient-to-br from-[#2197A1]/5 via-transparent to-transparent opacity-100"></div>
-                                    
+
                                     {/* The Badge perfectly clipped on the right */}
                                     <div className="absolute top-1/2 right-0 translate-x-[35%] -translate-y-1/2 w-[110px] h-[110px] bg-[#2197A1] transition-all duration-500 rounded-full flex items-center justify-start pl-6 shadow-lg">
                                         <span className="text-white font-black !pl-5 !text-xl transform -translate-y-[2px]">0{index + 1}</span>
                                     </div>
-                                    
+
                                 </div>
-                                
+
                                 {/* The outer SVG arc and dots perfectly wrapping the right side */}
                                 <svg className="absolute inset-0 w-full h-full z-10 pointer-events-none drop-shadow-[0_0_4px_rgba(33,151,161,0.2)] text-[#2197A1]" viewBox="-2 -2 104 104">
                                     {/* Sweeps from top-center (50,0) down the right side to bottom-center (50,100) */}
-                                    <path 
-                                        d="M 50 0 A 50 50 0 0 1 50 100" 
-                                        fill="none" 
-                                        stroke="currentColor" 
-                                        strokeWidth="1.5" 
-                                        className="transition-colors duration-500" 
+                                    <path
+                                        d="M 50 0 A 50 50 0 0 1 50 100"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        className="transition-colors duration-500"
                                     />
                                     {/* Top Dot */}
                                     <circle cx="50" cy="0" r="2.5" fill="currentColor" />

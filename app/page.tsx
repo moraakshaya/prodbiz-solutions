@@ -16,6 +16,7 @@ import FinalCTA from "@/components/FinalCTA";
 import dynamic from "next/dynamic";
 import NextImage from "next/image";
 import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 const LiquidEther = dynamic(() => import("@/components/LiquidEther"), { ssr: false });
 
@@ -280,19 +281,17 @@ export default function Home() {
               <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 lg:gap-6">
                 <Button
                   href="/get-proposal"
-                  variant="primary"
-                  className="!px-6 md:!px-8 !py-2.5 md:!py-4 !text-sm md:!text-lg font-bold rounded-xl md:rounded-2xl shadow-xl transition-all active:scale-95 text-black"
-                  style={{ background: "#e76038", border: "none", boxShadow: "0 10px 30px rgba(231,96,56,0.5)" }}
+                  className="home-hero-btn-primary"
                 >
-                  Get Free Consultation
+                  <span>Get Free Consultation</span>
+                  <ArrowRight size={20} className="md:w-[24px] md:h-[24px]" />
                 </Button>
                 <Button
-                  href="/solutions"
-                  variant="secondary"
-                  className="!px-6 md:!px-8 !py-2.5 md:!py-4 !text-sm md:!text-lg font-bold rounded-xl md:rounded-2xl border-white/30 backdrop-blur-md transition-all active:scale-95 text-white"
-                  style={{ background: "rgba(255,255,255,0.1)" }}
+                  href="/case-studies"
+                  className="home-hero-btn-secondary"
                 >
-                  Explore Services
+                  <span>Explore CaseStudies</span>
+                  <ArrowRight size={20} className="md:w-[24px] md:h-[24px]" />
                 </Button>
               </div>
             </div>

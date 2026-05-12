@@ -68,34 +68,59 @@ const galleryImages = [
 
 const eventImages = [
     {
-        url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80",
-        title: "Team Outings",
-        description: "Building bonds beyond the office walls."
+        url: "/images/gallery/1st-aniversary-img-01.JPG",
+        title: "1st Anniversary",
+        description: "Celebrating 365 days of innovation, growth, and digital excellence."
     },
     {
-        url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80",
-        title: "Company Celebrations",
-        description: "Celebrating our wins and milestones together."
+        url: "/images/gallery/1st-aniversary-img-02.JPG",
+        title: "1st Anniversary",
+        description: "A milestone moment marking a year of transforming visions into reality."
     },
     {
-        url: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80",
-        title: "Workshops",
-        description: "Interactive sessions to sharpen our creative skills."
+        url: "/images/gallery/1st-aniversary-img-03.JPG",
+        title: "1st Anniversary",
+        description: "Our dedicated team coming together to honor our first year of success."
     },
     {
-        url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80",
-        title: "Training Sessions",
-        description: "Continuous learning and professional growth."
+        url: "/images/gallery/1st-aniversary-img-04.JPG",
+        title: "1st Anniversary",
+        description: "Reflecting on a year of hard work, creativity, and outstanding achievements."
     },
     {
-        url: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80",
-        title: "Festivals",
-        description: "Bringing cultural vibrancy to our workspace."
+        url: "/images/gallery/1st-aniversary-img-05.JPG",
+        title: "1st Anniversary",
+        description: "Cheers to the first of many successful years as your innovation partner."
     },
     {
-        url: "https://images.unsplash.com/photo-1528605248644-14dd04cb11c7?auto=format&fit=crop&q=80",
-        title: "Team Lunch",
-        description: "Sharing moments and flavors as one team."
+        url: "/images/gallery/1st-aniversary-img-06.JPG",
+        title: "1st Anniversary",
+        description: "Capturing the joy and collective energy of our incredible first-year journey."
+    },
+    {
+        url: "/images/gallery/1st-aniversary-img-07.JPG",
+        title: "1st Anniversary",
+        description: "Honoring the dedication that made our first year extraordinary."
+    },
+    {
+        url: "/images/gallery/1st-aniversary-img-08.JPG",
+        title: "1st Anniversary",
+        description: "A night of gratitude and celebration for our partners and patrons."
+    },
+    {
+        url: "/images/gallery/chirstmas-img-01.JPG",
+        title: "Christmas Celebration",
+        description: "Spreading festive cheer and holiday magic across our office space."
+    },
+    {
+        url: "/images/gallery/chirstmas-img-02.JPG",
+        title: "Christmas Celebration",
+        description: "Secret Santa surprises and warm smiles during our holiday gathering."
+    },
+    {
+        url: "/images/gallery/chirstmas-img-03.JPG",
+        title: "Christmas Celebration",
+        description: "Ending the year with gratitude and festive team bonding moments."
     }
 ];
 
@@ -388,7 +413,7 @@ export default function InsideCompanyPage() {
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
                                 onClick={scrollToContent}
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[16px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                                className="hero-btn"
                             >
                                 <span>See Our Culture</span>
                                 <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />

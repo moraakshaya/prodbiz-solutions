@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 import Button from "@/components/Button";
 import FinalCTA from "@/components/FinalCTA";
 import gsap from "gsap";
@@ -55,6 +55,10 @@ export default function PrivacyPolicyPage() {
         }
     }, [mounted]);
 
+    const scrollToContent = () => {
+        contentSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
     return (
         <main className="flex min-h-screen flex-col items-center bg-white overflow-hidden">
             {/* Privacy Hero Section */}
@@ -87,8 +91,9 @@ export default function PrivacyPolicyPage() {
                             </div>
                         </div>
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
-                            <Button className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[16px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10">
+                            <Button onClick={scrollToContent} className="hero-btn">
                                 View Full Policy
+                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
                             </Button>
                         </div>
                     </div>

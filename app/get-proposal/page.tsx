@@ -38,7 +38,7 @@ export default function GetProposalPage() {
     const section3Ref = useRef<HTMLDivElement>(null);
     const section4Ref = useRef<HTMLDivElement>(null);
     const section5Ref = useRef<HTMLDivElement>(null);
-    const formButtonRef = useRef<HTMLButtonElement>(null);
+    const formButtonRef = useRef<HTMLDivElement>(null);
 
     // Right Sidebar Refs
     const rightSideContainerRef = useRef<HTMLDivElement>(null);
@@ -258,7 +258,7 @@ export default function GetProposalPage() {
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
                                 onClick={scrollToForm}
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[16px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                                className="hero-btn"
                             >
                                 <span>Ready to Start?</span>
                                 <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
@@ -352,9 +352,15 @@ export default function GetProposalPage() {
                                 </div>
                             </div>
 
-                            <button ref={formButtonRef} suppressHydrationWarning className="w-full bg-[#2197A1] text-white font-black text-xl !py-4 rounded-3xl shadow-[0_12px_24px_rgba(33,151,161,0.2)] hover:shadow-[0_15px_35px_rgba(33,151,161,0.3)] hover:-translate-y-1 transition-all active:scale-[0.98] !mt-4 tracking-widest">
-                                Get Proposal
-                            </button>
+                            <div ref={formButtonRef}>
+                                <Button 
+                                    type="submit"
+                                    className="contact-submit-btn"
+                                >
+                                    <span>Get Proposal</span>
+                                    <ArrowRight className="arrow-icon" />
+                                </Button>
+                            </div>
                         </form>
                     </div>
 

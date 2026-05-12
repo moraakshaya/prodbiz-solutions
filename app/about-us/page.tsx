@@ -16,11 +16,11 @@ const OurApproach = dynamic(() => import("@/components/OurApproach"), { ssr: fal
 
 
 const teamMembers = [
-    { name: "Srikanth Reddy", role: "Managing Director" },
-    { name: "Praveen Reddy", role: "CEO" },
-    { name: "Pravanya Reddy", role: "CTO" },
-    { name: "Surya Teja", role: "Business Head" },
-    { name: "Gopala Krishna", role: "SEO" }
+    { name: "Srikanth Reddy", role: "Managing Director", image: "/images/gallery/employee-01.JPG" },
+    { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employee-02.JPG" },
+    { name: "Pravanya Reddy", role: "CTO", image: "/images/gallery/employee-03.JPG" },
+    { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employee-04.JPG" },
+    { name: "Gopala Krishna", role: "SEO", image: "/images/gallery/employee-05.JPG" }
 ];
 
 
@@ -89,7 +89,7 @@ function MobileLeadersCarousel({ items }: { items: typeof teamMembers }) {
                         className="w-full flex-shrink-0 flex flex-col items-center snap-center !py-4"
                     >
                         {/* Image Container with Organic Blob */}
-                        <div className="relative w-52 h-52 !mb-5">
+                        <div className="relative w-72 h-[360px] !mb-5">
                             <div
                                 className="absolute inset-0 bg-[#e76038] opacity-90 shadow-xl"
                                 style={{
@@ -104,9 +104,19 @@ function MobileLeadersCarousel({ items }: { items: typeof teamMembers }) {
 
                             <div className="absolute inset-0 flex items-center justify-center overflow-hidden z-10"
                                 style={{ borderRadius: '40% 60% 70% 30% / 40% 40% 60% 60%' }}>
-                                <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[#2197A1]/20 font-black text-5xl select-none">
-                                    {member.name.split(' ').map(n => n[0]).join('')}
-                                </div>
+                                {member.image ? (
+                                    <Image 
+                                        src={member.image} 
+                                        alt={member.name}
+                                        fill
+                                        quality={100}
+                                        className="object-cover transition-transform duration-500"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[#2197A1]/20 font-black text-5xl select-none">
+                                        {member.name.split(' ').map(n => n[0]).join('')}
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -499,7 +509,7 @@ export default function WhoWeArePage() {
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
                                 href="/contact"
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[14px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                                className="hero-btn"
                             >
                                 <span className="max-sm:hidden">Start Your Project</span>
                                 <span className="sm:hidden">Get Started</span>
@@ -691,7 +701,7 @@ export default function WhoWeArePage() {
                             {teamMembers.map((member, idx) => (
                                 <div key={idx} className="w-full sm:w-[calc(50%-24px)] lg:w-[calc(25%-36px)] min-w-[260px] flex flex-col items-center group">
                                     {/* Image Container with Organic Blob */}
-                                    <div className="relative w-52 h-52 !mb-10">
+                                    <div className="relative w-64 h-[350px] !mb-10">
                                         {/* Organic Blob Background (Floating) */}
                                         <div
                                             className="absolute inset-0 bg-[#e76038] opacity-90 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 shadow-xl"
@@ -701,16 +711,26 @@ export default function WhoWeArePage() {
                                             }}
                                         />
                                         <div
-                                            className="absolute inset-2 bg-[#f97316] opacity-40 blur-lg transition-transform duration-700 group-hover:scale-125"
+                                            className="absolute inset-2 bg-[#f97316] opacity-20 blur-md transition-transform duration-700 group-hover:scale-110"
                                             style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }}
                                         />
 
-                                        {/* Initial/Headshot Mask */}
+                                        {/* Image/Headshot Mask */}
                                         <div className="absolute inset-0 flex items-center justify-center overflow-hidden z-10"
                                             style={{ borderRadius: '40% 60% 70% 30% / 40% 40% 60% 60%' }}>
-                                            <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[#2197A1]/20 font-black text-5xl select-none group-hover:scale-110 transition-transform duration-500">
-                                                {member.name.split(' ').map(n => n[0]).join('')}
-                                            </div>
+                                            {member.image ? (
+                                                <Image 
+                                                    src={member.image} 
+                                                    alt={member.name}
+                                                    fill
+                                                    quality={100}
+                                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[#2197A1]/20 font-black text-5xl select-none group-hover:scale-110 transition-transform duration-500">
+                                                    {member.name.split(' ').map(n => n[0]).join('')}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
 

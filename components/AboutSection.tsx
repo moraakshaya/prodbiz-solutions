@@ -149,8 +149,9 @@ const AboutSection = () => {
                         </p>
                     </div>
 
-                    <Button href="/about" className="group md:!px-10 md:!py-4 !px-5 !py-2 !text-[12px] md:!text-[16px]">
-                        Learn More <span className="inline-block transform group-hover:translate-x-2 transition-transform duration-300 ml-3">→</span>
+                    <Button href="/about-us" className="about-section-btn !py-2 !px-6">
+                        <span>Learn More</span>
+                        <span className="arrow-icon">→</span>
                     </Button>
                 </div>
             </div>

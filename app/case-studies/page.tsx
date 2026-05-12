@@ -293,7 +293,7 @@ export default function CaseStudiesPage() {
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
                                 href="/contact"
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-6 !py-1.5 md:!py-3 rounded-xl md:rounded-3xl font-bold !text-[12px] md:!text-[16px] hover:bg-[#e76038]/90 transition-all transform hover:scale-100 active:scale-95 shadow-md md:shadow-2xl relative z-10"
+                                className="hero-btn"
                             >
                                 <span className="max-sm:hidden">Work With Us</span>
                                 <span className="sm:hidden">Get Started</span>

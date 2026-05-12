@@ -391,7 +391,7 @@ export default function BlogDetails() {
                         <div ref={buttonRef}>
                             <Button
                                 href="/contact"
-                                className="inline-flex items-center gap-2 md:gap-3 bg-[#e76038] !text-white !px-3 md:!px-8 !py-2 md:!py-3.5 rounded-xl md:rounded-3xl font-bold text-lg md:text-lg hover:shadow-[0_10px_30px_rgba(231,96,56,0.3)] transition-all transform hover:-translate-y-1 active:scale-95 leading-tight relative z-10"
+                                className="hero-btn hover:!text-[#e76038] hover:!border-[#e76038]"
                             >
                                 <span>Start Your Growth</span>
                                 <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />

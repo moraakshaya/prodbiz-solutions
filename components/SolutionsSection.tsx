@@ -252,8 +252,8 @@ const SolutionsSection = () => {
                                 sendToBackOnClick={true}
                                 cards={[
                                     <img key={1} src="/images/home-services/post.webp" alt="Branding 1" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={2} src="/images/home-services/logo-1.webp" alt="Branding 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/home-services/banner.webp" alt="Branding 3" className="w-full h-full object-cover rounded-2xl" />,
+                                    <img key={2} src="/images/home-services/logo.webp" alt="Branding 2" className="w-full h-full object-cover rounded-2xl" />,
+                                    <img key={3} src="/images/home-services/menu-card.webp" alt="Branding 3" className="w-full h-full object-cover rounded-2xl" />,
                                     <img key={4} src="/images/home-services/posters.webp" alt="Branding 4" className="w-full h-full object-cover rounded-2xl" />,
                                 ]}
                                 autoplay={true}
