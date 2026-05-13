@@ -490,7 +490,7 @@ ol {
 }
 
 .animate-btn-and-arrow.animate-btn-and-arrow:hover {
-  transform: translateY(-8px) scale(1.05) !important;
+  transform: translateY(-4px) scale(1.02) !important;
 }
 
 .animate-btn-and-arrow .arrow-icon {

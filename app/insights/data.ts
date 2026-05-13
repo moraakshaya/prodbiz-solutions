@@ -1036,7 +1036,7 @@ This project highlights how a structured and data-driven strategy can help brand
         title: "UX Design Principles for Conversion",
         description: "Small design changes that can lead to significant improvements in your site's conversion rate.",
         category: "Web Development",
-        image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80",
+        image: "/images/insights-img-01.webp",
         date: "Feb 15, 2025",
         author: "Liam Neeson",
         readingTime: "6 min read",

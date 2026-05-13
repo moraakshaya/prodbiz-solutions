@@ -413,7 +413,7 @@ export default function WebsiteDevelopmentPage() {
                     <div ref={introVisualRef} className="hidden md:block w-full md:w-1/2 relative h-[300px] md:h-[450px]">
                         <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[4rem] blur-[80px] opacity-10 pointer-events-none"></div>
                         <NextImage
-                            src="/brain/47a2892c-4fc3-4a46-8966-688ff5c9cd1e/website_dev_intro_visual_1777536345566.png"
+                            src="/images/website.jpg"
                             alt="Why Your Business Needs a Website"
                             fill
                             className="object-cover rounded-[3rem] shadow-2xl border-4 border-white transform hover:scale-105 transition-transform duration-700"
@@ -432,7 +432,7 @@ export default function WebsiteDevelopmentPage() {
                         <div className="block md:hidden w-full relative h-[250px] !mb-8">
                             <div className="absolute inset-x-0 bottom-0 top-10 bg-gradient-to-t from-[#2197A1] to-transparent rounded-[2rem] blur-[60px] opacity-10 pointer-events-none"></div>
                             <NextImage
-                                src="/brain/47a2892c-4fc3-4a46-8966-688ff5c9cd1e/website_dev_intro_visual_1777536345566.png"
+                                src="/images/website.jpg"
                                 alt="Why Your Business Needs a Website"
                                 fill
                                 className="object-cover rounded-[2rem] shadow-xl border-2 border-white"

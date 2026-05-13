@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Button from "./Button";
+import FlyingPosters from "./FlyingPosters";
 
 const solutionCategories = [
     {
@@ -40,14 +41,6 @@ const solutionCategories = [
         ],
         short: "SOCIAL"
     }
-];
-
-import FlyingPosters from "./FlyingPosters";
-
-const caseImages = [
-    "/images/flyers-1.webp",
-    "/images/logo-1.webp",
-    "/images/poster-1.avif"
 ];
 
 const TimelineItem = ({
@@ -278,17 +271,21 @@ const CaseStudiesPreview = () => {
                         </div>
                     </div>
 
-                    {/* Right: Flying Posters WebGL */}
-                    <div className="relative w-full flex items-start justify-center lg:mt-0 mt-8 overflow-hidden min-h-[350px] lg:min-h-[500px]">
-                        <FlyingPosters 
-                            items={caseImages}
-                            planeWidth={planeSize}
-                            planeHeight={planeSize}
-                            distortion={3}
-                            scrollEase={0.01}
-                            cameraFov={45}
-                            cameraZ={20}
-                        />
+                    {/* Right: Dynamic Case Studies Visual */}
+                    <div className="relative w-full h-full lg:mt-0 mt-8 min-h-[600px] lg:min-h-[900px] flex items-center justify-center">
+                        <div className="relative w-full h-[850px] overflow-hidden transition-all duration-700">
+                             <FlyingPosters 
+                                items={[
+                                    "/images/branding-images/img-01.jpeg",
+                                    "/images/branding-images/img-02.jpeg",
+                                    "/images/branding-images/img-03.jpeg",
+                                    "/images/branding-images/img-04.jpeg"
+                                ]}
+                                planeWidth={planeSize}
+                                planeHeight={planeSize}
+                                distortion={2}
+                             />
+                        </div>
                     </div>
 
                 </div>

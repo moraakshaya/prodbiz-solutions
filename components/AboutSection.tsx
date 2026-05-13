@@ -44,16 +44,16 @@ const AboutSection = () => {
                     <div className="absolute inset-0 flex items-center justify-center scale-[0.65] sm:scale-[0.85] md:scale-100">
                         <div className="relative w-full h-full max-w-[500px] mx-auto">
                             {[
-                                { color: "bg-[#0096da]", img: "/services/webdevelopment.png", top: "5%", left: "20%", size: "w-32 h-32 md:w-36 md:h-36", z: 30, anim: "animate-float" },
-                                { color: "bg-[#7db7de]", img: "/services/brandidentity.jpg", top: "-5%", left: "55%", size: "w-28 h-28 md:w-32 md:h-32", z: 20, anim: "animate-float-delayed" },
-                                { color: "bg-[#005c93]", img: "/services/webapplication.jpg", top: "15%", left: "75%", size: "w-32 h-32 md:w-36 md:h-36", z: 10, anim: "animate-float-slow" },
-                                { color: "bg-[#e5352c]", img: "/services/seo.png", top: "35%", left: "5%", size: "w-24 h-24 md:w-28 md:h-28", z: 40, anim: "animate-float" },
-                                { color: "bg-[#ffcc00]", img: "/services/socialmediamarketing.jpg", top: "30%", left: "40%", size: "w-40 h-40 md:w-44 md:h-44", z: 50, anim: "animate-float-slow" },
-                                { color: "bg-[#a6ce39]", img: "/services/ppc.png", top: "45%", left: "70%", size: "w-32 h-32 md:w-36 md:h-36", z: 15, anim: "animate-float-delayed" },
+                                { color: "bg-[#0096da]", img: "/images/home-services/video-shooting.webp", top: "5%", left: "20%", size: "w-32 h-32 md:w-36 md:h-36", z: 30, anim: "animate-float" },
+                                { color: "bg-[#7db7de]", img: "/images/gallery/chirstmas-img-03.webp", top: "-5%", left: "55%", size: "w-28 h-28 md:w-32 md:h-32", z: 20, anim: "animate-float-delayed" },
+                                { color: "bg-[#005c93]", img: "/images/home-services/logo.webp", top: "15%", left: "75%", size: "w-32 h-32 md:w-36 md:h-36", z: 10, anim: "animate-float-slow" },
+                                { color: "bg-[#e5352c]", img: "/images/website.jpg", top: "35%", left: "5%", size: "w-24 h-24 md:w-28 md:h-28", z: 40, anim: "animate-float" },
+                                { color: "bg-[#ffcc00]", img: "/images/gallery/chirstmas-img-01.webp", top: "30%", left: "40%", size: "w-40 h-40 md:w-44 md:h-44", z: 50, anim: "animate-float-slow" },
+                                { color: "bg-[#a6ce39]", img: "/images/branding-images/img-02.jpeg", top: "45%", left: "70%", size: "w-32 h-32 md:w-36 md:h-36", z: 15, anim: "animate-float-delayed" },
                                 { color: "bg-[#0b5c91]", img: "/services/photography.png", top: "65%", left: "10%", size: "w-28 h-28 md:w-32 md:h-32", z: 25, anim: "animate-float" },
                                 { color: "bg-[#80b152]", img: "/services/videograpghy.jpg", top: "55%", left: "30%", size: "w-36 h-36 md:w-40 md:h-40", z: 35, anim: "animate-float-slow" },
-                                { color: "bg-[#f19598]", img: "/services/contentmarketing.webp", top: "70%", left: "60%", size: "w-28 h-28 md:w-32 md:h-32", z: 5, anim: "animate-float-delayed" },
-                                { color: "bg-[#f5811c]", img: "/services/influencermarketing.webp", top: "80%", left: "35%", size: "w-32 h-32 md:w-36 md:h-36", z: 45, anim: "animate-float" },
+                                { color: "bg-[#f19598]", img: "/images/branding-images/img-09.png", top: "70%", left: "60%", size: "w-28 h-28 md:w-32 md:h-32", z: 5, anim: "animate-float-delayed" },
+                                { color: "bg-[#f5811c]", img: "/images/branding-images/img-04.jpeg", top: "80%", left: "35%", size: "w-32 h-32 md:w-36 md:h-36", z: 45, anim: "animate-float" },
                             ].map((block, i) => (
                                 <div
                                     key={i}

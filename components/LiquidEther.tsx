@@ -87,16 +87,39 @@ export default function LiquidEther({
         this.container = container;
         this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         this.resize();
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.autoClear = false;
-        this.renderer.setClearColor(new THREE.Color(0x000000), 0);
-        this.renderer.setPixelRatio(this.pixelRatio);
-        this.renderer.setSize(this.width, this.height);
-        this.renderer.domElement.style.width = '100%';
-        this.renderer.domElement.style.height = '100%';
-        this.renderer.domElement.style.display = 'block';
-        this.clock = new THREE.Clock();
-        this.clock.start();
+        
+        // Explicit WebGL check to avoid THREE.js console errors
+        let isWebGLAvailable = false;
+        try {
+          const canvas = document.createElement('canvas');
+          isWebGLAvailable = !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+        } catch (e) {
+          isWebGLAvailable = false;
+        }
+
+        if (!isWebGLAvailable) {
+          console.warn("LiquidEther: WebGL not available in this environment.");
+          this.renderer = null;
+          return false;
+        }
+
+        try {
+          this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+          this.renderer.autoClear = false;
+          this.renderer.setClearColor(new THREE.Color(0x000000), 0);
+          this.renderer.setPixelRatio(this.pixelRatio);
+          this.renderer.setSize(this.width, this.height);
+          this.renderer.domElement.style.width = '100%';
+          this.renderer.domElement.style.height = '100%';
+          this.renderer.domElement.style.display = 'block';
+          this.clock = new THREE.Clock();
+          this.clock.start();
+          return true;
+        } catch (e) {
+          console.warn("WebGL initialization failed:", e);
+          this.renderer = null;
+          return false;
+        }
       }
       resize() {
         if (!this.container) return;
@@ -926,7 +949,9 @@ export default function LiquidEther({
     class WebGLManager {
       constructor(props) {
         this.props = props;
-        Common.init(props.$wrapper);
+        this.initSuccess = Common.init(props.$wrapper);
+        if (!this.initSuccess) return;
+        
         Mouse.init(props.$wrapper);
         Mouse.autoIntensity = props.autoIntensity;
         Mouse.takeoverDuration = props.takeoverDuration;
@@ -1017,6 +1042,12 @@ export default function LiquidEther({
       autoResumeDelay,
       autoRampDuration
     });
+    
+    if (!webgl.initSuccess) {
+      console.warn("LiquidEther: Skipping WebGL initialization due to lack of support.");
+      return;
+    }
+    
     webglRef.current = webgl;
 
     const applyOptionsFromProps = () => {

@@ -388,10 +388,10 @@ export default function ContactPage() {
                             <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">01 OUR OFFICE</p>
                             <h4 className="text-[#2A2A2A] font-bold text-lg mb-4">Location</h4>
                             <p className="text-gray-500 text-xs leading-relaxed">
-                                St. Peter&apos;s Tech Park<br />
-                                Madhapur, HITEC City<br />
-                                Hyderabad, Telangana<br />
-                                – 500081
+                                Sree IKON Residency, Plot 496<br />
+                                Mathrusree Nagar, Hafeezpet<br />
+                                Miyapur, Hyderabad<br />
+                                – 500049
                             </p>
                         </div>
                         <div className="relative flex-shrink-0 w-[260px] h-[250px] bg-white rounded-[3rem] border border-gray-200 p-8 flex flex-col items-center justify-center text-center group transform transition-all duration-300 hover:-translate-y-2 cursor-default overflow-hidden mt-8 sm:mt-12">
@@ -399,8 +399,8 @@ export default function ContactPage() {
                             <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">02 WORKING HOURS</p>
                             <h4 className="text-[#2A2A2A] font-bold text-lg mb-4">Schedule</h4>
                             <p className="text-gray-500 text-xs leading-relaxed">
-                                <span className="font-medium text-gray-700">Mon – Fri :</span> 9 AM – 6 PM<br />
-                                <span className="font-medium text-gray-700">Saturday :</span> 10 AM – 2 PM<br />
+                                <span className="font-medium text-gray-700">Mon – Fri :</span> 10 AM – 6.30 PM<br />
+                                <span className="font-medium text-gray-700">Saturday :</span> 10 AM – 6.30 PM<br />
                                 <span className="font-medium text-gray-700">Sunday :</span> Closed
                             </p>
                         </div>
@@ -409,26 +409,27 @@ export default function ContactPage() {
                             <p className="text-[#2197A1] font-bold text-xs uppercase tracking-widest mb-2">03 CONTACT US</p>
                             <h4 className="text-[#2A2A2A] font-bold text-lg mb-4">Reach Out</h4>
                             <p className="text-gray-500 text-xs leading-relaxed">
-                                <span className="font-medium text-gray-700">Phone No:</span> +91 98765 43210<br />
-                                <span className="font-medium text-gray-700">Email:</span> hello@company.com
+                                <span className="font-medium text-gray-700">Phone No:</span> +91 8977742255<br />
+                                <span className="font-medium text-gray-700">Email:</span> Info@prodbizsolutions.com
                             </p>
                         </div>
                     </div>
 
                     <div ref={contactMapRef} className="w-full lg:w-[88%] min-h-[400px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(33,151,161,0.15)] relative">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.244504437476!2d78.37615831484326!3d17.447190988034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dbb1d60e71%3A0x3de8b4c0e7f6e12e!2sMadhapur%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin"
+                            src="https://maps.google.com/maps?q=PRODBIZ%20SOLUTIONS%20PRIVATE%20LIMITED%2C%20Flat%20101%2C%20Sree%20IKON%20Residency%2C%20Plot%20496%2C%20Main%20Rd%20III%2C%20Mathrusree%20Nagar%2C%20Hafeezpet%2C%20Miyapur%2C%20Hyderabad%2C%20Telangana%20500049&t=&z=15&ie=UTF8&iwloc=&output=embed"
                             className="w-full h-full absolute inset-0"
                             style={{ border: 0, minHeight: '400px' }}
                             allowFullScreen={false}
                             loading="lazy"
+                            title="Prodbiz Solutions Location"
                             referrerPolicy="no-referrer-when-downgrade"
                         ></iframe>
                         <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-md z-10 flex items-center gap-2 pointer-events-none">
                             <span className="text-[#e76038] text-lg">📍</span>
                             <div>
-                                <p className="text-[#2A2A2A] font-bold text-xs">HITEC City</p>
-                                <p className="text-gray-500 text-[10px]">Hyderabad, Telangana</p>
+                                <p className="text-[#2A2A2A] font-bold text-xs">Miyapur / Hafeezpet</p>
+                                <p className="text-gray-500 text-[10px]">Hyderabad, Telangana 500049</p>
                             </div>
                         </div>
                     </div>

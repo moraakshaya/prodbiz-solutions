@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 const images = [
-    "/images/gallery/chirstmas-img-01.JPG",
-    "/images/gallery/chirstmas-img-02.JPG",
-    "/images/gallery/chirstmas-img-03.JPG"
+    "/images/gallery/chirstmas-img-01.webp",
+    "/images/gallery/chirstmas-img-02.webp",
+    "/images/gallery/chirstmas-img-03.webp"
 ];
 
 const GalleryHeroAnimation = () => {

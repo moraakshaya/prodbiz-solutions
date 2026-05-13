@@ -13,110 +13,22 @@ import dynamic from "next/dynamic";
 const WhoWeAreHero3D = dynamic(() => import("@/components/WhoWeAreHero3D"), { ssr: false });
 import FolderAnimation from "@/components/FolderAnimation";
 import Stack from "@/components/Stack";
-
+import { caseStudies } from "./data";
+ 
 gsap.registerPlugin(ScrollTrigger);
-
-const caseStudies = [
-    {
-        client: "Ricchhotel Restaurant",
-        industry: "Restaurant & Hospitality",
-        headline: "From No Online Presence to a Professional Restaurant Website",
-        problem: "Ricchhotel identified a critical gap: they had no digital footprint. Without an official website, potential customers couldn't find their menu, location, or even confirm their existence through search engines, leading to lost revenue and zero brand visibility in a digital-first market.",
-        challenges: "The business faced a blank slate with zero legacy data. They struggled to showcase their unique ambiance, missed out on local search traffic, and had no way to facilitate online reservation inquiries or digital menu exploration.",
-        solution: "We developed their first-ever digital flagship—a modern, mobile-responsive platform. Our solution featured structured menu discovery, integrated contact/location architecture, and a foundational SEO setup to ensure immediate discoverability on launch.",
-        results: [
-            { label: "Online Presence", value: "First Website" },
-            { label: "Visibility", value: "SEO Improved" },
-            { label: "Inquiries", value: "Increased" },
-            { label: "Brand Equity", value: "Professional" },
-            { label: "Accessibility", value: "Easy Find" },
-        ],
-        accent: "#2197A1",
-        polaroidAngle: "-rotate-2",
-        polaroidAngle2: "rotate-3",
-        images: {
-            before: "/case-studies/ricchhotel-before.png",
-            after: "/case-studies/ricchhotel-after.png"
-        }
-    },
-    {
-        client: "Shriswara Multispeciality Hospital",
-        industry: "Healthcare",
-        headline: "From an Outdated WordPress Website to a Modern Healthcare Platform",
-        problem: "The hospital's existing WordPress site was severely outdated and difficult to manage. It failed to convey the sophisticated level of care provided, creating a digital disconnect between the physical hospital experience and its online representation.",
-        challenges: "Limited flexibility in the legacy CMS hindered content updates, while slow loading speeds and poor mobile responsiveness made it difficult for patients to access critical department and doctor information during emergencies.",
-        solution: "We performed a complete architectural overhaul, moving away from restrictive templates to a custom-developed, scalable healthcare platform. We prioritized patient-centric navigation, optimized doctor directories, and ensured seamless cross-device performance.",
-        results: [
-            { label: "Patient UX", value: "Redesigned" },
-            { label: "Performance", value: "Significant" },
-            { label: "Accessibility", value: "Full Mobile" },
-            { label: "Navigation", value: "Intuitive" },
-            { label: "Design", value: "Professional" },
-        ],
-        accent: "#1b7a82",
-        polaroidAngle: "rotate-2",
-        polaroidAngle2: "-rotate-3",
-        images: {
-            before: "/case-studies/shriswara-before.png",
-            after: "/case-studies/shriswara-after.png"
-        }
-    },
-    {
-        client: "GVR Info Systems",
-        industry: "IT Services / Technology",
-        headline: "From a Self-Developed Website to a Modern Professional Digital Experience",
-        problem: "GVR Info Systems relied on an internally developed website that, while functional for basic info, failed to project the professional excellence expected of a leading technology provider.",
-        challenges: "The self-built architecture lacked a modern UI/UX hierarchy. Outdated typography and a cluttered layout made it difficult for potential clients to navigate their complex IT service offerings, impacting brand credibility.",
-        solution: "We engineered a visually engaging platform with a high-performance visual hierarchy. By restructuring the information architecture, we ensured their service portfolio was the focal point, supported by modern UI elements and optimized performance.",
-        results: [
-            { label: "Navigation", value: "Reorganized" },
-            { label: "Credibility", value: "Enhanced" },
-            { label: "Performance", value: "Improved" },
-            { label: "Design", value: "Professional" },
-            { label: "Engagement", value: "Better" },
-        ],
-        accent: "#2197A1",
-        polaroidAngle: "-rotate-2",
-        polaroidAngle2: "rotate-3",
-        images: {
-            before: "/case-studies/gvr-before.png",
-            after: "/case-studies/gvr-after.png"
-        }
-    },
-    {
-        client: "Russh Hospital",
-        industry: "Healthcare",
-        headline: "From an Outdated Website to a Strong Digital Healthcare Presence",
-        problem: "Russh Hospital struggled with an outdated digital presence that failed to effectively showcase their medical expertise or reach potential patients in a competitive healthcare landscape.",
-        challenges: "The existing platform lacked a modern structure and failed to communicate services clearly. Without a strategic marketing layer or an intuitive patient-centric design, their digital visibility remained stagnant.",
-        solution: "We implemented a complete digital transformation, redesigning the website with a modern healthcare interface and integrating a targeted performance marketing strategy to expand their reach and patient engagement.",
-        results: [
-            { label: "Website", value: "Modernized" },
-            { label: "Visibility", value: "Increased" },
-            { label: "Engagement", value: "Better" },
-            { label: "Brand", value: "Strengthened" },
-            { label: "Reach", value: "Strategic" },
-        ],
-        accent: "#1b7a82",
-        polaroidAngle: "rotate-2",
-        polaroidAngle2: "-rotate-3",
-        images: {
-            before: "/case-studies/russh-before.png",
-            after: "/case-studies/russh-after.png"
-        }
-    }
-];
 
 const TimelineItem = ({
     label,
     value,
     icon,
     delay = 0,
+    children
 }: {
     label: string;
-    value: string;
+    value?: string;
     icon: React.ReactNode;
     delay?: number;
+    children?: React.ReactNode;
 }) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -158,13 +70,16 @@ const TimelineItem = ({
             </div>
 
             {/* Content */}
-            <div className="pb-8">
+            <div className="pb-8 w-full pr-4">
                 <span className="text-[14px] font-black uppercase tracking-[0.15em] text-[#2197A1]/70 mb-1 block">
                     {label}
                 </span>
-                <p className="text-gray-800 font-medium leading-relaxed text-sm">
-                    {value}
-                </p>
+                {value && (
+                    <p className="text-gray-800 font-medium leading-relaxed text-sm">
+                        {value}
+                    </p>
+                )}
+                {children && <div className="mt-4">{children}</div>}
             </div>
         </div>
     );
@@ -358,19 +273,52 @@ export default function CaseStudiesPage() {
                                         />
                                         <TimelineItem
                                             delay={idx * 200 + 300}
-                                            label="Solution"
-                                            value={cs.solution}
+                                            label="What we did:"
                                             icon={
                                                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                     <path d="M12 2L2 7l10 5 10-5-10-5z" />
                                                     <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
                                                 </svg>
                                             }
-                                        />
-
+                                        >
+                                            {cs.categories ? (
+                                                <div className="space-y-4 w-full">
+                                                    {cs.categories.map((cat, cIdx) => (
+                                                        <div 
+                                                            key={cIdx}
+                                                            className="rounded-xl overflow-hidden shadow-[0_10px_10px_2px_rgba(0,0,0,0.05)] !p-4 !my-2 border border-gray-50 bg-white"
+                                                        >
+                                                            <div className="px-3 py-2 flex flex-col items-start bg-gray-50/40">
+                                                                <h5 className="text-[14px] font-bold text-gray-800">
+                                                                    {cat.title}
+                                                                </h5>
+                                                                <p className="text-[12px] text-gray-500 mt-1 leading-relaxed">
+                                                                    {cat.desc}
+                                                                </p>
+                                                            </div>
+                                                            <div className="px-3 pb-2 pt-2 border-t border-gray-50/50">
+                                                                <ul className="space-y-1">
+                                                                    {cat.points.map((pt, pIdx) => (
+                                                                        <li key={pIdx} className="flex items-start">
+                                                                            <svg className="w-3 h-3 text-[#2197A1] !mt-1 !mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                                                            <p className="text-[13px] text-gray-700 leading-relaxed !mb-0">{pt}</p>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <p className="text-gray-800 font-medium leading-relaxed text-sm">
+                                                    {cs.solution}
+                                                </p>
+                                            )}
+                                        </TimelineItem>
+ 
                                         {/* Results */}
                                         <div className="!mt-6 pl-2">
-                                            <span className="text-[14px] font-black uppercase tracking-[0.15em] text-[#2197A1]/70 !mb-1 block">Results</span>
+                                            <span className="text-[14px] font-black uppercase tracking-[0.15em] text-[#2197A1]/70 !mb-4 block">Results</span>
                                             <ul className="space-y-2 ml-0 mb-0">
                                                 {cs.results.map((r, rIdx) => (
                                                     <li key={rIdx} className="flex items-start text-sm font-medium mb-0">
@@ -394,33 +342,36 @@ export default function CaseStudiesPage() {
                                             autoplay={true}
                                             autoplayDelay={3500 + idx * 400}
                                             cards={[
-                                                // After Card (Primary)
-                                                <div key="after" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100">
+                                                // Primary Result Card (Desktop/Final)
+                                                <div key="after" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100 group">
                                                     <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50">
                                                         <img 
                                                             src={cs.images.after} 
                                                             alt={`${cs.client} After`} 
-                                                            className="w-full h-full object-cover" 
+                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                                         />
                                                     </div>
                                                     <div className="mt-4 pb-2 text-center">
                                                         <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-widest italic flex items-center justify-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> Premium After
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> 
+                                                            {cs.images.before ? "Premium Result" : "Desktop Platform"}
                                                         </span>
                                                     </div>
                                                 </div>,
-                                                // Before Card
-                                                <div key="before" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100">
+                                                
+                                                // Secondary Card: Either 'Before' or 'Mobile View'
+                                                <div key="secondary" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100 group">
                                                     <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
                                                         <img 
-                                                            src={cs.images.before} 
-                                                            alt={`${cs.client} Before`} 
-                                                            className="w-full h-full object-cover" 
+                                                            src={cs.images.before || cs.images.mobile || cs.images.after} 
+                                                            alt={`${cs.client} ${cs.images.before ? "Before" : "Mobile View"}`} 
+                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                                         />
                                                     </div>
                                                     <div className="mt-4 pb-2 text-center">
                                                         <span className="text-[11px] font-black uppercase text-gray-400 tracking-widest flex items-center justify-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-300" /> Initial Design
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-300" /> 
+                                                            {cs.images.before ? "Initial Design" : "Mobile Experience"}
                                                         </span>
                                                     </div>
                                                 </div>

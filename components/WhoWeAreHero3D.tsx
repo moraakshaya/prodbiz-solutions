@@ -145,11 +145,11 @@ function AnimatedScene({ playSignalRef, stayOpen = false, characterSrc }: { play
 
   const boxOp   = useRef(1);
   const dissRef  = useRef(false);
-  const lastSig  = useRef(0);
+  const lastSig  = useRef(-1); // Changed from 0 to -1 to trigger resetAll on mount
 
   const st = useRef({
     ph: "falling" as "falling"|"opening"|"dissolving"|"bouncing"|"stayOpen",
-    timer:0, posY:11, velY:0, bounces:0,
+    timer:0, posY: 8, velY:0, bounces:0, // Start from y=8 instead of y=11 for faster entry
     fA:0, bA:0, lA:0, rA:0, lidY:0,
     bY:0, bX:0, bDir: 1 as 1|-1, bShown:false,
   });
@@ -166,9 +166,9 @@ function AnimatedScene({ playSignalRef, stayOpen = false, characterSrc }: { play
     const lp=lpRef.current, rp=rpRef.current, lid=lidRef.current;
     const ball=ballRef.current, bL=blRef.current;
     if (!box||!fp||!bp||!lp||!rp||!lid||!ball) return;
-    st.current = { ph:"falling", timer:0, posY:11, velY:0, bounces:0, fA:0, bA:0, lA:0, rA:0, lidY:0, bY:0, bX:BOX_X, bDir:-1, bShown:false };
+    st.current = { ph:"falling", timer:0, posY: 8, velY:0, bounces:0, fA:0, bA:0, lA:0, rA:0, lidY:0, bY:0, bX:BOX_X, bDir:-1, bShown:false };
     boxOp.current=1; dissRef.current=false;
-    box.visible=true; box.position.y=11;
+    box.visible=true; box.position.y= 8;
     fp.rotation.x=0; bp.rotation.x=0; lp.rotation.z=0; rp.rotation.z=0;
     lid.position.y=0; ball.visible=false;
     if (bL) bL.visible=false;
@@ -179,7 +179,7 @@ function AnimatedScene({ playSignalRef, stayOpen = false, characterSrc }: { play
     s.timer += dt;
     if (playSignalRef.current !== lastSig.current) {
       lastSig.current = playSignalRef.current;
-      resetAll(); return;
+      resetAll();
     }
     const box=boxRef.current, fp=fpRef.current, bp=bpRef.current;
     const lp=lpRef.current,   rp=rpRef.current, lid=lidRef.current;
@@ -310,10 +310,10 @@ function AnimatedScene({ playSignalRef, stayOpen = false, characterSrc }: { play
 function Scene({ showBox, playSignalRef, stayOpen, characterSrc }: { showBox?: boolean; playSignalRef: React.MutableRefObject<number>; stayOpen?: boolean; characterSrc?: string }) {
   return (
     <group>
-      <ambientLight intensity={0.45} color="#081e28" />
-      <pointLight position={[6,8,5]}   intensity={4}   color="#2197A1" />
-      <pointLight position={[-7,3,-3]} intensity={2.5} color="#155f70" />
-      <pointLight position={[0,-4,6]}  intensity={1.5} color="#ffffff" />
+      <ambientLight intensity={0.65} color="#0d2a35" />
+      <pointLight position={[6,8,5]}   intensity={5}   color="#2197A1" />
+      <pointLight position={[-7,3,-3]} intensity={3} color="#155f70" />
+      <pointLight position={[0,-4,6]}  intensity={2} color="#ffffff" />
       <BackgroundParticles />
       {showBox && <AnimatedScene playSignalRef={playSignalRef} stayOpen={stayOpen} characterSrc={characterSrc} />}
     </group>
@@ -331,9 +331,24 @@ export default function WhoWeAreHero3D({
 }) {
   const wrapRef       = React.useRef<HTMLDivElement>(null);
   const playSignalRef = React.useRef(0);
+  const [mounted, setMounted] = React.useState(false);
+  const [webglAvailable, setWebglAvailable] = React.useState(false);
 
   React.useEffect(() => {
-    if (!showBox) return;
+    setMounted(true);
+    const checkWebGL = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+      } catch (e) {
+        return false;
+      }
+    };
+    setWebglAvailable(checkWebGL());
+  }, []);
+
+  React.useEffect(() => {
+    if (!mounted || !showBox || !webglAvailable) return;
     const el = wrapRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -342,11 +357,24 @@ export default function WhoWeAreHero3D({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [showBox]);
+  }, [showBox, webglAvailable, mounted]);
+
+  const backgroundStyle: React.CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    pointerEvents: "none",
+    zIndex: 0,
+    background: "linear-gradient(135deg,#030e12 0%,#051820 40%,#082430 70%,#0a2e3a 100%)"
+  };
+
+  if (!webglAvailable) {
+    return <div ref={wrapRef} style={backgroundStyle} />;
+  }
 
   return (
-    <div ref={wrapRef} style={{ position:"absolute", inset:0, width:"100%", height:"100%",
-      background:"linear-gradient(135deg,#030e12 0%,#051820 40%,#082430 70%,#0a2e3a 100%)" }}>
+    <div ref={wrapRef} style={backgroundStyle}>
       <Canvas dpr={[1,1.5]} gl={{ antialias:true, alpha:true }} style={{ width:"100%", height:"100%" }}>
         <PerspectiveCamera makeDefault position={[0,0,9]} fov={52} />
         <React.Suspense fallback={null}>

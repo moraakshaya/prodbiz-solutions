@@ -68,57 +68,57 @@ const galleryImages = [
 
 const eventImages = [
     {
-        url: "/images/gallery/1st-aniversary-img-01.JPG",
+        url: "/images/gallery/1st-aniversary-img-01.webp",
         title: "1st Anniversary",
         description: "Celebrating 365 days of innovation, growth, and digital excellence."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-02.JPG",
+        url: "/images/gallery/1st-aniversary-img-02.webp",
         title: "1st Anniversary",
         description: "A milestone moment marking a year of transforming visions into reality."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-03.JPG",
+        url: "/images/gallery/1st-aniversary-img-03.webp",
         title: "1st Anniversary",
         description: "Our dedicated team coming together to honor our first year of success."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-04.JPG",
+        url: "/images/gallery/1st-aniversary-img-04.webp",
         title: "1st Anniversary",
         description: "Reflecting on a year of hard work, creativity, and outstanding achievements."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-05.JPG",
+        url: "/images/gallery/1st-aniversary-img-05.webp",
         title: "1st Anniversary",
         description: "Cheers to the first of many successful years as your innovation partner."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-06.JPG",
+        url: "/images/gallery/1st-aniversary-img-06.webp",
         title: "1st Anniversary",
         description: "Capturing the joy and collective energy of our incredible first-year journey."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-07.JPG",
+        url: "/images/gallery/1st-aniversary-img-07.webp",
         title: "1st Anniversary",
         description: "Honoring the dedication that made our first year extraordinary."
     },
     {
-        url: "/images/gallery/1st-aniversary-img-08.JPG",
+        url: "/images/gallery/1st-aniversary-img-08.webp",
         title: "1st Anniversary",
         description: "A night of gratitude and celebration for our partners and patrons."
     },
     {
-        url: "/images/gallery/chirstmas-img-01.JPG",
+        url: "/images/gallery/chirstmas-img-01.webp",
         title: "Christmas Celebration",
         description: "Spreading festive cheer and holiday magic across our office space."
     },
     {
-        url: "/images/gallery/chirstmas-img-02.JPG",
+        url: "/images/gallery/chirstmas-img-02.webp",
         title: "Christmas Celebration",
         description: "Secret Santa surprises and warm smiles during our holiday gathering."
     },
     {
-        url: "/images/gallery/chirstmas-img-03.JPG",
+        url: "/images/gallery/chirstmas-img-03.webp",
         title: "Christmas Celebration",
         description: "Ending the year with gratitude and festive team bonding moments."
     }

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Renderer, Camera, Transform, Plane, Program, Mesh, Texture } from 'ogl';
 
 const vertexShader = `
@@ -278,26 +278,33 @@ class Canvas {
   }
 
   createRenderer() {
-    this.renderer = new Renderer({
-      canvas: this.canvas,
-      alpha: true,
-      antialias: true,
-      dpr: Math.min(window.devicePixelRatio, 2)
-    });
-    this.gl = this.renderer.gl;
+    try {
+      this.renderer = new Renderer({
+        canvas: this.canvas,
+        alpha: true,
+        antialias: true,
+        dpr: Math.min(window.devicePixelRatio, 2)
+      });
+      this.gl = this.renderer.gl;
+    } catch (e) {
+      // Fail silently, fallback UI will handle it
+    }
   }
 
   createCamera() {
+    if (!this.gl) return;
     this.camera = new Camera(this.gl);
     this.camera.fov = this.cameraFov;
     this.camera.position.z = this.cameraZ;
   }
 
   createScene() {
+    if (!this.gl) return;
     this.scene = new Transform();
   }
 
   createGeometry() {
+    if (!this.gl) return;
     this.planeGeometry = new Plane(this.gl, {
       heightSegments: 1,
       widthSegments: 100
@@ -305,7 +312,7 @@ class Canvas {
   }
 
   createMedias() {
-    if (!this.items) return;
+    if (!this.gl || !this.items) return;
     this.medias = this.items.map((image, index) => {
       return new Media({
         gl: this.gl,
@@ -401,8 +408,12 @@ class Canvas {
       this.medias.forEach(media => media.update(this.scroll));
     }
 
-    if (this.renderer && this.scene && this.camera) {
-      this.renderer.render({ scene: this.scene, camera: this.camera });
+    if (this.renderer && this.scene && this.camera && this.gl) {
+      try {
+        this.renderer.render({ scene: this.scene, camera: this.camera });
+      } catch (e) {
+        this.destroy();
+      }
     }
 
     this.scroll.last = this.scroll.current;
@@ -440,6 +451,16 @@ class Canvas {
     window.removeEventListener('touchstart', this.onTouchDown);
     window.removeEventListener('touchmove', this.onTouchMove);
     window.removeEventListener('touchend', this.onTouchUp);
+
+    // Free up WebGL context to prevent "unable to create webgl context" crash
+    if (this.gl) {
+      const ext = this.gl.getExtension('WEBGL_lose_context');
+      if (ext) ext.loseContext();
+    }
+    
+    if (this.renderer && this.renderer.gl) {
+        this.renderer.gl = null;
+    }
   }
 }
 
@@ -469,14 +490,32 @@ export default function FlyingPosters({
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const instanceRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
+  const [webglAvailable, setWebglAvailable] = useState(false);
+
+  // Double items if list is short to ensure smooth looping
+  const displayItems = items.length > 0 && items.length <= 4 ? [...items, ...items] : items;
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    setMounted(true);
+    const checkWebGL = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+      } catch (e) {
+        return false;
+      }
+    };
+    setWebglAvailable(checkWebGL());
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || !webglAvailable || !containerRef.current) return;
 
     instanceRef.current = new Canvas({
       container: containerRef.current,
       canvas: canvasRef.current,
-      items,
+      items: displayItems,
       planeWidth,
       planeHeight,
       distortion,
@@ -491,10 +530,10 @@ export default function FlyingPosters({
         instanceRef.current = null;
       }
     };
-  }, [items, planeWidth, planeHeight, distortion, scrollEase, cameraFov, cameraZ]);
+  }, [items, planeWidth, planeHeight, distortion, scrollEase, cameraFov, cameraZ, mounted, webglAvailable]);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!webglAvailable || !canvasRef.current) return;
 
     const canvasEl = canvasRef.current;
 
@@ -516,7 +555,65 @@ export default function FlyingPosters({
       canvasEl.removeEventListener('wheel', handleWheel);
       canvasEl.removeEventListener('touchmove', handleTouchMove);
     };
-  }, []);
+  }, [webglAvailable]);
+
+  if (!mounted) return <div className={`w-full h-full ${className}`} {...props} />;
+  
+  if (!webglAvailable) {
+    return (
+      <div className={`w-full h-full relative group overflow-hidden ${className}`} {...props}>
+        <div className="absolute inset-0 flex transition-transform duration-1000 ease-in-out">
+          {displayItems.map((src, idx) => (
+            <div key={idx} className="min-w-full h-full relative">
+              <img 
+                src={src} 
+                alt={`Portfolio ${idx + 1}`} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+        
+        {/* Simple Auto-play simulation via CSS animation if multiple items */}
+        {displayItems.length > 1 && (
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes slideLoop {
+              ${displayItems.map((_, i) => `
+                ${(i * 100) / displayItems.length}% { transform: translateX(-${i * 100}%); }
+                ${((i + 1) * 100) / displayItems.length - 5}% { transform: translateX(-${i * 100}%); }
+              `).join('')}
+              100% { transform: translateX(0); }
+            }
+            .fallback-slider {
+              display: flex;
+              width: ${displayItems.length * 100}%;
+              height: 100%;
+              animation: slideLoop ${displayItems.length * 4}s infinite ease-in-out;
+            }
+          `}} />
+        )}
+
+        <div className={displayItems.length > 1 ? "fallback-slider" : "w-full h-full flex"}>
+           {displayItems.map((src, idx) => (
+            <div key={idx} className="w-full h-full relative flex-shrink-0">
+               <img 
+                src={src} 
+                alt={`Portfolio ${idx + 1}`} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+        
+        {/* Floating label */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-[10px] uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+           Portfolio Gallery
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className={`w-full h-full overflow-hidden relative z-2 ${className}`} {...props}>

@@ -119,6 +119,41 @@ const Scene = ({ image, icons = defaultIcons }: HeroVisual3DProps) => {
 };
 
 export default function HeroVisual3D({ image, icons }: HeroVisual3DProps) {
+    const [mounted, setMounted] = React.useState(false);
+    const [webglAvailable, setWebglAvailable] = React.useState(false);
+
+    React.useEffect(() => {
+        setMounted(true);
+        const checkWebGL = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        };
+        setWebglAvailable(checkWebGL());
+    }, []);
+
+    if (!mounted) return <div className="w-full h-full min-h-[180px] sm:min-h-[350px] md:min-h-[600px] lg:min-h-[750px] relative md:top-[100px]" />;
+
+    if (!webglAvailable) {
+        return (
+            <div className="w-full h-full min-h-[180px] sm:min-h-[350px] md:min-h-[600px] lg:min-h-[750px] relative md:top-[100px] flex items-center justify-center">
+                <div className="relative group flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[#2197A1] rounded-full blur-[100px] opacity-15 pointer-events-none"></div>
+                    <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-[28rem] md:h-[28rem] flex items-center justify-center select-none">
+                        <img
+                            src={image || "/images/aboutheroimg.png"}
+                            alt="Professional"
+                            className="w-full h-full object-contain filter drop-shadow-[0_0px_0px_rgba(33,151,161,0.3)] scale-[1.2] sm:scale-[1.5] lg:scale-[1.8]"
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="w-full h-full min-h-[180px] sm:min-h-[350px] md:min-h-[600px] lg:min-h-[750px] relative md:top-[100px] pointer-events-auto">
             <Canvas className="w-full h-full !h-[180px] sm:!h-[350px] md:!h-[400px]">

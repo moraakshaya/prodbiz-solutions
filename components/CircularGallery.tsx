@@ -1,7 +1,7 @@
 "use client";
 
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function debounce(func: Function, wait: number) {
   let timeout: NodeJS.Timeout;
@@ -368,14 +368,20 @@ class App {
     this.addEventListeners();
   }
   createRenderer() {
-    this.renderer = new Renderer({
-      alpha: true,
-      antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
-    });
-    this.gl = this.renderer.gl;
-    this.gl.clearColor(0, 0, 0, 0);
-    this.container.appendChild(this.gl.canvas);
+    try {
+      this.renderer = new Renderer({
+        alpha: true,
+        antialias: true,
+        dpr: Math.min(window.devicePixelRatio || 1, 2)
+      });
+      this.gl = this.renderer.gl;
+      this.gl.clearColor(0, 0, 0, 0);
+      this.container.appendChild(this.gl.canvas);
+      return true;
+    } catch (e) {
+      console.warn("CircularGallery: Failed to create WebGL renderer", e);
+      return false;
+    }
   }
   createCamera() {
     this.camera = new Camera(this.gl);
@@ -534,12 +540,32 @@ export default function CircularGallery({
   scrollEase = 0.05
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!containerRef.current) return;
+  const [mounted, setMounted] = React.useState(false);
+  const [webglAvailable, setWebglAvailable] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const checkWebGL = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+      } catch (e) {
+        return false;
+      }
+    };
+    setWebglAvailable(checkWebGL());
+  }, []);
+
+  React.useEffect(() => {
+    if (!mounted || !containerRef.current || !webglAvailable) return;
     const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase });
     return () => {
       app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, webglAvailable, mounted]);
+
+  if (!mounted) return <div className="w-full h-full" ref={containerRef} />;
+  if (!webglAvailable) return null;
+
   return <div className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing" ref={containerRef} />;
 }

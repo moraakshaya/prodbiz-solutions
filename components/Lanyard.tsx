@@ -304,13 +304,40 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false, name = 'PRODBIZ A
 
 export default function Lanyard({ position = [0, 0, 24], gravity = [0, -40, 0], fov = 20, transparent = true, name = 'PRODBIZ ADMIN', role = 'LEGAL & COMPLIANCE' }) {
     const [isMobile, setIsMobile] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [webglAvailable, setWebglAvailable] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         setIsMobile(window.innerWidth < 768);
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener('resize', handleResize);
+        
+        const checkWebGL = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        };
+        setWebglAvailable(checkWebGL());
+        
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    if (!mounted) return <div className="w-full h-full" />;
+
+    if (!webglAvailable) {
+        return (
+            <div className="relative w-full h-full flex justify-center items-center bg-transparent">
+                <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 text-white text-center">
+                    <h3 className="text-xl font-bold mb-2">Interactive Preview</h3>
+                    <p className="opacity-60 text-sm">WebGL is required for the interactive lanyard.</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative z-0 w-full h-full flex justify-center items-center overflow-visible">

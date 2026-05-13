@@ -6,6 +6,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import Button from "./Button";
 import { usePathname } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 const solutionsDropdown = [
     { label: "Branding & Designing", href: "/solutions/branding-designing" },
@@ -117,9 +118,15 @@ export default function Navbar() {
                 <Link
                     href="/"
                     onClick={closeMobileMenu}
-                    className="flex-shrink-0 font-black text-2xl tracking-tight transition-all duration-300 hover:scale-105 text-[var(--primary-color)] leading-none"
+                    className="flex-shrink-0 flex items-center justify-center self-center transition-all duration-300 hover:scale-105"
                 >
-                    <Image src="/logo.png" alt="Logo" width={50} height={50} className="lg:w-[100px] lg:h-[70px]" />
+                    <Image 
+                        src="/images/logoimg.png" 
+                        alt="Logo" 
+                        width={200} 
+                        height={80} 
+                        className="w-[120px] sm:w-[150px] lg:w-[180px] h-auto max-h-[45px] lg:max-h-[65px] object-contain flex self-center" 
+                    />
                 </Link>
 
                 {/* ── Hamburger (Mobile) ── */}
@@ -257,7 +264,13 @@ export default function Navbar() {
 
                 {/* ── Desktop CTA ── */}
                 <div className="hidden lg:flex items-center flex-shrink-0">
-                    <Button href="/get-proposal">Get Proposal</Button>
+                    <Link
+                        href="/get-proposal"
+                        className="inline-flex items-center gap-2 bg-[#e76038] hover:bg-[transparent] !text-white !px-5 !py-2 rounded-3xl font-bold !text-[14px] transition-all transform hover:scale-102 active:scale-95 shadow-2xl hover:shadow-[10px_10px_20px_rgba(0,0,0,0.3)] relative z-10 animate-btn-and-arrow group/btn"
+                    >
+                        <span>Get Proposal</span>
+                        <ArrowRight size={18} className="arrow-icon transition-transform duration-300 group-hover/btn:translate-x-1" />
+                    </Link>
                 </div>
             </div>
 
@@ -357,9 +370,14 @@ export default function Navbar() {
 
                 {/* Mobile CTA */}
                 <div className="!px-6 !py-5">
-                    <Button href="/get-proposal" onClick={closeMobileMenu} className="w-full text-center py-4">
-                        Get Proposal
-                    </Button>
+                    <Link
+                        href="/get-proposal"
+                        onClick={closeMobileMenu}
+                        className="flex items-center justify-center gap-3 !py-3 bg-[#e76038] hover:bg-[transparent] !text-white w-full py-4 rounded-3xl font-bold !text-[16px] transition-all transform hover:scale-102 active:scale-95 shadow-2xl hover:shadow-[10px_10px_20px_rgba(0,0,0,0.3)] relative z-10 animate-btn-and-arrow group/mbtn"
+                    >
+                        <span>Get Proposal</span>
+                        <ArrowRight size={20} className="arrow-icon transition-transform duration-300 group-hover/mbtn:translate-x-1" />
+                    </Link>
                 </div>
             </div>
         </nav>

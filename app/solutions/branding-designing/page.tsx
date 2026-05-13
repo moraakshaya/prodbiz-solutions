@@ -53,12 +53,15 @@ const whyChooseUsData = [
 ];
 
 const portfolioItems = [
-    { title: "Corporate Identity", category: "Logo Design", image: "/services/brandidentity.jpg" },
-    { title: "Modern Brandmark", category: "Logo Design", image: "/services/12.jpg" },
-    { title: "Event Campaign", category: "Posters", image: "/services/motiongraphic.webp" },
-    { title: "Lifestyle Feed", category: "Social Media", image: "/services/socialmediamarketing.jpg" },
-    { title: "Platform Strategy", category: "Social Media", image: "/services/influencermarketing.webp" },
-    { title: "Elegant Dining", category: "Menu Cards", image: "/services/videograpghy.jpg" },
+    { title: "Corporate Identity", category: "Logo Design", image: "/images/branding-images/img-01.jpeg" },
+    { title: "Modern Brandmark", category: "Logo Design", image: "/images/branding-images/img-02.jpeg" },
+    { title: "Event Campaign", category: "Posters", image: "/images/branding-images/img-03.jpeg" },
+    { title: "Lifestyle Feed", category: "Social Media", image: "/images/branding-images/img-04.jpeg" },
+    { title: "Platform Strategy", category: "Social Media", image: "/images/branding-images/img-05.jpeg" },
+    { title: "Elegant Dining", category: "Menu Cards", image: "/images/branding-images/img-06.jpeg" },
+    {title: "Logo Design", category: "Logo Design", image: "/images/branding-images/img-07.png"},
+    {title: "Logo Design", category: "Logo Design", image: "/images/branding-images/img-08.png"},
+    {title: "Logo Design", category: "Logo Design", image: "/images/branding-images/img-09.png"},
 ];
 
 const designServices = [
