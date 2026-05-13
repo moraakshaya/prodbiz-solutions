@@ -13,7 +13,7 @@ const differences = [
   {
     title: "Branding & Design",
     desc: "We create your logo, posters, menus, and other designs to make your business look professional.",
-    img: "/images/logo.jpg",
+    img: "/images/branding-images/img-07.png",
     position: "pos-1",
     color: "#F59E0B",
     subServices: [
