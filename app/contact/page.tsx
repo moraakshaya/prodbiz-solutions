@@ -15,6 +15,10 @@ import SocialIconsRoll from "@/components/SocialIconsRoll";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ContactPage() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+    const [submitMessage, setSubmitMessage] = useState("");
+
     const scrollToContactForm = () => {
         const element = document.getElementById("contact-form-section");
         if (element) {
@@ -275,14 +279,57 @@ export default function ContactPage() {
                                 <p ref={contactFormParaRef} className="text-gray-500 font-medium">We&apos;ll get back to you as soon as possible.</p>
                             </div>
 
-                            <form id="contact-form" ref={contactFormRef} className="flex flex-col gap-5 sm:gap-6" onSubmit={(e) => e.preventDefault()}>
+                            <form 
+                                id="contact-form" 
+                                ref={contactFormRef} 
+                                className={`flex flex-col gap-5 sm:gap-6 transition-opacity duration-500 ${submitStatus === "success" ? "opacity-20 pointer-events-none" : "opacity-100"}`} 
+                                onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    setIsSubmitting(true);
+                                    setSubmitStatus("idle");
+
+                                    const formData = new FormData(e.currentTarget);
+                                    const object = Object.fromEntries(formData);
+                                    const json = JSON.stringify(object);
+
+                                    try {
+                                        const response = await fetch("https://api.web3forms.com/submit", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                                Accept: "application/json"
+                                            },
+                                            body: json
+                                        });
+                                        const result = await response.json();
+                                        if (result.success) {
+                                            setSubmitStatus("success");
+                                            setSubmitMessage("Thank you! Your message has been sent successfully. We'll get back to you soon.");
+                                            e.currentTarget.reset();
+                                        } else {
+                                            setSubmitStatus("error");
+                                            setSubmitMessage(result.message || "Something went wrong. Please try again.");
+                                        }
+                                    } catch (error) {
+                                        setSubmitStatus("error");
+                                        setSubmitMessage("Network error. Please check your connection.");
+                                    } finally {
+                                        setIsSubmitting(false);
+                                    }
+                                }}
+                            >
+                                {/* Web3Forms Access Key */}
+                                <input type="hidden" name="access_key" value="2d1c409a-2b2f-4898-b863-ee72bf1402b8" />
+                                
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="name" className="text-sm font-bold text-[#2A2A2A] ml-1">Full Name</label>
                                     <input
                                         type="text"
                                         id="name"
+                                        name="name"
+                                        required
                                         suppressHydrationWarning
-                                        className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)]"
+                                        className="w-full bg-[#2197A1]/5 text-[#2A2A2A] rounded-2xl !px-5 !py-3 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#2197A1]/5 transition-all shadow-sm"
                                         placeholder="John Doe"
                                     />
                                 </div>
@@ -293,8 +340,10 @@ export default function ContactPage() {
                                         <input
                                             type="email"
                                             id="email"
+                                            name="email"
+                                            required
                                             suppressHydrationWarning
-                                            className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)]"
+                                            className="w-full bg-[#2197A1]/5 text-[#2A2A2A] rounded-2xl !px-5 !py-3 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#2197A1]/5 transition-all shadow-sm"
                                             placeholder="john@example.com"
                                         />
                                     </div>
@@ -303,32 +352,72 @@ export default function ContactPage() {
                                         <input
                                             type="tel"
                                             id="phone"
+                                            name="phone"
                                             suppressHydrationWarning
-                                            className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all"
-                                            placeholder="+1 (555) 000-0000"
+                                            className="w-full bg-[#2197A1]/5 text-[#2A2A2A] rounded-2xl !px-5 !py-3 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#2197A1]/5 transition-all shadow-sm"
+                                            placeholder="+91 00000 00000"
                                         />
                                     </div>
+                                </div>
+
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="subject" className="text-sm font-bold text-[#2A2A2A] ml-1">Subject</label>
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        required
+                                        suppressHydrationWarning
+                                        className="w-full bg-[#2197A1]/5 text-[#2A2A2A] rounded-2xl !px-5 !py-3 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#2197A1]/5 transition-all shadow-sm"
+                                        placeholder="Project Inquiry"
+                                    />
                                 </div>
 
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="message" className="text-sm font-bold text-[#2A2A2A] ml-1">How can we help you?</label>
                                     <textarea
                                         id="message"
+                                        name="message"
                                         rows={4}
+                                        required
                                         suppressHydrationWarning
-                                        className="w-full bg-[#2197A1]/10 text-[#2A2A2A] rounded-2xl !px-5 !py-2 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-[#2197A1]/10 focus:outline-none focus:ring-2 focus:ring-[#2197A1]/10 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)]"
+                                        className="w-full bg-[#2197A1]/5 text-[#2A2A2A] rounded-2xl !px-5 !py-3 border-2 border-[#2197A1]/10 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#2197A1]/5 transition-all shadow-sm"
                                         placeholder="Tell us about your project..."
                                     ></textarea>
                                 </div>
 
-                                <div ref={contactSubmitBtnRef} className="mt-4">
+                                <div ref={contactSubmitBtnRef} className="mt-4 relative">
                                     <Button
                                         type="submit"
-                                        className="contact-submit-btn"
+                                        className={`contact-submit-btn w-full justify-center ${isSubmitting ? "opacity-70 pointer-events-none" : "opacity-100"}`}
+                                        disabled={isSubmitting}
                                     >
-                                        <span>Send Message</span>
-                                        <ArrowRight className="arrow-icon" />
+                                        {isSubmitting ? (
+                                            <span className="flex items-center gap-2">
+                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                Sending...
+                                            </span>
+                                        ) : (
+                                            <>
+                                                <span>Send Message</span>
+                                                <ArrowRight className="arrow-icon" />
+                                            </>
+                                        )}
                                     </Button>
+
+                                    {/* Success/Error Messages */}
+                                    {submitStatus !== "idle" && (
+                                        <div className={`mt-6 p-4 rounded-2xl text-center font-medium animate-in fade-in slide-in-from-top-4 duration-500 ${
+                                            submitStatus === "success" 
+                                            ? "bg-green-50 text-green-700 border border-green-100" 
+                                            : "bg-red-50 text-red-700 border border-red-100"
+                                        }`}>
+                                            {submitMessage}
+                                        </div>
+                                    )}
                                 </div>
                             </form>
                         </div>

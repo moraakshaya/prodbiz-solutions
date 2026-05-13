@@ -467,7 +467,7 @@ ol {
   color: #e76038 !important;
   border-color: #e76038 !important;
   transform: translateY(-4px) !important;
-  box-shadow: 0 14px 28px rgba(231, 96, 56, 0.2);
+  box-shadow: 0px 4px 8px rgba(231, 96, 56, 0.55) !important;
 }
 
 .contact-submit-btn .arrow-icon {

@@ -177,7 +177,7 @@ export default function Navbar() {
                                 href="/solutions"
                                 className="relative !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                             >
-                                Solutions
+                                Services
                                 <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
                             </Link>
                             <svg
@@ -298,7 +298,7 @@ export default function Navbar() {
                             suppressHydrationWarning
                             className="w-full flex items-center justify-between py-4 text-base font-semibold !text-gray-700 cursor-pointer bg-transparent border-none text-left"
                         >
-                            Solutions
+                            Services
                             <svg
                                 className={`w-5 h-5 !text-gray-800 transition-transform duration-300
                                     ${mobileDropdownOpen ? "rotate-180" : ""}`}

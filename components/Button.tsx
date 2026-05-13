@@ -13,6 +13,7 @@ interface ButtonProps {
     style?: React.CSSProperties;
     onClick?: () => void;
     type?: "button" | "submit" | "reset";
+    disabled?: boolean;
 }
 
 const Button = ({
@@ -24,6 +25,7 @@ const Button = ({
     style,
     onClick,
     type = "button",
+    disabled = false,
 }: ButtonProps) => {
     const baseClasses = `button button--${variant} ${size === "lg" ? "button--lg" : ""} ${className}`;
 
@@ -36,7 +38,14 @@ const Button = ({
     }
 
     return (
-        <button type={type} className={baseClasses} style={style} onClick={onClick} suppressHydrationWarning>
+        <button 
+            type={type} 
+            className={baseClasses} 
+            style={style} 
+            onClick={onClick} 
+            disabled={disabled}
+            suppressHydrationWarning
+        >
             {children}
         </button>
     );

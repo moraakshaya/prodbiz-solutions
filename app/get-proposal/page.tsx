@@ -15,6 +15,10 @@ const WhoWeAreHero3D = dynamic(() => import("@/components/WhoWeAreHero3D"), { ss
 gsap.registerPlugin(ScrollTrigger);
 
 export default function GetProposalPage() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+    const [submitMessage, setSubmitMessage] = useState("");
+
     const scrollToForm = () => {
         const element = document.getElementById("proposal-form-section");
         if (element) {
@@ -279,26 +283,71 @@ export default function GetProposalPage() {
                             <p ref={formDescRef} className="text-gray-500 font-medium">Please fill in the details below and our team will get back to you with a tailored proposal.</p>
                         </div>
 
-                        <form className="flex flex-col gap-10" onSubmit={(e) => e.preventDefault()}>
+                        <form 
+                            className={`flex flex-col gap-10 transition-opacity duration-500 ${submitStatus === "success" ? "opacity-20 pointer-events-none" : "opacity-100"}`} 
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                setIsSubmitting(true);
+                                setSubmitStatus("idle");
+
+                                const formData = new FormData(e.currentTarget);
+                                const object = Object.fromEntries(formData);
+                                
+                                // Specific formatting for Proposal Form
+                                const json = JSON.stringify({
+                                    ...object,
+                                    subject: `New Proposal Request from ${object.name}`,
+                                    from_name: "Prodbiz Solutions Portal",
+                                });
+
+                                try {
+                                    const response = await fetch("https://api.web3forms.com/submit", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            Accept: "application/json"
+                                        },
+                                        body: json
+                                    });
+                                    const result = await response.json();
+                                    if (result.success) {
+                                        setSubmitStatus("success");
+                                        setSubmitMessage("Proposal request sent! Our team will analyze your requirements and get back to you with a tailored plan.");
+                                        e.currentTarget.reset();
+                                    } else {
+                                        setSubmitStatus("error");
+                                        setSubmitMessage(result.message || "Failed to send request. Please try again.");
+                                    }
+                                } catch (error) {
+                                    setSubmitStatus("error");
+                                    setSubmitMessage("Network error. Please check your connection.");
+                                } finally {
+                                    setIsSubmitting(false);
+                                }
+                            }}
+                        >
+                            {/* Web3Forms Access Key */}
+                            <input type="hidden" name="access_key" value="2d1c409a-2b2f-4898-b863-ee72bf1402b8" />
+                            
                             {/* Section 1: Basic Info */}
                             <div ref={section1Ref} className="space-y-6">
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b border-[#2197A1]/20 pb-2">01. Basic Information</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Full Name</label>
-                                        <input type="text" suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="Enter your name" />
+                                        <label htmlFor="name" className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Full Name</label>
+                                        <input type="text" id="name" name="name" required suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="Enter your name" />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Email Address</label>
-                                        <input type="email" suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="name@company.com" />
+                                        <label htmlFor="email" className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Email Address</label>
+                                        <input type="email" id="email" name="email" required suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="name@company.com" />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Phone Number</label>
-                                        <input type="tel" suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="+91 XXX XXX XXXX" />
+                                        <label htmlFor="phone" className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Phone Number</label>
+                                        <input type="tel" id="phone" name="phone" required suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="+91 XXX XXX XXXX" />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Company Name</label>
-                                        <input type="text" suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="Your organization" />
+                                        <label htmlFor="company" className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Company Name</label>
+                                        <input type="text" id="company" name="company" suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="Your organization" />
                                     </div>
                                 </div>
                             </div>
@@ -307,14 +356,15 @@ export default function GetProposalPage() {
                             <div ref={section2Ref} className="space-y-4">
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b border-[#2197A1]/20 pb-2">02. Project Type</h3>
                                 <div className="flex flex-col gap-2">
-                                    <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">What are you looking for?</label>
-                                    <select suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none appearance-none transition-all text-gray-500 font-medium">
+                                    <label htmlFor="service" className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">What are you looking for?</label>
+                                    <select id="service" name="service" required suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none appearance-none transition-all text-gray-500 font-medium">
                                         <option value="">Select a service...</option>
-                                        <option value="web-design">Website Design & Development</option>
-                                        <option value="web-app">Web Application Development</option>
-                                        <option value="marketing">Performance Marketing</option>
-                                        <option value="branding">Branding & Media</option>
-                                        <option value="other">Other</option>
+                                        <option value="Branding & Designing">Branding & Designing</option>
+                                        <option value="Website Development">Website Development</option>
+                                        <option value="Content Creation & Video Marketing">Content Creation & Video Marketing</option>
+                                        <option value="Digital Marketing">Digital Marketing</option>
+                                        <option value="Complete Business Growth">Complete Business Growth</option>
+                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -323,8 +373,8 @@ export default function GetProposalPage() {
                             <div ref={section3Ref} className="space-y-4">
                                 <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b border-[#2197A1]/20 pb-2">03. Project Details</h3>
                                 <div className="flex flex-col gap-2">
-                                    <label className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Tell us about your requirements</label>
-                                    <textarea rows={5} suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="Describe your vision..."></textarea>
+                                    <label htmlFor="requirements" className="text-xs font-bold text-[#2A2A2A] ml-1 uppercase tracking-wider">Tell us about your requirements</label>
+                                    <textarea id="requirements" name="requirements" required rows={5} suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none transition-all" placeholder="Describe your vision..."></textarea>
                                 </div>
                             </div>
 
@@ -332,34 +382,59 @@ export default function GetProposalPage() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                 <div ref={section4Ref} className="space-y-4">
                                     <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b border-[#2197A1]/20 pb-2">04. Budget</h3>
-                                    <select suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none appearance-none transition-all text-gray-500 font-medium">
+                                    <select id="budget" name="budget" required suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none appearance-none transition-all text-gray-500 font-medium">
                                         <option value="">Expected Budget Range</option>
-                                        <option value="10k-25k">₹10K – ₹25K</option>
-                                        <option value="25k-50k">₹25K – ₹50K</option>
-                                        <option value="50k-1l">₹50K – ₹1L</option>
-                                        <option value="1l+">₹1L+</option>
+                                        <option value="₹10K – ₹25K">₹10K – ₹25K</option>
+                                        <option value="₹25K – ₹50K">₹25K – ₹50K</option>
+                                        <option value="₹50K – ₹1L">₹50K – ₹1L</option>
+                                        <option value="₹1L+">₹1L+</option>
                                     </select>
                                 </div>
                                 <div ref={section5Ref} className="space-y-4">
                                     <h3 className="text-sm font-black uppercase text-[#2197A1] tracking-widest border-b border-[#2197A1]/20 pb-2">05. Timeline</h3>
-                                    <select suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none appearance-none transition-all text-gray-500 font-medium">
+                                    <select id="timeline" name="timeline" required suppressHydrationWarning className="w-full bg-[#2197A1]/5 border-2 border-transparent rounded-2xl !px-5 !py-3 focus:border-[#2197A1]/30 focus:bg-white focus:outline-none appearance-none transition-all text-gray-500 font-medium">
                                         <option value="">Expected Launch</option>
-                                        <option value="asap">ASAP</option>
-                                        <option value="2-4weeks">2–4 Weeks</option>
-                                        <option value="1-2months">1–2 Months</option>
-                                        <option value="flexible">Flexible</option>
+                                        <option value="ASAP">ASAP</option>
+                                        <option value="2–4 Weeks">2–4 Weeks</option>
+                                        <option value="1–2 Months">1–2 Months</option>
+                                        <option value="Flexible">Flexible</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div ref={formButtonRef}>
+                            <div ref={formButtonRef} className="relative">
                                 <Button 
                                     type="submit"
-                                    className="contact-submit-btn"
+                                    className={`contact-submit-btn w-full justify-center ${isSubmitting ? "opacity-70 pointer-events-none" : ""}`}
+                                    disabled={isSubmitting}
                                 >
-                                    <span>Get Proposal</span>
-                                    <ArrowRight className="arrow-icon" />
+                                    {isSubmitting ? (
+                                        <span className="flex items-center gap-2">
+                                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Processing...
+                                        </span>
+                                    ) : (
+                                        <>
+                                            <span>Request Proposal</span>
+                                            <ArrowRight className="arrow-icon" />
+                                        </>
+                                    )}
                                 </Button>
+
+                                {/* Success/Error Messages */}
+                                {submitStatus !== "idle" && (
+                                    <div className={`mt-6 p-6 rounded-3xl text-center font-bold animate-in fade-in slide-in-from-top-4 duration-500 ${
+                                        submitStatus === "success" 
+                                        ? "bg-green-50 text-green-700 border border-green-100 shadow-[0_10px_30px_rgba(22,163,74,0.1)]" 
+                                        : "bg-red-50 text-red-700 border border-red-100 shadow-[0_10px_30px_rgba(220,38,38,0.1)]"
+                                    }`}>
+                                        <p className="text-lg mb-1">{submitStatus === "success" ? "✨ Successfully Sent!" : "Oops!"}</p>
+                                        <p className="font-medium text-sm opacity-90">{submitMessage}</p>
+                                    </div>
+                                )}
                             </div>
                         </form>
                     </div>
