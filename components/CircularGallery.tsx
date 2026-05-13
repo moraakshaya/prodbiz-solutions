@@ -309,8 +309,9 @@ class Media {
     }
     const heightRatio = this.screen.height / 1500;
     this.scale = heightRatio;
-    this.plane.scale.y = (this.viewport.height * (600 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (450 * this.scale)) / this.screen.width;
+    this.plane.scale.y = (this.viewport.height * (750 * this.scale)) / this.screen.height;
+    const baseWidth = this.screen.width > 768 ? 750 : 450;
+    this.plane.scale.x = (this.viewport.width * (baseWidth * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 1;
     this.width = this.plane.scale.x + this.padding;

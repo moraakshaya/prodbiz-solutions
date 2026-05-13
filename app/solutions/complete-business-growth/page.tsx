@@ -59,12 +59,12 @@ const growthServicesData = [
 ];
 
 const portfolioItems = [
-    { title: "Scale Case Study", category: "Business Growth", image: "/services/website-development.jpg" },
-    { title: "Transformation Project", category: "Business Growth", image: "/services/brandidentity.jpg" },
-    { title: "Omnichannel Growth", category: "Business Growth", image: "/services/socialmediamarketing.jpg" },
-    { title: "Market Expansion", category: "Business Growth", image: "/services/contentmarketing.webp" },
-    { title: "Revenue Optimization", category: "Business Growth", image: "/services/ppc.png" },
-    { title: "Lead Gen Success", category: "Business Growth", image: "/services/seo.png" },
+    { title: "Scale Case Study", category: "Business Growth", image: "/images/1.webp" },
+    { title: "Scale Case Study", category: "Business Growth", image: "/images/2.webp" },
+    { title: "Scale Case Study", category: "Business Growth", image: "/images/3.webp" },
+    { title: "Scale Case Study", category: "Business Growth", image: "/images/4.webp" },
+    { title: "Scale Case Study", category: "Business Growth", image: "/images/5.webp" },
+    { title: "Scale Case Study", category: "Business Growth", image: "/images/6.webp" },
 ];
 
 const whyChooseUsData = [
@@ -520,7 +520,8 @@ export default function CompleteBusinessGrowthPage() {
                     </div>
                 </div>
 
-                <style jsx>{`
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @keyframes float {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-15px); }
@@ -528,11 +529,11 @@ export default function CompleteBusinessGrowthPage() {
                     .animate-float {
                         animation: float 4s ease-in-out infinite;
                     }
-                `}</style>
+                `}} />
             </section>
 
             {/* Our Growth Work Section - Circular Gallery Version */}
-            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48">
+            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48 md:!pb-0">
                 <div className="max-w-7xl !mx-auto !px-6">
                     <div ref={portfolioHeaderRef} className="text-center !mb-16 md:!mb-0">
                         <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-3 block">Portfolio</span>

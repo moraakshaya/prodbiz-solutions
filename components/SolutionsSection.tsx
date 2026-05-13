@@ -434,7 +434,7 @@ const SolutionsSection = () => {
                                 cards={[
                                     <img key={1} src="/images/home-services/brand-growth-planning.webp" alt="Growth 1" className="w-full h-full object-cover rounded-2xl" />,
                                     <img key={2} src="/images/home-services/lead-generation.webp" alt="Growth 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/home-services/end-to-end-support.webp" alt="Growth 3" className="w-full h-full object-cover rounded-2xl" />,
+                                    <img key={3} src="/images/4.webp" alt="Growth 3" className="w-full h-full object-cover rounded-2xl" />,
                                     <img key={4} src="/images/home-services/digital-strategy.webp" alt="Growth 4" className="w-full h-full object-cover rounded-2xl" />,
                                 ]}
                                 autoplay={true}
@@ -485,15 +485,15 @@ const SolutionsSection = () => {
                                         sendToBackOnClick={true}
                                         cards={
                                             index === 0 ? [
-                                                <img key={1} src="/images/flyers-1.webp" alt="Branding 1" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={2} src="/images/logo-1.webp" alt="Branding 2" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={3} src="/images/poster-1.avif" alt="Branding 3" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={4} src="/images/logo-1.webp" alt="Branding 4" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={1} src="/images/home-services/post.webp" alt="Branding 1" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={2} src="/images/home-services/logo.webp" alt="Branding 2" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={3} src="/images/home-services/menu-card.webp" alt="Branding 3" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={4} src="/images/home-services/posters.webp" alt="Branding 4" className="w-full h-full object-cover rounded-2xl" />,
                                             ] : index === 1 ? [
-                                                <img key={1} src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format" alt="Web Dev 1" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={2} src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format" alt="Web Dev 2" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={3} src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format" alt="Web Dev 3" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={4} src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=600&auto=format" alt="Web Dev 4" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={1} src="/images/home-services/ecommerce-website.webp" alt="Web Dev 1" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={2} src="/images/home-services/landing-pages.webp" alt="Web Dev 2" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={3} src="/images/home-services/business-websites.webp" alt="Web Dev 3" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={4} src="/images/home-services/portfolio-website.webp" alt="Web Dev 4" className="w-full h-full object-cover rounded-2xl" />,
                                             ] : index === 2 ? [
                                                 <img key={1} src="/images/home-services/video-editing.webp" alt="Content 1" className="w-full h-full object-cover rounded-2xl" />,
                                                 <img key={2} src="/images/home-services/video-shooting.webp" alt="Content 2" className="w-full h-full object-cover rounded-2xl" />,

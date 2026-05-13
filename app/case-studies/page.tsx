@@ -347,31 +347,31 @@ export default function CaseStudiesPage() {
                                                     <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50">
                                                         <img 
                                                             src={cs.images.after} 
-                                                            alt={`${cs.client} After`} 
+                                                            alt={`${cs.client} Desktop View`} 
                                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                                         />
                                                     </div>
                                                     <div className="mt-4 pb-2 text-center">
                                                         <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-widest italic flex items-center justify-center gap-2">
                                                             <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> 
-                                                            {cs.images.before ? "Premium Result" : "Desktop Platform"}
+                                                            Desktop View
                                                         </span>
                                                     </div>
                                                 </div>,
                                                 
                                                 // Secondary Card: Either 'Before' or 'Mobile View'
                                                 <div key="secondary" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100 group">
-                                                    <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                                    <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50 transition-all duration-700">
                                                         <img 
                                                             src={cs.images.before || cs.images.mobile || cs.images.after} 
-                                                            alt={`${cs.client} ${cs.images.before ? "Before" : "Mobile View"}`} 
+                                                            alt={`${cs.client} Mobile View`} 
                                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                                         />
                                                     </div>
                                                     <div className="mt-4 pb-2 text-center">
-                                                        <span className="text-[11px] font-black uppercase text-gray-400 tracking-widest flex items-center justify-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-300" /> 
-                                                            {cs.images.before ? "Initial Design" : "Mobile Experience"}
+                                                        <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-widest flex items-center justify-center gap-2">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> 
+                                                            Mobile View
                                                         </span>
                                                     </div>
                                                 </div>

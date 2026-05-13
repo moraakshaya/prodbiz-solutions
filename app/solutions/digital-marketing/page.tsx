@@ -60,11 +60,10 @@ const marketingServicesData = [
 
 const portfolioItems = [
     { title: "SEO Campaign Success", category: "Digital Marketing", image: "/services/seo.png" },
-    { title: "Social Media Growth", category: "Digital Marketing", image: "/services/socialmediamarketing.jpg" },
-    { title: "High-ROI PPC", category: "Digital Marketing", image: "/services/ppc.png" },
-    { title: "Content Strategy", category: "Digital Marketing", image: "/services/contentmarketing.webp" },
-    { title: "Brand Identity", category: "Branding", image: "/services/brandidentity.jpg" },
-    { title: "Growth Analytics", category: "Digital Marketing", image: "/services/marketing-analysit.jpg" },
+    { title: "High-ROI PPC", category: "Digital Marketing", image: "/images/digital-marketing-img-1.png" },
+    { title: "Content Strategy", category: "Digital Marketing", image: "/images/digital-marketing-img-3.png" },
+    { title: "Brand Identity", category: "Branding", image: "/images/digital-marketing-img-2.png" },
+    { title: "Growth Analytics", category: "Digital Marketing", image: "/images/digital-marketing-img-4.png" },
 ];
 
 const whyChooseUsData = [
@@ -520,7 +519,8 @@ export default function DigitalMarketingPage() {
                     </div>
                 </div>
 
-                <style jsx>{`
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @keyframes float {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-15px); }
@@ -528,11 +528,11 @@ export default function DigitalMarketingPage() {
                     .animate-float {
                         animation: float 4s ease-in-out infinite;
                     }
-                `}</style>
+                `}} />
             </section>
 
             {/* Our Marketing Work Section - Circular Gallery Version */}
-            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48">
+            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48 md:!pb-0">
                 <div className="max-w-7xl !mx-auto !px-6">
                     <div ref={portfolioHeaderRef} className="text-center !mb-16 md:!mb-0">
                         <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-3 block">Portfolio</span>

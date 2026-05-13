@@ -78,8 +78,8 @@ export const caseStudies: CaseStudy[] = [
         polaroidAngle: "-rotate-2",
         polaroidAngle2: "rotate-3",
         images: {
-            after: "/images/ricch-img-01.png",
-            mobile: "/case-studies/ricchhotel-after.png"
+            after: "/images/case-study-rich-img-01.png",
+            mobile: "/images/case-study-rich-img-02.png"
         }
     },
     {
@@ -120,8 +120,8 @@ export const caseStudies: CaseStudy[] = [
         polaroidAngle: "rotate-2",
         polaroidAngle2: "-rotate-3",
         images: {
-            before: "/case-studies/shriswara-before.png",
-            after: "/case-studies/shriswara-after.png"
+            before: "/images/case-study-shriswara-img-02.png",
+            after: "/images/case-study-shriswara-img-01.png"
         }
     },
     {
@@ -162,8 +162,8 @@ export const caseStudies: CaseStudy[] = [
         polaroidAngle: "-rotate-2",
         polaroidAngle2: "rotate-3",
         images: {
-            before: "/case-studies/gvr-before.png",
-            after: "/case-studies/gvr-after.png"
+            before: "/images/case-study-gvr-img-02.png",
+            after: "/images/case-study-gvr-img-01.png"
         }
     },
     {
@@ -204,8 +204,8 @@ export const caseStudies: CaseStudy[] = [
         polaroidAngle: "rotate-2",
         polaroidAngle2: "-rotate-3",
         images: {
-            before: "/case-studies/russh-before.png",
-            after: "/case-studies/russh-after.png"
+            before: "/images/case-study-russh-img-01.png",
+            after: "/images/case-study-russh-img-02.png"
         }
     }
 ];

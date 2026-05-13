@@ -276,10 +276,10 @@ const CaseStudiesPreview = () => {
                         <div className="relative w-full h-[850px] overflow-hidden transition-all duration-700">
                              <FlyingPosters 
                                 items={[
-                                    "/images/branding-images/img-01.jpeg",
-                                    "/images/branding-images/img-02.jpeg",
-                                    "/images/branding-images/img-03.jpeg",
-                                    "/images/branding-images/img-04.jpeg"
+                                    "/images/branding-images/img-3.png",
+                                    "/images/branding-images/img-4.png",
+                                    "/images/branding-images/img-5.png",
+                                    "/images/website-img-04.png "
                                 ]}
                                 planeWidth={planeSize}
                                 planeHeight={planeSize}

@@ -17,6 +17,7 @@ import NextImage from "next/image";
 import Button from "@/components/Button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import dynamic from "next/dynamic";
 import CircularGallery from "@/components/CircularGallery";
 import DomeGallery from "@/components/DomeGallery";
@@ -59,12 +60,11 @@ const contentServicesData = [
 ];
 
 const portfolioItems = [
-    { title: "Brand Storyfilm", category: "Video", image: "/services/videograpghy.jpg" },
-    { title: "Product Promo", category: "Video", image: "/services/motiongraphic.webp" },
-    { title: "Influencer Reel", category: "Social Media", image: "/services/influencermarketing.webp" },
-    { title: "Social Campaign", category: "Content", image: "/services/socialmediamarketing.jpg" },
-    { title: "Corporate Event", category: "Video", image: "/services/content-creation-video-making.jpg" },
-    { title: "Creative Series", category: "Social Media", image: "/services/digital-marketing.jpg" },
+    { title: "Brand Storyfilm", category: "Video", image: "/images/home-services/reels-creation.webp" },
+    { title: "Product Promo", category: "Video", image: "/images/home-services/video-editing.webp" },
+    { title: "Product Promo", category: "Video", image: "/images/home-services/video-shooting.webp" },
+    { title: "Product Promo", category: "Video", image: "/images/home-services/social-media-content-posting.webp" },
+    { title: "Product Promo", category: "Video", image: "/images/video.jpg" },
 ];
 
 const whyChooseUsData = [
@@ -125,7 +125,7 @@ export default function ContentCreationVideoMarketingPage() {
 
         // --- Hero Entrance Sequence ---
         if (titleRef.current && paraRef.current && smallLineRef.current && buttonsRef.current) {
-            const words = paraRef.current.querySelectorAll(".para-word");
+            const splitParas = new SplitType(paraRef.current, { types: "lines" });
             const smallWords = smallLineRef.current.querySelectorAll(".para-word");
             const chars = titleRef.current.querySelectorAll(".char");
             const buttons = buttonsRef.current.children;
@@ -145,7 +145,7 @@ export default function ContentCreationVideoMarketingPage() {
             );
 
             tl.fromTo(
-                words,
+                splitParas.lines,
                 { y: 30, opacity: 0 },
                 {
                     y: 0,
@@ -518,7 +518,8 @@ export default function ContentCreationVideoMarketingPage() {
                     </div>
                 </div>
 
-                <style jsx>{`
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @keyframes float {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-15px); }
@@ -526,11 +527,11 @@ export default function ContentCreationVideoMarketingPage() {
                     .animate-float {
                         animation: float 4s ease-in-out infinite;
                     }
-                `}</style>
+                `}} />
             </section>
 
             {/* Our Creative Work Section - Circular Gallery Version */}
-            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48">
+            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48 md:!pb-0">
                 <div className="max-w-7xl !mx-auto !px-6">
                     <div ref={portfolioHeaderRef} className="text-center !mb-16 md:!mb-0">
                         <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-3 block">Portfolio</span>

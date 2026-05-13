@@ -57,12 +57,11 @@ const buildServices = [
 ];
 
 const portfolioItems = [
-    { title: "E-commerce Store", category: "Web Design", image: "/services/website-development.jpg" },
-    { title: "Corporate Portal", category: "Web Design", image: "/services/11.jpg" },
-    { title: "SaaS Dashboard", category: "Web Design", image: "/services/digital-marketing.jpg" },
-    { title: "Landing Page", category: "Web Design", image: "/services/contentmarketing.webp" },
-    { title: "Product Showcase", category: "Web Design", image: "/services/seo.png" },
-    { title: "Booking System", category: "Web Design", image: "/services/marketing-analysit.jpg" },
+    { title: "E-commerce Store", category: "Web Design", image: "/images/website-img-01.png" },
+    { title: "E-commerce Store", category: "Web Design", image: "/images/website-img-02.png" },
+    { title: "E-commerce Store", category: "Web Design", image: "/images/website-img-03.png" },
+    { title: "E-commerce Store", category: "Web Design", image: "/images/website-img-04.png" },
+    { title: "E-commerce Store", category: "Web Design", image: "/images/website-img-05.png" },
 ];
 
 const whyChooseUsData = [
@@ -518,7 +517,8 @@ export default function WebsiteDevelopmentPage() {
                     </div>
                 </div>
 
-                <style jsx>{`
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @keyframes float {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-15px); }
@@ -526,11 +526,11 @@ export default function WebsiteDevelopmentPage() {
                     .animate-float {
                         animation: float 4s ease-in-out infinite;
                     }
-                `}</style>
+                `}} />
             </section>
 
             {/* Our Build Work Section - Circular Gallery Version */}
-            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48">
+            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48 md:!pb-0">
                 <div className="max-w-7xl !mx-auto !px-6">
                     <div ref={portfolioHeaderRef} className="text-center !mb-16 md:!mb-0">
                         <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-3 block">Portfolio</span>

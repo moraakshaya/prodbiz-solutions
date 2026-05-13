@@ -53,15 +53,15 @@ const whyChooseUsData = [
 ];
 
 const portfolioItems = [
-    { title: "Corporate Identity", category: "Logo Design", image: "/images/branding-images/img-01.jpeg" },
-    { title: "Modern Brandmark", category: "Logo Design", image: "/images/branding-images/img-02.jpeg" },
-    { title: "Event Campaign", category: "Posters", image: "/images/branding-images/img-03.jpeg" },
-    { title: "Lifestyle Feed", category: "Social Media", image: "/images/branding-images/img-04.jpeg" },
-    { title: "Platform Strategy", category: "Social Media", image: "/images/branding-images/img-05.jpeg" },
-    { title: "Elegant Dining", category: "Menu Cards", image: "/images/branding-images/img-06.jpeg" },
+    { title: "Corporate Identity", category: "Logo Design", image: "/images/branding-images/img-1.png" },
+    { title: "Modern Brandmark", category: "Logo Design", image: "/images/branding-images/img-2.png" },
     {title: "Logo Design", category: "Logo Design", image: "/images/branding-images/img-07.png"},
+    { title: "Event Campaign", category: "Posters", image: "/images/branding-images/img-3.png" },
+    { title: "Lifestyle Feed", category: "Social Media", image: "/images/branding-images/img-4.png" },
     {title: "Logo Design", category: "Logo Design", image: "/images/branding-images/img-08.png"},
+    { title: "Platform Strategy", category: "Social Media", image: "/images/branding-images/img-5.png" },
     {title: "Logo Design", category: "Logo Design", image: "/images/branding-images/img-09.png"},
+    { title: "Elegant Dining", category: "Menu Cards", image: "/images/branding-images/img-6.png" },
 ];
 
 const designServices = [
@@ -528,7 +528,8 @@ export default function BrandingDesigningPage() {
                     </div>
                 </div>
 
-                <style jsx>{`
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @keyframes float {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-15px); }
@@ -536,14 +537,14 @@ export default function BrandingDesigningPage() {
                     .animate-float {
                         animation: float 4s ease-in-out infinite;
                     }
-                `}</style>
+                `}} />
             </section>
 
 
 
             {/* Our Design Work Section */}
             {/* Our Design Work Section - Circular Gallery Version */}
-            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48">
+            <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48 md:!pb-0">
                 <div className="max-w-7xl !mx-auto !px-6">
                     <div ref={portfolioHeaderRef} className="text-center !mb-16 md:!mb-0">
                         <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-3 block">Portfolio</span>
