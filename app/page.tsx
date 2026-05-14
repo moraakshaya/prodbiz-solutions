@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col md:items-center justify-between">
       {/* Redesigned Hero Section */}
-      <section className="relative w-full min-h-[65vh] md:min-h-[100vh] lg:min-h-[100vh] !mb-10 md:!mb-28 flex flex-col items-center overflow-hidden bg-black">
+      <section className="relative w-full min-h-[65vh] md:min-h-[100vh] lg:min-h-[100vh] !pt-5 md:!pt-5 !mb-10 md:!mb-28 flex flex-col items-center overflow-hidden bg-black">
         {/* LiquidEther Background Overlay */}
         <div className="absolute inset-0 -z-20">
           {!isMobile ? (
