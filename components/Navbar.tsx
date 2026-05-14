@@ -173,13 +173,12 @@ export default function Navbar() {
                         onMouseLeave={() => setDropdownOpen(false)}
                     >
                         <div className="flex items-center gap-1 cursor-pointer group h-full">
-                            <Link
-                                href="/solutions"
+                            <div
                                 className="relative !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                             >
                                 Services
                                 <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
-                            </Link>
+                            </div>
                             <svg
                                 className={`w-5 h-5 !text-gray-700 !pt-1 transition-transform duration-200
                                     ${dropdownOpen ? "rotate-180" : ""}`}
