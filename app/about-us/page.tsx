@@ -20,7 +20,7 @@ const teamMembers = [
     { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employee-02.webp" },
     { name: "Pravanya Reddy", role: "CTO", image: "/images/gallery/employee-03.webp" },
     { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employee-04.webp" },
-    { name: "Gopala Krishna", role: "SEO", image: "/images/gallery/employee-05.webp" }
+    { name: "Gopala Krishna", role: "SEO", image: "/images/gallery/employee-05.png" }
 ];
 
 
