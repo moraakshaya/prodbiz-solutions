@@ -7,16 +7,25 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // Add your client logo files to /public/clients/
 // Replace the `src` value with the actual file path when available.
 const clients = [
-    { name: "Blue Elan", src: "/clients/gvr.png" },
-    { name: "Client 02", src: "/clients/ricch.png" },
-    { name: "Client 03", src: "/clients/shriswara.png" },
-    { name: "Client 04", src: "/clients/russh.png" },
-    { name: "Client 05", src: "/clients/pranaa.png" },
-    { name: "Client 06", src: "/clients/goverment.png" },
-    { name: "Client 07", src: "/clients/bluelan.png" },
-    { name: "Client 08", src: "/clients/lalitha.png" },
-    { name: "Client 09", src: "/clients/trcr.png" },
-    { name: "Client 10", src: "/clients/tvv.png" },
+    { name: "GVR Infosystem", src: "/clients/gvr.png" },
+    { name: "Ricch Hotels", src: "/clients/ricch.png" },
+    { name: "Shri Swaraa Multi Speciality Hospital", src: "/clients/shriswara.png" },
+    { name: "Russh Super Speciality Hospital", src: "/clients/russh.png" },
+    { name: "Pranaa Homeopathy", src: "/clients/pranaa.png" },
+    { name: "Government of Telangana", src: "/clients/goverment.png" },
+    { name: "Blue Elan", src: "/clients/bluelan.png" },
+    { name: "Lalitha Hospital", src: "/clients/lalitha.png" },
+    { name: "The Royal Club Of Riders", src: "/clients/trcr.png" },
+    { name: "The Viral Vibe", src: "/clients/tvv.png" },
+    { name: "Esthetix Dental", src: "/clients/esthetix.png" },
+    { name: "Ricch Cafe", src: "/clients/ricchcafe.png" },
+    { name: "Ricch Sports", src: "/clients/ricch-sports.png" },
+    { name: "Firetunes", src: "/clients/firetunes.png" },
+    { name: "Terrace Pond", src: "/clients/terracepond.png" },
+    { name: "Curry Leaves Restaurant", src: "/clients/curry-leaves.png" },
+    { name: "Ayucare", src: "/clients/ayucare.png" },
+    { name: "Neeraj", src: "/clients/neeraj.png" },
+    { name: "Trini Farms", src: "/clients/trini.png" },
 ];
 
 const LogoTile = ({ client }: { client: (typeof clients)[0] }) => (
