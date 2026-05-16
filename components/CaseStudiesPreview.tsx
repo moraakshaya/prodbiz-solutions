@@ -279,7 +279,7 @@ const CaseStudiesPreview = () => {
                                     "/images/branding-images/img-3.png",
                                     "/images/branding-images/img-4.png",
                                     "/images/branding-images/img-5.png",
-                                    "/images/website-img-04.png "
+                                    "/images/website-img-04.png"
                                 ]}
                                 planeWidth={planeSize}
                                 planeHeight={planeSize}

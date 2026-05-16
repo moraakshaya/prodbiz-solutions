@@ -127,11 +127,13 @@ export default function Footer() {
                         <ul className="footer__contact">
                             <li>
                                 <span className="footer__contact-label">Phone</span>
-                                <a href="tel:+1234567890">+91 8977742255</a>
+                                {/* <a href="tel:+1234567890">+91 8977742255</a> */}
+                                <span>+91 8977742255</span>
                             </li>
                             <li>
                                 <span className="footer__contact-label">Email</span>
-                                <a href="mailto:hello@prodbiz.com">info@prodbizsolutions.com</a>
+                                {/* <a href="mailto:hello@prodbiz.com">info@prodbizsolutions.com</a> */}
+                                <span>info@prodbizsolutions.com</span>
                             </li>
                             <li>
                                 <span className="footer__contact-label">Address</span>

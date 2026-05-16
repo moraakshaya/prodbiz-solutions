@@ -181,7 +181,7 @@ export default function PrivacyPolicyPage() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-sm font-black uppercase text-[#e76038] tracking-widest">Phone:</span>
-                                    <span className="text-sm font-medium !text-gray-700 leading-tight">+91-8989898989</span>
+                                    <span className="text-sm font-medium !text-gray-700 leading-tight">+91-8977742255</span>
                                 </div>
                             </div>
                         </div>

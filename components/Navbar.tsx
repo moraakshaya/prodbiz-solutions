@@ -110,7 +110,7 @@ export default function Navbar() {
         <nav
             ref={navRef}
             className={`fixed top-0 left-0 w-full z-50 transition-[border-radius,padding,background-color,background-image] duration-500 bg-linear-to-r from-[#e0e0e0] to-[#2197A1] shadow-[0_2px_20px_rgba(0,0,0,0.08)]
-                ${scrolled ? "rounded-b-[0px] lg:rounded-b-[100px] py-4 lg:py-1.5" : "rounded-full lg:rounded-t-[50px] py-4 lg:py-2"}`}
+                ${scrolled ? "rounded-b-[0px] lg:rounded-b-[100px] py-3 lg:py-1.5" : "rounded-full lg:rounded-t-[50px] py-5 lg:py-2"}`}
         >
             <div className="container !mx-auto !px-6 lg:!px-12 [@media(min-width:1140px)_and_(max-width:1270px)]:!px-0  [@media(min-width:1290px)]:!px-24 flex items-center justify-between min-h-[60px] lg:min-h-0">
 
@@ -120,13 +120,13 @@ export default function Navbar() {
                     onClick={closeMobileMenu}
                     className="flex-shrink-0 flex items-center justify-center self-center transition-all duration-300 hover:scale-105"
                 >
-                    <Image 
-                        src="/images/logo1.png" 
-                        alt="Logo" 
-                        width={150} 
-                        height={100} 
+                    <Image
+                        src="/images/logo1.png"
+                        alt="Logo"
+                        width={150}
+                        height={100}
                         priority
-                        className="w-[120px] sm:w-[150px] lg:w-[150px] h-auto max-h-[45px] lg:max-h-[85px] object-contain flex self-center" 
+                        className="w-[120px] sm:w-[150px] lg:w-[150px] h-auto max-h-[45px] lg:max-h-[85px] object-contain flex self-center"
                     />
                 </Link>
 
