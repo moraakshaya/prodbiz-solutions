@@ -26,6 +26,7 @@ const clients = [
     { name: "Ayucare", src: "/clients/ayucare.png" },
     { name: "Neeraj", src: "/clients/neeraj.png" },
     { name: "Trini Farms", src: "/clients/trini.png" },
+    { name: "Padmavati Hospital", src: "/clients/padmavati.png" },
 ];
 
 const LogoTile = ({ client }: { client: (typeof clients)[0] }) => (
