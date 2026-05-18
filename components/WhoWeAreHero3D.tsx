@@ -339,12 +339,18 @@ export default function WhoWeAreHero3D({
     const checkWebGL = () => {
       try {
         const canvas = document.createElement('canvas');
-        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+        return !!(window.WebGLRenderingContext && 
+          (canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+        );
       } catch (e) {
         return false;
       }
     };
-    setWebglAvailable(checkWebGL());
+    const isAvailable = checkWebGL();
+    setWebglAvailable(isAvailable);
+    if (!isAvailable) {
+      console.warn("WebGL not supported or disabled in this browser.");
+    }
   }, []);
 
   React.useEffect(() => {

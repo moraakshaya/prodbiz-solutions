@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Button from "./Button";
-import FlyingPosters from "./FlyingPosters";
 
 const solutionCategories = [
     {
@@ -116,6 +115,8 @@ const CaseStudiesPreview = () => {
     const headingRef = useRef<HTMLHeadingElement>(null);
     const paraRef = useRef<HTMLParagraphElement>(null);
     const buttonRef = useRef<HTMLDivElement>(null);
+    const col1Ref = useRef<HTMLDivElement>(null);
+    const col2Ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -137,32 +138,59 @@ const CaseStudiesPreview = () => {
         tl.fromTo(lines, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" }, "-=0.6");
         tl.fromTo(buttonRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.1");
 
+        // Simple scroll parallax for columns
+        if (col1Ref.current && col2Ref.current) {
+            gsap.fromTo(col1Ref.current, 
+                { y: 100 }, 
+                { 
+                    y: -100, 
+                    ease: "none", 
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                }
+            );
+            gsap.fromTo(col2Ref.current, 
+                { y: -100 }, 
+                { 
+                    y: 100, 
+                    ease: "none", 
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                }
+            );
+        }
+
         return () => { split.revert(); };
     }, []);
 
-    const [planeSize, setPlaneSize] = React.useState(340);
+    const images1 = [
+        "/images/branding-images/img-3.png",
+        "/images/branding-images/img-4.png",
+        "/images/branding-images/img-5.png",
+    ];
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 768) {
-                setPlaneSize(250);
-            } else {
-                setPlaneSize(340);
-            }
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    const images2 = [
+        "/images/case-study-rich-img-01.png",
+        "/images/branding-images/img-08.png",
+        "/images/case-study-rich-img-02.png",
+    ];
 
     return (
-        <section ref={sectionRef} className="relative w-full !py-24 !px-6 overflow-hidden flex items-center justify-center">
+        <section ref={sectionRef} className="relative w-full !py-24 md:!px-6 overflow-hidden flex items-center justify-center">
             {/* Decorative blob */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl -mr-48 -mt-48 pointer-events-none" />
 
             <div className="max-w-7xl mx-auto w-full">
                 {/* Section Header */}
-                <div className="mb-16 text-center flex flex-col items-center">
+                <div className="mb-16 text-center flex flex-col items-center !px-6">
                     <h2 ref={headingRef} className="font-bold text-gray-900 !mb-3 tracking-tight">
                         Our Work Speaks for Itself
                     </h2>
@@ -172,10 +200,10 @@ const CaseStudiesPreview = () => {
                 </div>
 
                 {/* Case Study Entry */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-stretch !mt-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center !mt-10">
                     
                     {/* Left: Content Timeline */}
-                    <div className="relative z-10 w-full max-w-[500px] mx-auto lg:mx-0">
+                    <div className="relative z-10 w-full max-w-[500px] mx-auto lg:mx-0 !px-6">
                         {/* Client Name Header */}
                         <div className="!mb-8 pl-2">
                             <span className="inline-block bg-primary/10 text-primary text-xs font-black uppercase tracking-widest !px-4 !py-1.5 rounded-full mb-3" style={{ fontFamily: 'var(--font-garamond)' }}>
@@ -215,7 +243,7 @@ const CaseStudiesPreview = () => {
                                     {solutionCategories.map((cat, idx) => (
                                         <div 
                                             key={idx}
-                                            className="rounded-xl overflow-hidden shadow-[0_10px_10px_2px_rgba(0,0,0,0.05)] !p-4 !my-4"
+                                            className="rounded-xl overflow-hidden shadow-[0_10px_10px_2px_rgba(0,0,0,0.05)] !p-4 !my-4 bg-white"
                                         >
                                             {/* Header */}
                                             <div className="px-4 py-3 flex flex-col items-start bg-gray-50/40">
@@ -271,27 +299,54 @@ const CaseStudiesPreview = () => {
                         </div>
                     </div>
 
-                    {/* Right: Dynamic Case Studies Visual */}
-                    <div className="relative w-full h-full lg:mt-0 mt-8 min-h-[600px] lg:min-h-[900px] flex items-center justify-center">
-                        <div className="relative w-full h-[850px] overflow-hidden transition-all duration-700">
-                             <FlyingPosters 
-                                items={[
-                                    "/images/branding-images/img-3.png",
-                                    "/images/branding-images/img-4.png",
-                                    "/images/branding-images/img-5.png",
-                                    "/images/website-img-04.png"
-                                ]}
-                                planeWidth={planeSize}
-                                planeHeight={planeSize}
-                                distortion={2}
-                             />
+                    {/* Right: Simple Two Column Gallery / Horizontal Marquee on Mobile */}
+                    <div className="relative w-full h-[550px] md:h-[650px] lg:h-[950px] overflow-hidden flex flex-col md:flex-row gap-6 lg:gap-8 md:!pt-10">
+                        {/* Column 1 / Row 1 */}
+                        <div 
+                            ref={col1Ref} 
+                            className="flex-1 flex flex-row md:flex-col gap-4 lg:gap-8 mobile-marquee-1"
+                        >
+                            {[...images1, ...images1].map((src, idx) => (
+                                <div key={idx} className="relative w-[240px] md:w-full flex-shrink-0 aspect-square rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white">
+                                    <img src={src} alt={`Work ${idx}`} className="w-full h-full object-cover" />
+                                </div>
+                            ))}
                         </div>
+                        {/* Column 2 / Row 2 */}
+                        <div 
+                            ref={col2Ref} 
+                            className="flex-1 flex flex-row md:flex-col gap-4 lg:gap-8 !mt-0 md:!mt-32 mobile-marquee-2"
+                        >
+                            {[...images2, ...images2].map((src, idx) => (
+                                <div key={idx} className="relative w-[240px] md:w-full flex-shrink-0 aspect-square rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white">
+                                    <img src={src} alt={`Work ${idx + 3}`} className="w-full h-full object-cover" />
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Mobile Marquee Styles */}
+                        <style dangerouslySetInnerHTML={{ __html: `
+                            @media (max-width: 767px) {
+                                .mobile-marquee-1 {
+                                    animation: marqueeHorizontal 20s linear infinite;
+                                    width: max-content;
+                                }
+                                .mobile-marquee-2 {
+                                    animation: marqueeHorizontal 25s linear infinite reverse;
+                                    width: max-content;
+                                }
+                                @keyframes marqueeHorizontal {
+                                    0% { transform: translateX(0); }
+                                    100% { transform: translateX(-50%); }
+                                }
+                            }
+                        `}} />
                     </div>
 
                 </div>
 
                 {/* CTA */}
-                <div ref={buttonRef} className="flex justify-center lg:!mt-45 !mt-8">
+                <div ref={buttonRef} className="flex justify-center !mt-8 lg:-mt-20 relative z-[20]">
                     <Button href="/case-studies" className="about-section-btn !py-2 !px-6">
                         <span>View All Case Studies</span>
                         <span className="arrow-icon">→</span>

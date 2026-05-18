@@ -92,7 +92,9 @@ export default function LiquidEther({
         let isWebGLAvailable = false;
         try {
           const canvas = document.createElement('canvas');
-          isWebGLAvailable = !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+          isWebGLAvailable = !!(window.WebGLRenderingContext && 
+            (canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+          );
         } catch (e) {
           isWebGLAvailable = false;
         }
@@ -796,8 +798,8 @@ export default function LiquidEther({
         this.createShaderPass();
       }
       getFloatType() {
-        const isIOS = /(iPad|iPhone|iPod)/i.test(navigator.userAgent);
-        return isIOS ? THREE.HalfFloatType : THREE.FloatType;
+        // HalfFloatType is more universally supported than FloatType for FBOs across different GPUs
+        return THREE.HalfFloatType;
       }
       createAllFBO() {
         const type = this.getFloatType();

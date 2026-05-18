@@ -316,12 +316,18 @@ export default function Lanyard({ position = [0, 0, 24], gravity = [0, -40, 0], 
         const checkWebGL = () => {
             try {
                 const canvas = document.createElement('canvas');
-                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+                return !!(window.WebGLRenderingContext && 
+                  (canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+                );
             } catch (e) {
                 return false;
             }
         };
-        setWebglAvailable(checkWebGL());
+        const isAvailable = checkWebGL();
+        setWebglAvailable(isAvailable);
+        if (!isAvailable) {
+            console.warn("Lanyard: WebGL not available.");
+        }
         
         return () => window.removeEventListener('resize', handleResize);
     }, []);
