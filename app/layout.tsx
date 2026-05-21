@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EB_Garamond, M_PLUS_Rounded_1c } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingActions from "@/components/FloatingActions";
 import "./globals.css";
 
 const ebGaramond = EB_Garamond({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <FloatingActions />
       </body>
     </html>
   );
