@@ -300,22 +300,22 @@ const CaseStudiesPreview = () => {
                     </div>
 
                     {/* Right: Simple Two Column Gallery / Horizontal Marquee on Mobile */}
-                    <div className="relative w-full h-[550px] md:h-[650px] lg:h-[950px] overflow-hidden flex flex-col md:flex-row gap-6 lg:gap-8 md:!pt-10">
+                    <div className="relative w-full h-[280px] md:h-[650px] lg:h-[950px] overflow-hidden flex flex-col md:flex-row gap-6 lg:gap-8 md:!pt-10">
                         {/* Column 1 / Row 1 */}
                         <div 
                             ref={col1Ref} 
                             className="flex-1 flex flex-row md:flex-col gap-4 lg:gap-8 mobile-marquee-1"
                         >
-                            {[...images1, ...images1].map((src, idx) => (
+                            {[...images1, ...images2, ...images1].map((src, idx) => (
                                 <div key={idx} className="relative w-[240px] md:w-full flex-shrink-0 aspect-square rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white">
                                     <img src={src} alt={`Work ${idx}`} className="w-full h-full object-cover" />
                                 </div>
                             ))}
                         </div>
-                        {/* Column 2 / Row 2 */}
+                        {/* Column 2 / Row 2 - Hidden on Mobile */}
                         <div 
                             ref={col2Ref} 
-                            className="flex-1 flex flex-row md:flex-col gap-4 lg:gap-8 !mt-0 md:!mt-32 mobile-marquee-2"
+                            className="hidden md:flex flex-1 flex-row md:flex-col gap-4 lg:gap-8 !mt-0 md:!mt-32 mobile-marquee-2"
                         >
                             {[...images2, ...images2].map((src, idx) => (
                                 <div key={idx} className="relative w-[240px] md:w-full flex-shrink-0 aspect-square rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white">
