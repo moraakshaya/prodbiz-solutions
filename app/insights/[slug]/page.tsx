@@ -346,68 +346,56 @@ export default function BlogDetails() {
         .slice(0, 3);
 
     return (
-        <main className="flex min-h-screen flex-col items-center bg-white">
-            {/* Redesigned Blog Hero Section - Dark Premium Theme */}
+        <main className="flex min-h-screen flex-col items-center bg-white overflow-x-hidden">
+            {/* Redesigned Blog Hero Section - Background Image Style */}
             <section
-                className="relative w-full min-h-[75vh] min-[340px]:min-h-[85vh] min-[360px]:min-h-[85vh] min-[380px]:min-h-[65vh] min-[400px]:min-h-[58vh] min-[420px]:min-h-[55vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center !pt-16 !pb-20 md:!py-32 overflow-hidden"
-                style={{ background: "radial-gradient(circle at 30% 20%, #fff 0%, #2197A1 100%)" }}
+                className="hero-section-standard"
             >
-                {/* Background Accents */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2197A1] opacity-10 rounded-full -mr-64 -mt-64 blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#e76038] opacity-5 rounded-full -ml-48 -mb-48 blur-[100px] pointer-events-none"></div>
+                {/* Background Image Layer */}
+                <div className="absolute inset-0 z-0">
+                    <img 
+                        src={blog.image} 
+                        alt={blog.title} 
+                        className="w-full h-full object-cover scale-105"
+                    />
+                    {/* Multi-layered Premium Dark Overlays */}
+                    <div className="absolute inset-0 bg-[#030e12]/50" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#030e12] via-[#030e12]/70 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#030e12] via-transparent to-transparent" />
+                </div>
 
-                {/* Floating Decorative Elements (Dots) as seen in design */}
-                <div className="absolute top-1/4 left-10 w-2 h-2 bg-white/20 rounded-full blur-[1px]"></div>
-                <div className="absolute top-1/2 left-20 w-1.5 h-1.5 bg-white/10 rounded-full"></div>
-                <div className="absolute bottom-1/3 left-1/4 w-3 h-3 bg-white/5 rounded-full blur-[2px]"></div>
-                <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-white/20 rounded-full"></div>
-                <div className="absolute bottom-1/2 right-10 w-1.5 h-1.5 bg-white/15 rounded-full blur-[1px]"></div>
-                <div className="absolute top-40 right-20 w-2.5 h-2.5 bg-white/10 rounded-full"></div>
-
-                <div className="z-10 w-full max-w-7xl !mx-auto !px-2 md:!px-6 grid grid-cols-2 gap-1 md:gap-16 items-center !mb-2">
-                    {/* Left Column: Text Content */}
-                    <div className="flex flex-col items-start">
-                        <div ref={categoryRef} className="hidden md:inline-block bg-white/30 text-[#2197A1] !px-5 !py-1.5 rounded-full !text-[8px] md:text-xs font-bold uppercase tracking-[0.2em] mb-8 shadow-lg shadow-black/10">
+                {/* Content Container */}
+                <div className="z-10 w-full max-w-7xl !mx-auto !px-6 md:!px-12 relative flex items-center">
+                    <div className="flex flex-col items-start max-w-4xl !pt-12 md:!pt-0">
+                        <div ref={categoryRef} className="hidden md:inline-block bg-[#2197A1] text-white !px-5 !py-2 rounded-full !text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] !mb-8 shadow-2xl shadow-[#2197A1]/20">
                             {blog.category}
                         </div>
-                        <h1 ref={titleRef} className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white !my-2 md:!my-4 leading-[1.15] tracking-tight">
+                        <h1 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl font-bold !text-white !my-2 md:!my-6 leading-[1.1] tracking-tight drop-shadow-2xl">
                             {blog.title}
                         </h1>
-                        <p ref={descriptionRef} className="text-lg md:text-xl text-[#2a2a2a]/80 font-medium mb-10 max-w-xl leading-relaxed">
+                        <p ref={descriptionRef} className="text-lg md:text-2xl text-white/80 font-medium mb-10 max-w-2xl leading-relaxed drop-shadow-lg">
                             {blog.description}
                         </p>
 
-                        <div ref={metadataRef} className="flex flex-wrap items-center gap-2 md:gap-8 !text-[#2a2a2a]/60 text-sm font-semibold !mb-3 md:!mb-8">
-                            <div className="flex items-center gap-2.5">
-                                <Calendar size={18} className="text-[#e76038]" />
+                        <div ref={metadataRef} className="flex flex-wrap items-center gap-6 md:gap-10 !text-white/70 text-sm font-semibold !mb-4 md:!mb-12">
+                            <div className="flex items-center gap-3">
+                                <Calendar size={20} className="text-[#e76038]" />
                                 {blog.date}
                             </div>
-                            <div className="hidden md:flex items-center gap-2.5">
-                                <Clock size={18} className="text-[#e76038]" />
+                            <div className="flex items-center gap-3">
+                                <Clock size={20} className="text-[#e76038]" />
                                 {blog.readingTime}
                             </div>
                         </div>
 
-                        <div ref={buttonRef}>
+                        <div ref={buttonRef} className="w-full md:w-auto">
                             <Button
                                 href="/contact"
-                                className="hero-btn hover:!text-[#e76038] hover:!border-[#e76038]"
+                                className="hero-btn !py-1.5 !px-4 md:!py-2.5 md:!px-8 hover:!text-[#e76038] hover:!border-[#e76038] w-auto md:w-auto justify-center"
                             >
-                                <span>Start Your Growth</span>
-                                <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
+                                <span className="!text-[12px] !text-[14px]">Start Your Project</span>
+                                <ArrowRight size={20} />
                             </Button>
-                        </div>
-                    </div>
-
-                    {/* Right Column: Visual Component */}
-                    <div ref={imageRef} className="relative group">
-                        <div className="absolute -inset-4 bg-white/10 rounded-[2.5rem] blur-2xl group-hover:bg-white/15 transition-all"></div>
-                        <div className="relative bg-white/10 backdrop-blur-md rounded-[2.5rem] p-4 border-4 border-white/20 shadow-2xl transform lg:rotate-2 hover:rotate-0 transition-all duration-700 overflow-hidden">
-                            <img
-                                src={blog.image}
-                                alt={blog.title}
-                                className="w-full h-[200px] md:h-[400px] object-cover rounded-[1.8rem] shadow-inner"
-                            />
                         </div>
                     </div>
                 </div>
@@ -415,7 +403,7 @@ export default function BlogDetails() {
                 {/* Refined Wavy Divider */}
                 <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] translate-y-[1px]">
                     <svg
-                        className="relative block w-[calc(100%+1.3px)] h-[140px] md:h-[180px]"
+                        className="relative block w-[calc(100%+1.3px)] h-[80px] md:h-[150px]"
                         viewBox="0 0 1200 120"
                         preserveAspectRatio="none"
                     >
@@ -443,7 +431,7 @@ export default function BlogDetails() {
                         {/* Left Side: Shape Image (40%) */}
                         <div ref={takeawaysImageRef} className="lg:col-span-5 relative">
                             <div className="relative aspect-square overflow-hidden transform group-hover/takeaways:scale-105 transition-all duration-700 shadow-5xl bg-white/50"
-                                style={{ borderRadius: "50px 450px 450px 50px" }}>
+                                style={{ borderRadius: "30px 150px 150px 30px" }}>
                                 <img
                                     src={blog.image}
                                     alt="Key takeaways visual"

@@ -507,7 +507,7 @@ const SolutionsSection = () => {
                                             ] : [
                                                 <img key={1} src="/images/home-services/brand-growth-planning.webp" alt="Growth 1" className="w-full h-full object-cover rounded-2xl" />,
                                                 <img key={2} src="/images/home-services/lead-generation.webp" alt="Growth 2" className="w-full h-full object-cover rounded-2xl" />,
-                                                <img key={3} src="/images/home-services/end-to-end-support.webp" alt="Growth 3" className="w-full h-full object-cover rounded-2xl" />,
+                                                <img key={3} src="/images/4.webp" alt="Growth 3" className="w-full h-full object-cover rounded-2xl" />,
                                                 <img key={4} src="/images/home-services/digital-strategy.webp" alt="Growth 4" className="w-full h-full object-cover rounded-2xl" />,
                                             ]
                                         }
