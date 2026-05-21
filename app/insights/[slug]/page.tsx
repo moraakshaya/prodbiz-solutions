@@ -388,7 +388,7 @@ export default function BlogDetails() {
                             </div>
                         </div>
 
-                        <div ref={buttonRef} className="w-full md:w-auto">
+                        <div ref={buttonRef} className="hidden md:block w-full md:w-auto">
                             <Button
                                 href="/contact"
                                 className="hero-btn !py-1.5 !px-4 md:!py-2.5 md:!px-8 hover:!text-[#e76038] hover:!border-[#e76038] w-auto md:w-auto justify-center"
