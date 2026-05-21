@@ -347,9 +347,9 @@ export default function BlogDetails() {
 
     return (
         <main className="flex min-h-screen flex-col items-center bg-white overflow-x-hidden">
-            {/* Redesigned Blog Hero Section - Background Image Style */}
+            {/* Redesigned Blog Hero Section - Adaptive Height for Content */}
             <section
-                className="hero-section-standard"
+                className="relative w-full h-auto md:hero-section-standard flex items-center overflow-hidden !py-16 md:!py-0"
             >
                 {/* Background Image Layer */}
                 <div className="absolute inset-0 z-0">
