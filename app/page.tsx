@@ -278,20 +278,20 @@ export default function Home() {
             <div className="absolute bottom-15 left-0 right-0 z-40 flex flex-col items-center px-4 text-center">
 
               
-              <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 lg:gap-6">
+              <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-2 md:gap-4 lg:gap-6">
                 <Button
                   href="/get-proposal"
                   className="home-hero-btn-primary"
                 >
                   <span>Get Free Consultation</span>
-                  <ArrowRight size={20} className="md:w-[24px] md:h-[24px]" />
+                  <ArrowRight size={16} className="md:w-[24px] md:h-[24px]" />
                 </Button>
                 <Button
                   href="/case-studies"
                   className="home-hero-btn-secondary"
                 >
                   <span>Explore CaseStudies</span>
-                  <ArrowRight size={20} className="md:w-[24px] md:h-[24px]" />
+                  <ArrowRight size={16} className="md:w-[24px] md:h-[24px]" />
                 </Button>
               </div>
             </div>

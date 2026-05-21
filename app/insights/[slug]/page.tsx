@@ -349,12 +349,22 @@ export default function BlogDetails() {
         <main className="flex min-h-screen flex-col items-center bg-white overflow-x-hidden">
             {/* Redesigned Blog Hero Section - Dark Premium Theme */}
             <section
-                className="relative w-full min-h-[75vh] min-[340px]:min-h-[65vh] min-[360px]:min-h-[70vh] min-[380px]:min-h-[65vh] min-[400px]:min-h-[55vh] min-[420px]:min-h-[55vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center !pt-16 !pb-20 md:!py-32 overflow-hidden"
+                className="relative w-full min-h-[75vh] min-[340px]:min-h-[65vh] min-[360px]:min-h-[75vh] min-[380px]:min-h-[65vh] min-[400px]:min-h-[55vh] min-[420px]:min-h-[55vh] min-[760px]:min-h-[66vh] min-[1024px]:min-h-screen flex items-center !pt-16 !pb-20 md:!py-32 overflow-hidden"
                 style={{ background: "radial-gradient(circle at 30% 20%, #fff 0%, #2197A1 100%)" }}
             >
-                {/* Background Accents */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2197A1] opacity-10 rounded-full -mr-64 -mt-64 blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#e76038] opacity-5 rounded-full -ml-48 -mb-48 blur-[100px] pointer-events-none"></div>
+                {/* Mobile-only Background Image Overlay */}
+                <div className="absolute inset-0 md:hidden z-0">
+                    <img 
+                        src={blog.image} 
+                        alt="" 
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
+                </div>
+
+                {/* Background Accents (Desktop only) */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2197A1] opacity-10 rounded-full -mr-64 -mt-64 blur-[120px] pointer-events-none hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#e76038] opacity-5 rounded-full -ml-48 -mb-48 blur-[100px] pointer-events-none hidden md:block"></div>
 
                 {/* Floating Decorative Elements (Dots) as seen in design */}
                 <div className="absolute top-1/4 left-10 w-2 h-2 bg-white/20 rounded-full blur-[1px]"></div>
@@ -364,26 +374,20 @@ export default function BlogDetails() {
                 <div className="absolute bottom-1/2 right-10 w-1.5 h-1.5 bg-white/15 rounded-full blur-[1px]"></div>
                 <div className="absolute top-40 right-20 w-2.5 h-2.5 bg-white/10 rounded-full"></div>
 
-                {/* Mobile-Only Background Image - Fits behind content */}
-                <div className="md:hidden absolute inset-0 z-0">
-                    <img src={blog.image} alt="" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
-                </div>
-
-                <div className="z-10 w-full max-w-7xl !mx-auto !px-4 md:!px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center !mb-2 relative">
+                <div className="z-10 w-full max-w-7xl !mx-auto !px-6 md:!px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center !mb-2">
                     {/* Left Column: Text Content */}
-                    <div className="flex flex-col items-center md:items-start order-2 md:order-1 text-center md:text-left">
-                        <div ref={categoryRef} className="inline-block bg-white/30 !text-white md:!text-[#2197A1] !px-5 !py-1.5 rounded-full !text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] !mb-4 md:!mb-8 shadow-lg shadow-black/10 backdrop-blur-md">
+                    <div className="flex flex-col items-start order-1">
+                        <div ref={categoryRef} className="inline-block bg-white/20 backdrop-blur-md md:bg-white/30 text-white md:text-[#2197A1] !px-5 !py-1.5 rounded-full !text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] !mb-4 md:!mb-8 shadow-lg shadow-black/10">
                             {blog.category}
                         </div>
-                        <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold !text-white md:!text-[#1E293B] !my-2 md:!my-4 leading-[1.15] tracking-tight drop-shadow-md md:drop-shadow-none">
+                        <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold !text-white md:!text-[#000] !my-2 md:!my-4 leading-[1.15] tracking-tight">
                             {blog.title}
                         </h1>
-                        <p ref={descriptionRef} className="text-base md:text-xl !text-white/80 md:!text-[#2a2a2a]/80 font-medium mb-6 md:mb-10 max-w-xl leading-relaxed">
+                        <p ref={descriptionRef} className="text-base md:text-xl text-white/90 md:text-[#2a2a2a]/80 font-medium mb-6 md:mb-10 max-w-xl leading-relaxed">
                             {blog.description}
                         </p>
 
-                        <div ref={metadataRef} className="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-8 !text-white/60 md:!text-[#2a2a2a]/60 text-xs font-semibold !mb-6 md:!mb-8">
+                        <div ref={metadataRef} className="flex flex-wrap items-center gap-4 md:gap-8 !text-white/70 md:!text-[#2a2a2a]/60 text-xs font-semibold !mb-6 md:!mb-8">
                             <div className="flex items-center gap-2">
                                 <Calendar size={16} className="text-[#e76038]" />
                                 {blog.date}
@@ -394,10 +398,10 @@ export default function BlogDetails() {
                             </div>
                         </div>
 
-                        <div ref={buttonRef} className="w-full md:w-auto">
+                        <div ref={buttonRef} className="w-auto md:w-auto">
                             <Button
                                 href="/contact"
-                                className="hero-btn !text-white !border-none md:!text-inherit md:!border-none hover:!text-[#e76038] hover:!border-[#e76038] w-auto md:w-auto justify-center"
+                                className="hero-btn !text-white border-white/30 md:border-none hover:!text-[#e76038] hover:!border-[#e76038] w-full md:w-auto justify-center"
                             >
                                 <span className="!text-[12px] md:!text-[14px]">Start Your Growth</span>
                                 <ArrowRight size={16} className="md:w-[22px] md:h-[22px]" />
@@ -405,8 +409,8 @@ export default function BlogDetails() {
                         </div>
                     </div>
 
-                    {/* Right Column: Visual Component */}
-                    <div ref={imageRef} className="hidden md:block relative group order-1 md:order-2 !mb-8 md:!mb-0">
+                    {/* Right Column: Visual Component - Hidden on Mobile */}
+                    <div ref={imageRef} className="hidden md:block relative group order-2">
                         <div className="absolute -inset-4 bg-white/10 rounded-[2.5rem] blur-2xl group-hover:bg-white/15 transition-all"></div>
                         <div className="relative bg-white/10 backdrop-blur-md rounded-[2.5rem] p-4 border-4 border-white/20 shadow-2xl transform md:rotate-2 hover:rotate-0 transition-all duration-700 overflow-hidden">
                             <img
