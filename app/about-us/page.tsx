@@ -17,8 +17,8 @@ const OurApproach = dynamic(() => import("@/components/OurApproach"), { ssr: fal
 
 const teamMembers = [
     { name: "Srikanth Reddy", role: "Managing Director", image: "/images/gallery/employee-01.webp" },
-    { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employee-02.webp" },
-    { name: "Pravanya Reddy", role: "CTO", image: "/images/gallery/employee-03.webp" },
+    { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employee-03.webp" },
+    { name: "Pravanya Reddy", role: "COO", image: "/images/gallery/employee-02.webp" },
     { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employee-04.webp" },
     { name: "Gopala Krishna", role: "SEO", image: "/images/gallery/employee-05.png" }
 ];
@@ -105,8 +105,8 @@ function MobileLeadersCarousel({ items }: { items: typeof teamMembers }) {
                             <div className="absolute inset-0 flex items-center justify-center overflow-hidden z-10"
                                 style={{ borderRadius: '40% 60% 70% 30% / 40% 40% 60% 60%' }}>
                                 {member.image ? (
-                                    <Image 
-                                        src={member.image} 
+                                    <Image
+                                        src={member.image}
                                         alt={member.name}
                                         fill
                                         quality={100}
@@ -189,7 +189,7 @@ export default function WhoWeArePage() {
         setMounted(true);
 
         if (h1Ref.current && spanRef.current && paraRef.current && buttonsRef.current) {
-            
+
             // Core Entrance Timeline
             const tl = gsap.timeline();
 
@@ -252,17 +252,17 @@ export default function WhoWeArePage() {
                 ease: "power2.in"
             })
 
-            // 2) Instantly reset to the bottom (invisible)
-            .set(spanRef.current, { y: 25, rotationX: -90 })
+                // 2) Instantly reset to the bottom (invisible)
+                .set(spanRef.current, { y: 25, rotationX: -90 })
 
-            // 3) Roll in from the bottom
-            .to(spanRef.current, {
-                y: 0,
-                opacity: 1,
-                rotationX: 0,
-                duration: 0.8,
-                ease: "power2.out"
-            });
+                // 3) Roll in from the bottom
+                .to(spanRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    rotationX: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
 
             // Clean up split on unmount
             return () => {
@@ -481,7 +481,7 @@ export default function WhoWeArePage() {
                 <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "linear-gradient(105deg, rgba(3,14,18,0.72) 0%, rgba(3,14,18,0.45) 50%, transparent 100%)" }} />
                 {/* Content Container */}
                 <div className="relative z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
- 
+
                     {/* Hero Content Wrapper */}
                     <div className="w-full md:w-[55%] min-[1150px]:max-[1299px]:w-[45%] flex flex-col items-center md:items-start translate-y-[-20px] !mt-20 md:pr-8 md:!pl-8">
                         {/* Title: Centered on Mobile */}
@@ -524,12 +524,12 @@ export default function WhoWeArePage() {
 
             {/* Our Story Section */}
             <section className="w-full !pt-24 md:!pt-30 !pb-10 md:!pb-30 !px-6 overflow-x-hidden">
-                <div className="max-w-7xl !mx-auto flex flex-col items-center md:grid md:grid-cols-2 md:gap-x-16 gap-10">
-                    
+                <div className="max-w-7xl !mx-auto flex flex-col items-center md:grid md:grid-cols-2 md:gap-x-16 gap-5">
+
                     {/* Header: Title & Badge - Comes first on Mobile */}
                     <div className="w-full order-1 md:col-start-2 md:self-end">
                         <span ref={storySpanRef} className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-1 block">About Us</span>
-                        <h2 ref={storyH2Ref} className="text-4xl md:text-5xl font-bold text-[#2A2A2A] md:!mb-8 leading-tight">
+                        <h2 ref={storyH2Ref} className="text-4xl md:text-5xl font-bold text-[#2A2A2A] md:!mb-0 leading-tight">
                             Helping Businesses <span className="text-[#2197A1]">Build, Grow, and Succeed</span> Online
                         </h2>
                     </div>
@@ -558,7 +558,7 @@ export default function WhoWeArePage() {
                                 Prodbiz Solutions is a digital marketing and website development company focused on helping businesses grow online. We work with different types of businesses — from small startups to established brands — and provide simple, effective solutions to build a strong online presence. From creating your brand identity and designing your logo to building professional websites and promoting your business on Google and social media, we handle everything your business needs to succeed in the digital world.
                             </p>
                             <p>
-                               Our team includes experienced designers, developers, and digital marketing professionals who understand both business goals and online strategies. We don’t just focus on design or development — we focus on results. Our approach is to create solutions that not only look good but also help you reach more people, attract customers, and grow your business.
+                                Our team includes experienced designers, developers, and digital marketing professionals who understand both business goals and online strategies. We don’t just focus on design or development — we focus on results. Our approach is to create solutions that not only look good but also help you reach more people, attract customers, and grow your business.
                             </p>
                         </div>
                     </div>
@@ -595,63 +595,63 @@ export default function WhoWeArePage() {
                                 </div>
                             </div>
 
-                        {/* Top Left: Mission Branch */}
-                        <div ref={missionLeftRef} className="absolute top-10 -left-25 w-1/2 h-1/2 flex flex-col items-end justify-start pr-10 pt-10 group">
-                            {/* Mission Pill Header */}
-                            <div className="flex items-center gap-0 mb-6 bg-[#2197A1] rounded-full !mt-10 !mr-12 pl-6 pr-2 py-2 shadow-lg shadow-[#2197A1]/20 group-hover:scale-105 transition-transform duration-500">
-                                <span className="text-white font-black uppercase tracking-[0.2em] text-sm !pl-2 !mr-1">Our Mission</span>
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
-                                    <HeartPulse size={20} strokeWidth={2.5} />
+                            {/* Top Left: Mission Branch */}
+                            <div ref={missionLeftRef} className="absolute top-10 -left-25 w-1/2 h-1/2 flex flex-col items-end justify-start pr-10 pt-10 group">
+                                {/* Mission Pill Header */}
+                                <div className="flex items-center gap-0 mb-6 bg-[#2197A1] rounded-full !mt-10 !mr-12 pl-6 pr-2 py-2 shadow-lg shadow-[#2197A1]/20 group-hover:scale-105 transition-transform duration-500">
+                                    <span className="text-white font-black uppercase tracking-[0.2em] text-sm !pl-2 !mr-1">Our Mission</span>
+                                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                                        <HeartPulse size={20} strokeWidth={2.5} />
+                                    </div>
                                 </div>
+                                <div className="text-right max-w-[340px] !mr-16 !mt-4">
+                                    <h4 className="text-4xl font-black text-[#2A2A2A] mb-4 tracking-tight">IDEA</h4>
+                                    <p className="text-lg text-[#2A2A2A]/70 leading-relaxed font-medium">
+                                        To help businesses grow online through digital marketing, website development, and effective strategies that bring real customers.
+                                    </p>
+                                </div>
+                                {/* SVG Connection Arc (Mission) */}
+                                <svg className="absolute -bottom-8 -right-8 w-64 h-64 pointer-events-none z-10 overflow-visible">
+                                    <path
+                                        d="M 256,128 A 128,128 0 0 0 128,0"
+                                        fill="none"
+                                        stroke="#2197A1"
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
+                                        className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                    />
+                                    <circle cx="128" cy="0" r="4" fill="#2197A1" />
+                                </svg>
                             </div>
-                            <div className="text-right max-w-[340px] !mr-16 !mt-4">
-                                <h4 className="text-4xl font-black text-[#2A2A2A] mb-4 tracking-tight">IDEA</h4>
-                                <p className="text-lg text-[#2A2A2A]/70 leading-relaxed font-medium">
-                                    To help businesses grow online through digital marketing, website development, and effective strategies that bring real customers.
-                                </p>
-                            </div>
-                            {/* SVG Connection Arc (Mission) */}
-                            <svg className="absolute -bottom-8 -right-8 w-64 h-64 pointer-events-none z-10 overflow-visible">
-                                <path
-                                    d="M 256,128 A 128,128 0 0 0 128,0"
-                                    fill="none"
-                                    stroke="#2197A1"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
-                                />
-                                <circle cx="128" cy="0" r="4" fill="#2197A1" />
-                            </svg>
-                        </div>
 
-                        {/* Bottom Right: Vision Branch */}
-                        <div ref={visionRightRef} className="absolute bottom-10 -right-30 w-1/2 h-1/2 flex flex-col items-start justify-end pl-10 pb-10 group">
-                            {/* SVG Connection Arc (Vision) */}
-                            <svg className="absolute -top-8 -left-8 w-64 h-64 pointer-events-none z-10 overflow-visible">
-                                <path
-                                    d="M 0,128 A 128,128 0 0 0 128,256"
-                                    fill="none"
-                                    stroke="#e76038"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
-                                />
-                                <circle cx="128" cy="256" r="4" fill="#e76038" />
-                            </svg>
-                            <div className="text-left max-w-[340px] !ml-12 !mb-0">
-                                <h4 className="text-4xl font-black text-[#e76038] mb-4 tracking-tight">GOAL</h4>
-                                <p className="text-lg text-[#2A2A2A]/70 leading-relaxed font-medium mb-6">
-                                  To become a trusted digital partner for businesses by delivering complete solutions and long-term growth.
-                                </p>
-                            </div>
-                            {/* Vision Pill Header */}
-                            <div className="flex items-center gap-1 bg-[#e76038] rounded-full !ml-12 !mb-12 py-2 shadow-lg shadow-[#e76038]/20 group-hover:scale-105 transition-transform duration-500 z-10">
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm !mr-1">
-                                    <Rocket size={20} strokeWidth={2.5} />
+                            {/* Bottom Right: Vision Branch */}
+                            <div ref={visionRightRef} className="absolute bottom-10 -right-30 w-1/2 h-1/2 flex flex-col items-start justify-end pl-10 pb-10 group">
+                                {/* SVG Connection Arc (Vision) */}
+                                <svg className="absolute -top-8 -left-8 w-64 h-64 pointer-events-none z-10 overflow-visible">
+                                    <path
+                                        d="M 0,128 A 128,128 0 0 0 128,256"
+                                        fill="none"
+                                        stroke="#e76038"
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
+                                        className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                    />
+                                    <circle cx="128" cy="256" r="4" fill="#e76038" />
+                                </svg>
+                                <div className="text-left max-w-[340px] !ml-12 !mb-0">
+                                    <h4 className="text-4xl font-black text-[#e76038] mb-4 tracking-tight">GOAL</h4>
+                                    <p className="text-lg text-[#2A2A2A]/70 leading-relaxed font-medium mb-6">
+                                        To become a trusted digital partner for businesses by delivering complete solutions and long-term growth.
+                                    </p>
                                 </div>
-                                <span className="text-white font-black uppercase tracking-[0.2em] !pr-2 text-sm">Our Vision</span>
+                                {/* Vision Pill Header */}
+                                <div className="flex items-center gap-1 bg-[#e76038] rounded-full !ml-12 !mb-12 py-2 shadow-lg shadow-[#e76038]/20 group-hover:scale-105 transition-transform duration-500 z-10">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm !mr-1">
+                                        <Rocket size={20} strokeWidth={2.5} />
+                                    </div>
+                                    <span className="text-white font-black uppercase tracking-[0.2em] !pr-2 text-sm">Our Vision</span>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
 
@@ -680,7 +680,7 @@ export default function WhoWeArePage() {
                 </div>
             </section>
 
-             {/* Leadership Team Section */}
+            {/* Leadership Team Section */}
             <section className="relative w-full overflow-hidden">
                 {/* Main Content Area with Grid */}
                 <div className="relative bg-white md:!pt-10 !pb-10 md:!pb-20">
@@ -719,8 +719,8 @@ export default function WhoWeArePage() {
                                         <div className="absolute inset-0 flex items-center justify-center overflow-hidden z-10"
                                             style={{ borderRadius: '40% 60% 70% 30% / 40% 40% 60% 60%' }}>
                                             {member.image ? (
-                                                <Image 
-                                                    src={member.image} 
+                                                <Image
+                                                    src={member.image}
                                                     alt={member.name}
                                                     fill
                                                     quality={100}
