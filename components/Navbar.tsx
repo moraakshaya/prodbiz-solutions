@@ -121,7 +121,7 @@ export default function Navbar() {
                     className="flex-shrink-0 flex items-center justify-center self-center transition-all duration-300 hover:scale-105"
                 >
                     <Image
-                        src="/images/logo1.png"
+                        src="/images/pbimg.png"
                         alt="Logo"
                         width={150}
                         height={100}
@@ -226,10 +226,10 @@ export default function Navbar() {
 
                     <li className="flex items-center !m-0 !p-0 h-full">
                         <Link
-                            href="/case-studies"
+                            href="/our-work"
                             className="relative group !text-[1.09rem] font-semibold !text-gray-700 hover:!text-[var(--secondary-color)] transition-colors duration-200 no-underline leading-none"
                         >
-                            Case Studies
+                            Our Work
                             <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[var(--secondary-color)] transition-all duration-300 group-hover:w-full" />
                         </Link>
                     </li>
@@ -332,11 +332,11 @@ export default function Navbar() {
 
                     <li className="!my-2 !px-2 !py-1 border border-transparent rounded-md shadow-[20px_20px_20px_rgba(0,0,0,0.15)]">
                         <Link
-                            href="/case-studies"
+                            href="/our-work"
                             onClick={closeMobileMenu}
                             className="flex items-center justify-between py-4 text-base font-semibold !text-gray-700 no-underline hover:text-[var(--primary-color)] transition-colors group"
                         >
-                            Case Studies
+                            Our Work
                         </Link>
                     </li>
                     <li className="!my-0 !px-2 !py-1 border border-transparent rounded-md shadow-[20px_20px_20px_rgba(0,0,0,0.15)]">

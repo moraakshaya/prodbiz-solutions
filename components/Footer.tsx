@@ -5,9 +5,10 @@ import "./Footer.css";
 
 const quickLinks = [
     { label: "About Us", href: "/about-us" },
-    { label: "Case Studies", href: "/case-studies" },
+    { label: "Our Work", href: "/our-work" },
     { label: "Insights", href: "/insights" },
     { label: "Gallery", href: "/gallery" },
+    { label: "Case Studies", href: "/case-studies" },
     { label: "Contact", href: "/contact" },
 ];
 
@@ -109,9 +110,9 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* ── Column 3: Solutions ── */}
+                    {/* ── Column 3: Services ── */}
                     <div className="footer__col">
-                        <h4 className="footer__heading">Solutions</h4>
+                        <h4 className="footer__heading">Services</h4>
                         <ul className="footer__list">
                             {services.map((link) => (
                                 <li key={link.href}>
