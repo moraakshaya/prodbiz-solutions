@@ -30,11 +30,15 @@ const workCategories = [
         title: "Logos",
         description: "Unique and memorable brand identities designed to establish trust and presence.",
         works: [
-            { id: "l1", image: "/images/branding-images/img-07.png", title: "Nexus Technology Identity", client: "Nexus Corp" },
-            { id: "l2", image: "/images/branding-images/img-08.png", title: "Earth Organic Identity", client: "Earth Organic" },
-            { id: "l3", image: "/images/branding-images/img-09.png", title: "Volt Energy Style Identity", client: "Volt Energy" },
-            { id: "l4", image: "/images/logoimg.png", title: "Minimalist Icon Concept", client: "Modern Tech" },
-            { id: "l5", image: "/images/logo1.png", title: "Corporate Logo Design", client: "ProdBiz" },
+            { id: "l1", image: "/clients/ricchlogo.png", title: "Nexus Technology Identity", client: "Nexus Corp" },
+            { id: "l2", image: "/clients/padmavatilogo.png", title: "Earth Organic Identity", client: "Earth Organic" },
+            { id: "l3", image: "/clients/trinilogo.png", title: "Volt Energy Style Identity", client: "Volt Energy" },
+            { id: "l4", image: "/clients/terracepondlogo.png", title: "Minimalist Icon Concept", client: "Modern Tech" },
+            { id: "l5", image: "/clients/curryleaveslogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
+            { id: "l6", image: "/clients/firetunslogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
+            { id: "l7", image: "/clients/ricchsportslogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
+            { id: "l8", image: "/clients/tvvlogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
+            { id: "l9", image: "/clients/praanalogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
         ]
     },
     {
@@ -184,12 +188,12 @@ const WorkCarouselRow = ({ category }: { category: typeof workCategories[0] }) =
 
                         {/* Text Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                            <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-wider mb-1 block">
+                            {/* <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-wider mb-1 block">
                                 {work.client}
                             </span>
                             <h4 className="text-white font-bold text-lg leading-tight">
                                 {work.title}
-                            </h4>
+                            </h4> */}
                         </div>
                     </div>
                 ))}
