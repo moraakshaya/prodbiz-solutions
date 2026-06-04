@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import "./Footer.css";
 
 const quickLinks = [
@@ -76,7 +77,13 @@ export default function Footer() {
                     {/* ── Column 1: Company Info ── */}
                     <div className="footer__col footer__col--brand">
                         <Link href="/" className="footer__logo">
-                            ProdBiz
+                            <Image
+                                src="/images/pbimg.png"
+                                alt="ProdBiz Solutions Logo"
+                                width={150}
+                                height={60}
+                                className="h-auto max-h-[55px] w-auto object-contain"
+                            />
                         </Link>
                         <p className="footer__description">
                             We deliver scalable IT solutions and data-driven digital marketing
