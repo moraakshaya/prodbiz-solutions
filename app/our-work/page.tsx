@@ -39,6 +39,7 @@ const workCategories = [
             { id: "l7", image: "/clients/ricchsportslogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
             { id: "l8", image: "/clients/tvvlogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
             { id: "l9", image: "/clients/praanalogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
+            { id: "l10", image: "/clients/ricchcafelogo.png", title: "Corporate Logo Design", client: "ProdBiz" },
         ]
     },
     {
@@ -128,7 +129,7 @@ const WorkCarouselRow = ({ category }: { category: typeof workCategories[0] }) =
     return (
         <div className="w-full !mb-5 md:!mb-10 relative gap-5">
             {/* Header row */}
-            <div className="flex justify-between items-end !mb-4 md:!mb-6 px-4 md:px-0">
+            <div className="flex items-end !mb-4 md:!mb-6 px-4 md:px-0">
                 <div>
                     <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
                         {category.title}
@@ -137,66 +138,61 @@ const WorkCarouselRow = ({ category }: { category: typeof workCategories[0] }) =
                         {category.description}
                     </p>
                 </div>
-
-                {/* Circular Navigation Buttons */}
-                <div className="flex items-center gap-3">
-                    {/* Left Arrow Button */}
-                    <button
-                        onClick={() => scroll("left")}
-                        className={`w-12 h-12 rounded-full border border-[#2197A1] flex items-center justify-center bg-[#2197A1] text-white shadow-md transition-all duration-300 active:scale-95 ${canScrollLeft
-                            ? "opacity-100 cursor-pointer hover:bg-white hover:text-[#2197A1] hover:border-[#2197A1]"
-                            : "opacity-0 pointer-events-none"
-                            }`}
-                        aria-label="Scroll Left"
-                    >
-                        <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
-                    </button>
-
-                    {/* Right Arrow Button */}
-                    <button
-                        onClick={() => scroll("right")}
-                        className={`w-12 h-12 rounded-full border border-[#2197A1] flex items-center justify-center bg-[#2197A1] text-white shadow-md transition-all duration-300 active:scale-95 ${canScrollRight
-                            ? "opacity-100 cursor-pointer hover:bg-white hover:text-[#2197A1] hover:border-[#2197A1]"
-                            : "opacity-0 pointer-events-none"
-                            }`}
-                        aria-label="Scroll Right"
-                    >
-                        <ChevronRight className="w-6 h-6 stroke-[2.5]" />
-                    </button>
-                </div>
             </div>
 
-            {/* Images Carousel Container */}
-            <div
-                ref={scrollRef}
-                className="w-full overflow-x-auto flex gap-6 pb-6 px-4 md:px-0 scrollbar-none snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-                {category.works.map((work) => (
-                    <div
-                        key={work.id}
-                        className="flex-shrink-0 w-[290px] sm:w-[360px] md:w-[440px] snap-start group relative rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 bg-white hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] transition-all duration-300"
-                    >
-                        {/* Image Frame */}
-                        <div className="w-full h-[190px] sm:h-[240px] md:h-[290px] overflow-hidden bg-gray-50">
-                            <img
-                                src={work.image}
-                                alt={work.title}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-                        </div>
+            {/* Images Carousel Container with Side Arrows */}
+            <div className="relative">
+                {/* Left Arrow — always visible */}
+                <button
+                    onClick={() => scroll("left")}
+                    className={`absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border-2 border-[#2197A1] flex items-center justify-center bg-[#2197A1] text-white shadow-lg transition-all duration-300 active:scale-95 hover:bg-white hover:text-[#2197A1] ${canScrollLeft ? "opacity-100 cursor-pointer" : "opacity-40 cursor-default"
+                        }`}
+                    aria-label="Scroll Left"
+                >
+                    <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+                </button>
 
-                        {/* Text Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                            {/* <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-wider mb-1 block">
-                                {work.client}
-                            </span>
-                            <h4 className="text-white font-bold text-lg leading-tight">
-                                {work.title}
-                            </h4> */}
+                {/* Right Arrow — always visible */}
+                <button
+                    onClick={() => scroll("right")}
+                    className={`absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border-2 border-[#2197A1] flex items-center justify-center bg-[#2197A1] text-white shadow-lg transition-all duration-300 active:scale-95 hover:bg-white hover:text-[#2197A1] ${canScrollRight ? "opacity-100 cursor-pointer" : "opacity-40 cursor-default"
+                        }`}
+                    aria-label="Scroll Right"
+                >
+                    <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                </button>
+
+                <div
+                    ref={scrollRef}
+                    className="w-full overflow-x-auto flex gap-6 pb-6 px-4 md:px-0 scrollbar-none snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
+                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
+                    {category.works.map((work) => (
+                        <div
+                            key={work.id}
+                            className="flex-shrink-0 w-[290px] sm:w-[360px] md:w-[440px] snap-start group relative rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 bg-white hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] transition-all duration-300"
+                        >
+                            {/* Image Frame */}
+                            <div className="w-full h-[190px] sm:h-[240px] md:h-[290px] overflow-hidden bg-gray-50">
+                                <img
+                                    src={work.image}
+                                    alt={work.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                            </div>
+
+                            {/* Text Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                                {/* <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-wider mb-1 block">
+                                    {work.client}
+                                </span>
+                                <h4 className="text-white font-bold text-lg leading-tight">
+                                    {work.title}
+                                </h4> */}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
@@ -331,7 +327,7 @@ export default function OurWorkPage() {
             </section>
 
             {/* Categories Carousel Rows Showcase */}
-            <section className="w-full max-w-7xl mx-auto !py-14 px-6 md:px-8">
+            <section className="w-full max-w-7xl mx-auto !py-14 !px-6 md:px-8">
                 {workCategories.map((category) => (
                     <WorkCarouselRow key={category.id} category={category} />
                 ))}
