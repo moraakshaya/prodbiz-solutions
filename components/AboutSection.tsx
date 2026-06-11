@@ -97,7 +97,7 @@ const AboutSection = () => {
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="relative w-full h-full max-w-[500px] mx-auto">
                                 {[
-                                    { color: "bg-[#0096da]", img: "/images/home-services/video-shooting.webp", top: "5%", left: "20%", size: "w-20 h-20", z: 30, anim: "animate-float" },
+                                    { color: "bg-[#0096da]", img: "/images/video-shooting.webp", top: "5%", left: "20%", size: "w-20 h-20", z: 30, anim: "animate-float" },
                                     { color: "bg-[#7db7de]", img: "/images/gallery/chirstmas-img-03.webp", top: "-5%", left: "55%", size: "w-16 h-16", z: 20, anim: "animate-float-delayed" },
                                     { color: "bg-[#005c93]", img: "/images/home-services/logo.webp", top: "15%", left: "75%", size: "w-20 h-20", z: 10, anim: "animate-float-slow" },
                                     { color: "bg-[#e5352c]", img: "/images/website.jpg", top: "35%", left: "5%", size: "w-14 h-14", z: 40, anim: "animate-float" },
