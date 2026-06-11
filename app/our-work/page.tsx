@@ -45,10 +45,10 @@ const workCategories = [
         title: "Videos",
         description: "Premium commercial shoots, reels, and video productions capturing brand stories.",
         works: [
-            { id: "v1", image: "/images/video-shooting.webp", title: "Professional Video Shoot", client: "Media Studio" },
-            { id: "v2", image: "/images/video.jpg", title: "Commercial Editing Production", client: "Ad Agency" },
-            { id: "v3", image: "/images/insights-img-01.webp", title: "Brand Story Shoot", client: "EcoDrive" },
-            { id: "v4", image: "/images/office-team.png", title: "Corporate Interview Production", client: "Alpha Tech" },
+            { id: "v1", image: "/images/home-services/video-img-1.png", title: "Professional Video Shoot", client: "Media Studio" },
+            { id: "v2", image: "/images/home-services/video-img-2.png", title: "Commercial Editing Production", client: "Ad Agency" },
+            { id: "v3", image: "/images/home-services/video-img-3.png", title: "Brand Story Shoot", client: "EcoDrive" },
+            { id: "v4", image: "/images/home-services/video-img-4.png", title: "Corporate Interview Production", client: "Alpha Tech" },
         ]
     },
     {
