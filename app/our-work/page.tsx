@@ -77,11 +77,10 @@ const workCategories = [
         title: "Websites",
         description: "State-of-the-art websites, interactive web applications, and fast landing pages.",
         works: [
-            { id: "w1", image: "/images/website-img-01.png", title: "Corporate Flagship Platform", client: "Global Industries" },
-            { id: "w2", image: "/images/website-img-02.png", title: "E-Commerce Experience Portal", client: "Luxe Retail" },
-            { id: "w3", image: "/images/website-img-03.png", title: "Interactive SaaS Dashboard", client: "CloudSync" },
-            { id: "w4", image: "/images/website-img-04.png", title: "Healthcare Services Portal", client: "CarePlus" },
-            { id: "w5", image: "/images/website-img-05.png", title: "Creative Agency Showcase", client: "Creatives Inc" },
+            { id: "w1", image: "/images/home-services/website-img-1.png", title: "Corporate Flagship Platform", client: "Global Industries" },
+            { id: "w2", image: "/images/home-services/website-img-2.png", title: "E-Commerce Experience Portal", client: "Luxe Retail" },
+            { id: "w3", image: "/images/home-services/website-img-3.png", title: "Interactive SaaS Dashboard", client: "CloudSync" },
+            { id: "w4", image: "/images/home-services/website-img-4.png", title: "Healthcare Services Portal", client: "CarePlus" },
         ]
     }
 ];
