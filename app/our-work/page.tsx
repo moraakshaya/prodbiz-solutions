@@ -17,12 +17,10 @@ const workCategories = [
         title: "Hoardings",
         description: "Large-format outdoor media and billboard campaigns designed for high impact and visibility.",
         works: [
-            { id: "h1", image: "/images/branding-images/img-1.png", title: "Commercial Billboard", client: "Metro Transit" },
-            { id: "h2", image: "/images/branding-images/img-2.png", title: "Retail Launch Hoarding", client: "Fashion Hub" },
-            { id: "h3", image: "/images/branding-images/img-3.png", title: "Corporate Branding Wall", client: "Alpha Tech" },
-            { id: "h4", image: "/images/branding-images/img-4.png", title: "Real Estate Billboard", client: "Green Meadows" },
-            { id: "h5", image: "/images/branding-images/img-5.png", title: "Mega Event Banner", client: "Summit 2026" },
-            { id: "h6", image: "/images/branding-images/img-6.png", title: "Expressway Hoarding", client: "Prime Auto" },
+            { id: "h1", image: "/images/home-services/hoarding-img-1.png", title: "Commercial Billboard", client: "Metro Transit" },
+            { id: "h2", image: "/images/home-services/hoarding-img-2.png", title: "Retail Launch Hoarding", client: "Fashion Hub" },
+            { id: "h3", image: "/images/home-services/hoarding-img-3.png", title: "Corporate Branding Wall", client: "Alpha Tech" },
+            { id: "h3", image: "/images/home-services/posters-img-2.png", title: "Corporate Branding Wall", client: "Alpha Tech" },
         ]
     },
     {
@@ -58,10 +56,9 @@ const workCategories = [
         title: "Posters",
         description: "Creative promotional posters, menu cards, and social media offer graphics.",
         works: [
-            { id: "p1", image: "/images/digital-marketing-img-1.png", title: "Campaign Launch Poster", client: "Fashion Hub" },
-            { id: "p2", image: "/images/digital-marketing-img-2.png", title: "Seasonal Sale Offer", client: "SuperMart" },
-            { id: "p3", image: "/images/digital-marketing-img-3.png", title: "Digital Product Poster", client: "Nexus Corp" },
-            { id: "p4", image: "/images/digital-marketing-img-4.png", title: "Business Growth Event Poster", client: "Summit 2026" },
+            { id: "p1", image: "/images/home-services/posters-img-1.png", title: "Campaign Launch Poster", client: "Fashion Hub" },
+            { id: "p2", image: "/images/home-services/posters-img-4.png", title: "Seasonal Sale Offer", client: "SuperMart" },
+            { id: "p3", image: "/images/home-services/posters-img-3.png", title: "Digital Product Poster", client: "Nexus Corp" },
         ]
     },
     {
@@ -69,10 +66,10 @@ const workCategories = [
         title: "Auto Ads",
         description: "High-reach transit advertisements and vehicle branding designs.",
         works: [
-            { id: "a1", image: "/images/branding-images/img-1.png", title: "Transit Ad Poster", client: "Metro Ads" },
-            { id: "a2", image: "/images/branding-images/img-2.png", title: "Mobile Branding Design", client: "Quick Delivery" },
-            { id: "a3", image: "/images/branding-images/img-3.png", title: "Vehicle Wrap Ad", client: "Local Transport" },
-            { id: "a4", image: "/images/branding-images/img-4.png", title: "Auto Carrier Banner", client: "Prime Auto" },
+            { id: "a1", image: "/images/home-services/autoads-img-1.png", title: "Transit Ad Poster", client: "Metro Ads" },
+            { id: "a2", image: "/images/home-services/autoads-img-2.png", title: "Mobile Branding Design", client: "Quick Delivery" },
+            { id: "a3", image: "/images/home-services/autoads-img-3.png", title: "Vehicle Wrap Ad", client: "Local Transport" },
+            { id: "a4", image: "/images/home-services/autoads-img-4.png", title: "Auto Carrier Banner", client: "Prime Auto" },
         ]
     },
     {
@@ -197,6 +194,7 @@ const WorkCarouselRow = ({ category }: { category: typeof workCategories[0] }) =
         </div>
     );
 };
+
 
 export default function OurWorkPage() {
     const [mounted, setMounted] = useState(false);
