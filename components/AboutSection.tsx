@@ -44,7 +44,7 @@ const AboutSection = () => {
                     <div className="absolute inset-0 flex items-center justify-center scale-[0.65] sm:scale-[0.85] md:scale-100">
                         <div className="relative w-full h-full max-w-[500px] mx-auto">
                             {[
-                                { color: "bg-[#0096da]", img: "/images/home-services/video-shooting.webp", top: "5%", left: "20%", size: "w-32 h-32 md:w-36 md:h-36", z: 30, anim: "animate-float" },
+                                { color: "bg-[#0096da]", img: "/images/video-shooting.webp", top: "5%", left: "20%", size: "w-32 h-32 md:w-36 md:h-36", z: 30, anim: "animate-float" },
                                 { color: "bg-[#7db7de]", img: "/images/gallery/chirstmas-img-03.webp", top: "-5%", left: "55%", size: "w-28 h-28 md:w-32 md:h-32", z: 20, anim: "animate-float-delayed" },
                                 { color: "bg-[#005c93]", img: "/images/home-services/logo.webp", top: "15%", left: "75%", size: "w-32 h-32 md:w-36 md:h-36", z: 10, anim: "animate-float-slow" },
                                 { color: "bg-[#e5352c]", img: "/images/website.jpg", top: "35%", left: "5%", size: "w-24 h-24 md:w-28 md:h-28", z: 40, anim: "animate-float" },
@@ -72,7 +72,7 @@ const AboutSection = () => {
                                         />
                                         <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
                                     </div>
-                                    
+
                                     {/* 3D Extrusion Effect */}
                                     <div className="absolute right-[-8px] bottom-[-8px] w-full h-full bg-black/15 -z-10 rounded-2xl"></div>
                                 </div>
