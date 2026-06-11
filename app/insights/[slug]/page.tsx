@@ -169,9 +169,9 @@ export default function BlogDetails() {
     React.useEffect(() => {
         setMounted(true);
 
-        if (categoryRef.current && titleRef.current && descriptionRef.current && 
+        if (categoryRef.current && titleRef.current && descriptionRef.current &&
             metadataRef.current && buttonRef.current && imageRef.current) {
-            
+
             const tl = gsap.timeline();
 
             // 1. Blog Category: Fade + Slide Up
@@ -190,10 +190,10 @@ export default function BlogDetails() {
             // 3. Right side Image: Slide in from right
             tl.fromTo(imageRef.current!,
                 { x: 60, opacity: 0 },
-                { 
-                    x: 0, 
-                    opacity: 1, 
-                    duration: 1.2, 
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1.2,
                     ease: "power3.out",
                     onComplete: () => {
                         if (imageRef.current) {
@@ -276,9 +276,9 @@ export default function BlogDetails() {
             }
 
             // 9. Related Insights Section (Coordinated Reveal)
-            if (relatedSectionRef.current && relatedTitleRef.current && relatedParaRef.current && 
+            if (relatedSectionRef.current && relatedTitleRef.current && relatedParaRef.current &&
                 relatedViewAllRef.current && relatedGridRef.current && relatedMobileRef.current) {
-                
+
                 const relatedTl = gsap.timeline({
                     scrollTrigger: {
                         trigger: relatedSectionRef.current,
@@ -354,9 +354,9 @@ export default function BlogDetails() {
             >
                 {/* Mobile-only Background Image Overlay */}
                 <div className="absolute inset-0 md:hidden z-0">
-                    <img 
-                        src={blog.image} 
-                        alt="" 
+                    <img
+                        src={blog.image}
+                        alt=""
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
@@ -380,9 +380,9 @@ export default function BlogDetails() {
                         <div ref={categoryRef} className="inline-block bg-white/20 backdrop-blur-md md:bg-white/30 text-white md:text-[#2197A1] !px-5 !py-1.5 rounded-full !text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] !mb-4 md:!mb-8 shadow-lg shadow-black/10">
                             {blog.category}
                         </div>
-                        <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold !text-white md:!text-[#000] !my-2 md:!my-4 leading-[1.15] tracking-tight">
+                        <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold !text-white md:!text-[#000] !my-2 md:!my-4 leading-[1.15] tracking-tight">
                             {blog.title}
-                        </h1>
+                        </h2>
                         <p ref={descriptionRef} className="text-base md:text-xl text-white/90 md:text-[#2a2a2a]/80 font-medium mb-6 md:mb-10 max-w-xl leading-relaxed">
                             {blog.description}
                         </p>
@@ -542,7 +542,7 @@ export default function BlogDetails() {
             <FinalCTA
                 title={
                     <>
-                        Ready to Grow Your 
+                        Ready to Grow Your
                         <span className="text-[#2197A1]"> Business Online</span> ?
                     </>
                 }
