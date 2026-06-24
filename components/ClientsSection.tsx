@@ -27,6 +27,7 @@ const clients = [
     { name: "Neeraj", src: "/clients/neeraj.png" },
     { name: "Trini Farms", src: "/clients/trini.png" },
     { name: "Padmavati Hospital", src: "/clients/padmavati.png" },
+    { name: "Intend Pitch Dek", src: "/clients/intendpitch.png" },
 ];
 
 const LogoTile = ({ client }: { client: (typeof clients)[0] }) => (
@@ -193,7 +194,7 @@ const ClientsSection = () => {
                             ))}
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </section>
     );

@@ -139,14 +139,14 @@ const SolutionsSection = () => {
             });
 
             tl.fromTo(headingRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" })
-              .fromTo(split.lines, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" }, "-=0.6");
+                .fromTo(split.lines, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" }, "-=0.6");
 
             // --- Scroll Stack Logic (Both Desktop & Mobile) ---
             const mm = gsap.matchMedia();
             mm.add("(min-width: 0px)", () => {
                 const desktopCards = gsap.utils.toArray<HTMLElement>(".desktop-stack-card");
                 const mobileCards = gsap.utils.toArray<HTMLElement>(".mobile-stack-card");
-                
+
                 // Desktop Anims
                 desktopCards.forEach((card, i) => {
                     if (i === desktopCards.length - 1) return;
@@ -155,7 +155,7 @@ const SolutionsSection = () => {
                         start: "top bottom",
                         end: "top top",
                         scrub: true,
-                        animation: gsap.fromTo(card, 
+                        animation: gsap.fromTo(card,
                             { scale: 1, filter: "brightness(1)", opacity: 1 },
                             { scale: 0.9, filter: "brightness(0.5)", opacity: 0.8, ease: "none" }
                         ),
@@ -170,7 +170,7 @@ const SolutionsSection = () => {
                         start: "top bottom",
                         end: "top top",
                         scrub: true,
-                        animation: gsap.fromTo(card, 
+                        animation: gsap.fromTo(card,
                             { scale: 1, filter: "brightness(1)", opacity: 1 },
                             { scale: 0.9, filter: "brightness(0.5)", opacity: 0.8, ease: "none" }
                         ),
@@ -212,244 +212,244 @@ const SolutionsSection = () => {
                         Everything Your Business Needs — All in One Place
                     </h2>
                     <p ref={paraRef} className="max-w-3xl text-lg text-gray-500 font-medium leading-relaxed">
-                       We take care of your design, website, and marketing so you don’t have to go anywhere else.
+                        We take care of your design, website, and marketing so you don’t have to go anywhere else.
                     </p>
                 </div>
 
                 {/* Scroll Stack Container (Desktop) */}
                 <div ref={stackContainerRef} className="hidden md:flex flex-col relative w-full items-center">
-                    
+
                     {/* Featured 1st Service - Flex layout 40/60 */}
                     <div className="desktop-stack-card sticky top-0 flex h-screen w-full items-center px-6 sm:px-12 lg:px-14 xl:px-32 z-[11]">
-                    <div className="solution-card-anim flex flex-col justify-center w-[40%] !pl-18">
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-primary font-extrabold text-4xl">01</span>
-                            <div className="h-[2px] w-12 bg-primary"></div>
+                        <div className="solution-card-anim flex flex-col justify-center w-[40%] !pl-18">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-primary font-extrabold text-4xl">01</span>
+                                <div className="h-[2px] w-12 bg-primary"></div>
+                            </div>
+                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+                                {solutions[0].title}
+                            </h2>
+                            <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
+                                {solutions[0].description}
+                            </p>
+                            <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
+                                👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We design everything your business needs to look professional — from logos to menus.</span>
+                            </p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
+                                {solutions[0].items.map((item, idx) => (
+                                    <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
+                                        <span className="!mr-3 text-primary font-bold text-xl">•</span>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-                            {solutions[0].title}
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
-                            {solutions[0].description}
-                        </p>
-                        <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
-                           👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We design everything your business needs to look professional — from logos to menus.</span>
-                        </p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
-                            {solutions[0].items.map((item, idx) => (
-                                <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
-                                    <span className="!mr-3 text-primary font-bold text-xl">•</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
-                        <div style={{ width: 450, height: 450 }}>
-                            <Stack
-                                randomRotation={true}
-                                sensitivity={180}
-                                sendToBackOnClick={true}
-                                cards={[
-                                    <img key={1} src="/images/home-services/post.webp" alt="Branding 1" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={2} src="/images/home-services/logo.webp" alt="Branding 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/home-services/menu-card.webp" alt="Branding 3" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={4} src="/images/home-services/posters.webp" alt="Branding 4" className="w-full h-full object-cover rounded-2xl" />,
-                                ]}
-                                autoplay={true}
-                                autoplayDelay={4500}
-                            />
+                        <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
+                            <div style={{ width: 450, height: 450 }}>
+                                <Stack
+                                    randomRotation={true}
+                                    sensitivity={180}
+                                    sendToBackOnClick={true}
+                                    cards={[
+                                        <img key={1} src="/images/home-services/post.webp" alt="Branding 1" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={2} src="/images/home-services/logo.webp" alt="Branding 2" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={3} src="/images/home-services/menu-card.webp" alt="Branding 3" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={4} src="/images/home-services/posters.webp" alt="Branding 4" className="w-full h-full object-cover rounded-2xl" />,
+                                    ]}
+                                    autoplay={true}
+                                    autoplayDelay={4500}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
                     {/* Featured 2nd Service - Reverse Flex layout 60/40 */}
                     <div className="desktop-stack-card sticky top-0 flex h-screen w-full items-center bg-white shadow-[0_-20px_50px_rgba(0,0,0,0.1)] border-t border-gray-100 px-6 sm:px-12 lg:px-24 xl:px-32 z-[12]">
-                    <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
-                        <div style={{ width: 450, height: 450 }}>
-                            <Stack
-                                randomRotation={true}
-                                sensitivity={180}
-                                sendToBackOnClick={true}
-                                cards={[
-                                    <img key={1} src="/images/home-services/ecommerce-website.webp" alt="Web Dev 1" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={2} src="/images/home-services/landing-pages.webp" alt="Web Dev 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/home-services/business-websites.webp" alt="Web Dev 3" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={4} src="/images/home-services/portfolio-website.webp" alt="Web Dev 4" className="w-full h-full object-cover rounded-2xl" />,
-                                ]}
-                                autoplay={true}
-                                autoplayDelay={4000}
-                            />
+                        <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
+                            <div style={{ width: 450, height: 450 }}>
+                                <Stack
+                                    randomRotation={true}
+                                    sensitivity={180}
+                                    sendToBackOnClick={true}
+                                    cards={[
+                                        <img key={1} src="/images/home-services/ecommerce-website.webp" alt="Web Dev 1" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={2} src="/images/home-services/landing-pages.webp" alt="Web Dev 2" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={3} src="/images/home-services/business-websites.webp" alt="Web Dev 3" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={4} src="/images/home-services/portfolio-website.webp" alt="Web Dev 4" className="w-full h-full object-cover rounded-2xl" />,
+                                    ]}
+                                    autoplay={true}
+                                    autoplayDelay={4000}
+                                />
+                            </div>
+                        </div>
+                        <div className="solution-card-anim flex flex-col justify-center w-[40%] !pr-18">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-primary font-extrabold text-4xl">02</span>
+                                <div className="h-[2px] w-12 bg-primary"></div>
+                            </div>
+                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+                                {solutions[1].title}
+                            </h2>
+                            <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
+                                {solutions[1].description}
+                            </p>
+                            <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
+                                👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We create fast, mobile-friendly websites that help turn visitors into customers.</span>
+                            </p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0">
+                                {[
+                                    "Business Websites",
+                                    "Landing Pages",
+                                    "Portfolio Websites",
+                                    "E-commerce Websites"
+                                ].map((item, idx) => (
+                                    <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
+                                        <span className="!mr-3 text-primary font-bold text-xl">•</span>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
-                    <div className="solution-card-anim flex flex-col justify-center w-[40%] !pr-18">
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-primary font-extrabold text-4xl">02</span>
-                            <div className="h-[2px] w-12 bg-primary"></div>
-                        </div>
-                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-                            {solutions[1].title}
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
-                            {solutions[1].description}
-                        </p>
-                        <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
-                           👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We create fast, mobile-friendly websites that help turn visitors into customers.</span>
-                        </p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0">
-                            {[
-                                "Business Websites",
-                                "Landing Pages",
-                                "Portfolio Websites",
-                                "E-commerce Websites"
-                            ].map((item, idx) => (
-                                <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
-                                    <span className="!mr-3 text-primary font-bold text-xl">•</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
 
                     {/* Featured 3rd Service - Flex layout 40/60 */}
                     <div className="desktop-stack-card sticky top-0 flex h-screen w-full items-center bg-white shadow-[0_-20px_50px_rgba(0,0,0,0.1)] border-t border-gray-100 px-6 sm:px-12 lg:px-24 xl:px-32 z-[13]">
-                    <div className="solution-card-anim flex flex-col justify-center w-[40%] !pl-18">
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-primary font-extrabold text-4xl">03</span>
-                            <div className="h-[2px] w-12 bg-primary"></div>
+                        <div className="solution-card-anim flex flex-col justify-center w-[40%] !pl-18">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-primary font-extrabold text-4xl">03</span>
+                                <div className="h-[2px] w-12 bg-primary"></div>
+                            </div>
+                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+                                {solutions[2].title}
+                            </h2>
+                            <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
+                                {solutions[2].description}
+                            </p>
+                            <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
+                                👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We create engaging videos and content that grab attention and help your business stand out on social media.</span>
+                            </p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
+                                {solutions[2].items.map((item, idx) => (
+                                    <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
+                                        <span className="!mr-3 text-primary font-bold text-xl">•</span>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-                            {solutions[2].title}
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
-                            {solutions[2].description}
-                        </p>
-                        <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
-                           👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We create engaging videos and content that grab attention and help your business stand out on social media.</span>
-                        </p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
-                            {solutions[2].items.map((item, idx) => (
-                                <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
-                                    <span className="!mr-3 text-primary font-bold text-xl">•</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
-                        <div style={{ width: 450, height: 450 }}>
-                            <Stack
-                                randomRotation={true}
-                                sensitivity={180}
-                                sendToBackOnClick={true}
-                                cards={[
-                                    <img key={1} src="/images/home-services/video-editing.webp" alt="Content 1" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={2} src="/images/home-services/video-shooting.webp" alt="Content 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/home-services/reels-creation.webp" alt="Content 3" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={4} src="/images/home-services/social-media-content-posting.webp" alt="Content 4" className="w-full h-full object-cover rounded-2xl" />,
-                                ]}
-                                autoplay={true}
-                                autoplayDelay={5000}
-                            />
+                        <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
+                            <div style={{ width: 450, height: 450 }}>
+                                <Stack
+                                    randomRotation={true}
+                                    sensitivity={180}
+                                    sendToBackOnClick={true}
+                                    cards={[
+                                        <img key={1} src="/images/home-services/video-editing.webp" alt="Content 1" className="w-full h-full object-cover rounded-2xl" />,
+                                        // <img key={2} src="/images/home-services/video-shooting.webp" alt="Content 2" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={3} src="/images/home-services/reels-creation.webp" alt="Content 3" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={4} src="/images/home-services/social-media-content-posting.webp" alt="Content 4" className="w-full h-full object-cover rounded-2xl" />,
+                                    ]}
+                                    autoplay={true}
+                                    autoplayDelay={5000}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
                     {/* Featured 4th Service - Reverse Flex layout 60/40 */}
                     <div className="desktop-stack-card sticky top-0 flex h-screen w-full items-center bg-white shadow-[0_-20px_50px_rgba(0,0,0,0.1)] border-t border-gray-100 px-6 sm:px-12 lg:px-24 xl:px-32 z-[14]">
-                    <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
-                        <div style={{ width: 450, height: 450 }}>
-                            <Stack
-                                randomRotation={true}
-                                sensitivity={180}
-                                sendToBackOnClick={true}
-                                cards={[
-                                    <img key={1} src="/images/home-services/facebook-ads.webp" alt="Marketing 1" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={2} src="/images/home-services/seo.webp" alt="Marketing 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/home-services/google-ads.webp" alt="Marketing 3" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={4} src="/images/home-services/local-business.webp" alt="Marketing 4" className="w-full h-full object-cover rounded-2xl" />,
-                                ]}
-                                autoplay={true}
-                                autoplayDelay={4200}
-                            />
+                        <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
+                            <div style={{ width: 450, height: 450 }}>
+                                <Stack
+                                    randomRotation={true}
+                                    sensitivity={180}
+                                    sendToBackOnClick={true}
+                                    cards={[
+                                        <img key={1} src="/images/home-services/facebook-ads.webp" alt="Marketing 1" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={2} src="/images/home-services/seo.webp" alt="Marketing 2" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={3} src="/images/home-services/google-ads.webp" alt="Marketing 3" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={4} src="/images/home-services/local-business.webp" alt="Marketing 4" className="w-full h-full object-cover rounded-2xl" />,
+                                    ]}
+                                    autoplay={true}
+                                    autoplayDelay={4200}
+                                />
+                            </div>
+                        </div>
+                        <div className="solution-card-anim flex flex-col justify-center w-[40%] !pr-18">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-primary font-extrabold text-4xl">04</span>
+                                <div className="h-[2px] w-12 bg-primary"></div>
+                            </div>
+                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+                                {solutions[3].title}
+                            </h2>
+                            <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
+                                {solutions[3].description}
+                            </p>
+                            <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
+                                👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We promote your business on Google and social media to reach more people and bring you more customers.</span>
+                            </p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
+                                {solutions[3].items.map((item, idx) => (
+                                    <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
+                                        <span className="!mr-3 text-primary font-bold text-xl">•</span>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
-                    <div className="solution-card-anim flex flex-col justify-center w-[40%] !pr-18">
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-primary font-extrabold text-4xl">04</span>
-                            <div className="h-[2px] w-12 bg-primary"></div>
-                        </div>
-                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-                            {solutions[3].title}
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
-                            {solutions[3].description}
-                        </p>
-                        <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
-                           👉 <span className="text-gray-700 italic border-b-2 border-primary/30">We promote your business on Google and social media to reach more people and bring you more customers.</span>
-                        </p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
-                            {solutions[3].items.map((item, idx) => (
-                                <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
-                                    <span className="!mr-3 text-primary font-bold text-xl">•</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
 
                     {/* Featured 5th Service - Flex layout 40/60 */}
                     <div className="desktop-stack-card sticky top-0 flex h-screen w-full items-center bg-white border-t border-gray-100 px-6 sm:px-12 lg:px-24 xl:px-32 z-[15]">
-                    <div className="solution-card-anim flex flex-col justify-center w-[40%] !pl-18">
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-primary font-extrabold text-4xl">05</span>
-                            <div className="h-[2px] w-12 bg-primary"></div>
+                        <div className="solution-card-anim flex flex-col justify-center w-[40%] !pl-18">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-primary font-extrabold text-4xl">05</span>
+                                <div className="h-[2px] w-12 bg-primary"></div>
+                            </div>
+                            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+                                {solutions[4].title}
+                            </h2>
+                            <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
+                                {solutions[4].description}
+                            </p>
+                            <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
+                                👉 <span className="text-gray-700 italic border-b-2 border-primary/30">From starting your brand to growing it, we handle everything so you can focus on running your business.</span>
+                            </p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
+                                {solutions[4].items.map((item, idx) => (
+                                    <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
+                                        <span className="!mr-3 text-primary font-bold text-xl">•</span>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-                            {solutions[4].title}
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-4 font-medium leading-relaxed max-w-xl">
-                            {solutions[4].description}
-                        </p>
-                        <p className="text-primary font-bold text-lg mb-8 flex items-center gap-2">
-                           👉 <span className="text-gray-700 italic border-b-2 border-primary/30">From starting your brand to growing it, we handle everything so you can focus on running your business.</span>
-                        </p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-0 text-left">
-                            {solutions[4].items.map((item, idx) => (
-                                <li key={idx} className="flex items-start text-lg text-gray-500 font-medium whitespace-nowrap">
-                                    <span className="!mr-3 text-primary font-bold text-xl">•</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
-                        <div style={{ width: 450, height: 450 }}>
-                            <Stack
-                                randomRotation={true}
-                                sensitivity={180}
-                                sendToBackOnClick={true}
-                                cards={[
-                                    <img key={1} src="/images/home-services/brand-growth-planning.webp" alt="Growth 1" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={2} src="/images/home-services/lead-generation.webp" alt="Growth 2" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={3} src="/images/4.webp" alt="Growth 3" className="w-full h-full object-cover rounded-2xl" />,
-                                    <img key={4} src="/images/home-services/digital-strategy.webp" alt="Growth 4" className="w-full h-full object-cover rounded-2xl" />,
-                                ]}
-                                autoplay={true}
-                                autoplayDelay={4800}
-                            />
+                        <div className="hidden md:flex items-center justify-center relative min-h-[400px] w-[60%]">
+                            <div style={{ width: 450, height: 450 }}>
+                                <Stack
+                                    randomRotation={true}
+                                    sensitivity={180}
+                                    sendToBackOnClick={true}
+                                    cards={[
+                                        <img key={1} src="/images/home-services/brand-growth-planning.webp" alt="Growth 1" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={2} src="/images/home-services/lead-generation.webp" alt="Growth 2" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={3} src="/images/4.webp" alt="Growth 3" className="w-full h-full object-cover rounded-2xl" />,
+                                        <img key={4} src="/images/home-services/digital-strategy.webp" alt="Growth 4" className="w-full h-full object-cover rounded-2xl" />,
+                                    ]}
+                                    autoplay={true}
+                                    autoplayDelay={4800}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
                 {/* Mobile Scroll Stack (Refactored from Carousel) */}
                 <div className="md:hidden flex flex-col w-full relative h-auto">
                     {solutions.map((solution, index) => (
-                        <div 
-                            key={index} 
+                        <div
+                            key={index}
                             className={`mobile-stack-card ${index === solutions.length - 1 ? 'relative' : 'sticky top-0 min-h-[90vh]'} flex flex-col w-full bg-white !pt-10 !px-6 z-10`}
                         >
                             {/* Title & Number */}

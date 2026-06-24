@@ -85,7 +85,7 @@ const AboutSection = () => {
                 <div ref={contentRef} className="w-full md:w-[60%] flex flex-col items-start text-left relative z-20 !px-0 md:!pl-10">
                     <div className="flex items-center gap-3 mb-8">
                         <div className="h-[3px] w-14 bg-primary rounded-full"></div>
-                        <span className="text-primary font-black uppercase tracking-[0.3em] text-xs">Innovation Partner</span>
+                        <span className="text-primary font-black uppercase tracking-[0.3em] text-xs">Digital Growth</span>
                     </div>
 
                     <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-8 leading-[1.05] tracking-tight">
@@ -126,21 +126,21 @@ const AboutSection = () => {
                     <div className="space-y-8 md:!mb-6 text-lg lg:text-xl text-gray-600 font-medium leading-relaxed max-w-xl">
                         <p className="border-l-4 border-primary/20 !pl-2">
                             <span className="font-semibold text-gray-800">Prodbiz Solutions</span> is a
-                            <span className="font-semibold text-primary"> digital marketing</span> and
-                            <span className="font-semibold text-primary"> website development</span> company that helps businesses
+                            <span className="font-semibold text-primary"> Digital marketing</span> and
+                            <span className="font-semibold text-primary"> IT solutions</span> company that helps businesses
                             <span className="font-semibold text-gray-800"> grow online</span>.
                             We create your <span className="font-semibold">brand</span>, design your
                             <span className="font-semibold"> logo</span>, build your
                             <span className="font-semibold"> website</span>, and promote your business on
                             <span className="font-semibold"> Google</span> and
-                            <span className="font-semibold"> social media</span>.
+                            <span className="font-semibold"> Social Media</span>.
                         </p>
 
                         <p className="!pl-2">
                             From <span className="font-semibold">video creation</span> and
                             <span className="font-semibold"> content posting</span> to
-                            <span className="font-semibold text-primary"> SEO services</span> and
-                            <span className="font-semibold text-primary"> online advertising</span>,
+                            <span className="font-semibold text-primary"> SEO Services</span> and
+                            <span className="font-semibold text-primary"> Online Advertising</span>,
                             we handle <span className="font-semibold text-gray-800">everything in one place</span>.
                             Our goal is simple — help you
                             <span className="font-semibold text-gray-800"> attract more customers</span>,

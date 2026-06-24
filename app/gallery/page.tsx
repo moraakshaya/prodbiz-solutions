@@ -20,44 +20,9 @@ if (typeof window !== "undefined") {
 
 const galleryImages = [
     {
-        url: "/images/gallery/1st-aniversary-img-01.webp",
-        title: "1st Anniversary",
-        description: "Celebrating 365 days of innovation, growth, and digital excellence."
-    },
-    {
-        url: "/images/gallery/1st-aniversary-img-04.webp",
-        title: "1st Anniversary",
-        description: "A milestone moment marking a year of transforming visions into reality."
-    },
-    {
         url: "/images/gallery/1st-aniversary-img-05.webp",
         title: "1st Anniversary",
         description: "Our dedicated team coming together to honor our first year of success."
-    },
-    {
-        url: "/images/gallery/1st-aniversary-img-07.webp",
-        title: "1st Anniversary",
-        description: "Reflecting on a year of hard work, creativity, and outstanding achievements."
-    },
-    {
-        url: "/images/gallery/1st-aniversary-img-08.webp",
-        title: "1st Anniversary",
-        description: "Cheers to the first of many successful years as your innovation partner."
-    },
-    {
-        url: "/images/gallery/1st-aniversary-img-02.webp",
-        title: "1st Anniversary",
-        description: "Capturing the joy and collective energy of our incredible first-year journey."
-    },
-    {
-        url: "/images/gallery/1st-aniversary-img-03.webp",
-        title: "1st Anniversary",
-        description: "Honoring the dedication that made our first year extraordinary."
-    },
-    {
-        url: "/images/gallery/1st-aniversary-img-06.webp",
-        title: "1st Anniversary",
-        description: "A night of gratitude and celebration for our partners and patrons."
     },
     {
         url: "/images/gallery/chirstmas-img-01.webp",
@@ -145,14 +110,14 @@ export default function InsideCompanyPage() {
                 duration: 0.6,
                 ease: "power2.in"
             })
-            .set(spanRef.current, { y: 25, rotationX: -90 })
-            .to(spanRef.current, {
-                y: 0,
-                opacity: 1,
-                rotationX: 0,
-                duration: 0.8,
-                ease: "power2.out"
-            });
+                .set(spanRef.current, { y: 25, rotationX: -90 })
+                .to(spanRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    rotationX: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
 
             return () => {
                 splitParas.revert();
@@ -213,7 +178,7 @@ export default function InsideCompanyPage() {
             >
                 {/* ── 3D Glassmorphism Background ── */}
                 <WhoWeAreHero3D />
-                
+
                 {/* Mobile Gallery Animation (Centered Background) */}
                 <div className="block md:hidden absolute inset-0 z-0 opacity-40 flex items-center justify-center h-full">
                     <GalleryHeroAnimation />
@@ -221,23 +186,23 @@ export default function InsideCompanyPage() {
 
                 {/* Gradient overlay: ensures left-side text stays readable */}
                 <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "linear-gradient(105deg, rgba(3,14,18,0.72) 0%, rgba(3,14,18,0.45) 50%, transparent 100%)" }} />
-                
+
                 {/* Content Container */}
                 <div className="relative z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
-  
+
                     {/* Hero Content Wrapper */}
                     <div className="w-full md:w-[60%] flex flex-col items-center md:items-start translate-y-[-20px] !mt-20 md:pr-8 md:!pl-8">
                         {/* Title: Centered on Mobile */}
                         <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold !text-white !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full drop-shadow-lg" style={{ perspective: "1000px" }}>
                             Inside <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d" style={{ textShadow: "0 0 30px rgba(33,151,161,0.6)" }}>Prodbiz</span>
                         </h1>
- 
+
                         <div ref={paraRef} className="w-full flex flex-col md:block">
                             {/* Short mobile content */}
                             <p className="block md:hidden text-base sm:text-base text-white/80 font-medium leading-relaxed text-center mb-8">
                                 Explore the moments that define Prodbiz — from team collaborations to project milestones.
                             </p>
- 
+
                             {/* Desktop content */}
                             <div className="hidden md:block space-y-4 max-w-3xl mb-1 md:mb-8">
                                 <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed">
@@ -245,7 +210,7 @@ export default function InsideCompanyPage() {
                                 </p>
                             </div>
                         </div>
- 
+
                         {/* Button: Centered on Mobile */}
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
@@ -257,7 +222,7 @@ export default function InsideCompanyPage() {
                             </Button>
                         </div>
                     </div>
- 
+
                     {/* Desktop Right Side: Rotating Gallery Hero Animation */}
                     <div className="hidden md:flex w-[40%] justify-center items-center h-full">
                         <GalleryHeroAnimation />
@@ -269,7 +234,7 @@ export default function InsideCompanyPage() {
             {/* Content Section */}
             <section id="inside-content-section" className="w-full max-w-7xl mx-auto px-6 !pb-24 flex flex-col items-center overflow-hidden !mt-16 md:!mt-24">
                 <div ref={contentRef} className="w-full">
-                    
+
                     {/* Unified Gallery Section */}
                     <div className="w-full flex flex-col items-center gap-12 !px-4 !py-6">
                         {/* Header Section */}
@@ -294,13 +259,13 @@ export default function InsideCompanyPage() {
                                     onClick={() => setSelectedImage(img)}
                                 >
                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col items-center justify-center p-6 text-center" />
-                                    
+
                                     <img
                                         src={img.url}
                                         alt={img.title}
                                         className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                    
+
                                     {/* Overlay Content */}
                                     <div className="absolute inset-0 z-20 flex flex-col items-center justify-end !p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                                         <p className="text-white font-bold text-lg mb-1">{img.title}</p>
