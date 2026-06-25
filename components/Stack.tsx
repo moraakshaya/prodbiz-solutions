@@ -148,11 +148,7 @@ export default function Stack({
     }
   });
 
-  useEffect(() => {
-    if (cards && cards.length) {
-      setStack(cards.map((content, index) => ({ id: index + 1, content })));
-    }
-  }, [cards]);
+
 
   const sendToBack = (id: number) => {
     setStack(prev => {
