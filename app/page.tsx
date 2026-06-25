@@ -328,7 +328,7 @@ export default function Home() {
               <div ref={buttonsRef} className="flex flex-row flex-wrap gap-0 md:gap-4 lg:gap-6 justify-center mt-4">
                 <Button
                   href="/get-proposal"
-                  className="home-hero-btn-primary !bg-transparent md:!bg-[#e67038] md:hover:!bg-transparent !px-3 !py-2 sm:!px-5 sm:!py-3 !border-1 !border-transparent md:!border-2 md:hover:!border-2 md:hover:!border-[#FEFEFE] !shadow-none"
+                  className="home-hero-btn-primary !bg-transparent md:!bg-[#e67038] md:hover:!bg-transparent !border-1 !border-transparent md:!border-2 md:hover:!border-2 md:hover:!border-[#FEFEFE] !shadow-none"
                 >
                   <span className="hidden md:inline">Get Free Consultation</span>
                   <ArrowRight size={16} className="hidden md:inline md:w-[24px] md:h-[24px]" />
@@ -336,7 +336,7 @@ export default function Home() {
                 </Button>
                 <Button
                   href="/our-work"
-                  className="home-hero-btn-secondary !px-3 !py-2 sm:!px-5 sm:!py-3 !text-[#fefefe]"
+                  className="home-hero-btn-secondary !px-3 !py-2 !text-[#fefefe]"
                 >
                   <span>Explore Our Work</span>
                   <ArrowRight size={16} className="md:w-[24px] md:h-[24px]" />

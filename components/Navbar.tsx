@@ -9,11 +9,11 @@ import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 const solutionsDropdown = [
-    { label: "Branding & Designing", href: "/solutions/branding-designing" },
-    { label: "Website Development", href: "/solutions/website-development" },
-    { label: "Content Creation & Video Marketing", href: "/solutions/content-creation-video-marketing" },
-    { label: "Digital Marketing", href: "/solutions/digital-marketing" },
-    { label: "Complete Business Growth", href: "/solutions/complete-business-growth" },
+    { label: "Branding & Designing", href: "/services/branding-designing" },
+    { label: "Website Development", href: "/services/website-development" },
+    { label: "Content Creation & Video Marketing", href: "/services/content-creation-video-marketing" },
+    { label: "Digital Marketing", href: "/services/digital-marketing" },
+    { label: "Complete Business Growth", href: "/services/complete-business-growth" },
 ];
 
 export default function Navbar() {

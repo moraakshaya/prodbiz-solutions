@@ -70,6 +70,8 @@ const workCategories = [
             { id: "a2", image: "/images/home-services/autoads-img-2.png", title: "Mobile Branding Design", client: "Quick Delivery" },
             { id: "a3", image: "/images/home-services/autoads-img-3.png", title: "Vehicle Wrap Ad", client: "Local Transport" },
             { id: "a4", image: "/images/home-services/autoads-img-4.png", title: "Auto Carrier Banner", client: "Prime Auto" },
+            { id: "a5", image: "/images/home-services/autoads-img-5.png", title: "Auto Carrier Banner", client: "Prime Auto" },
+            { id: "a6", image: "/images/home-services/autoads-img-6.png", title: "Auto Carrier Banner", client: "Prime Auto" },
         ]
     },
     {

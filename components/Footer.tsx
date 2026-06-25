@@ -14,11 +14,11 @@ const quickLinks = [
 ];
 
 const services = [
-    { label: "Branding & Designing", href: "/solutions/branding-designing" },
-    { label: "Website Development", href: "/solutions/website-development" },
-    { label: "Content Creation & Video Marketing", href: "/solutions/content-creation-video-marketing" },
-    { label: "Digital Marketing", href: "/solutions/digital-marketing" },
-    { label: "Complete Business Growth", href: "/solutions/complete-business-growth" },
+    { label: "Branding & Designing", href: "/services/branding-designing" },
+    { label: "Website Development", href: "/services/website-development" },
+    { label: "Content Creation & Video Marketing", href: "/services/content-creation-video-marketing" },
+    { label: "Digital Marketing", href: "/services/digital-marketing" },
+    { label: "Complete Business Growth", href: "/services/complete-business-growth" },
 ];
 
 const socialLinks = [
