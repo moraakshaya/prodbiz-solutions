@@ -16,14 +16,12 @@ const OurApproach = dynamic(() => import("@/components/OurApproach"), { ssr: fal
 
 
 const teamMembers = [
-    { name: "Srikanth Reddy", role: "Managing Director", image: "/images/gallery/employee-01.webp" },
-    { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employee-03.webp" },
-    { name: "Pravanya Reddy", role: "COO", image: "/images/gallery/employee-02.webp" },
-    { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employee-04.webp" },
-    { name: "Gopala Krishna", role: "Marketing Strategist", image: "/images/gallery/employee-05.png" }
+    { name: "Srikanth Reddy", role: "Managing Director", image: "/images/gallery/employee-011.png" },
+    { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employ-02.png" },
+    { name: "Pravanya Reddy", role: "COO", image: "/images/gallery/employe-03.png" },
+    { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employe-04.png" },
+    { name: "Gopala Krishna", role: "Marketing Strategist", image: "/images/gallery/employ-05.png" }
 ];
-
-
 
 
 function MobileLeadersCarousel({ items }: { items: typeof teamMembers }) {
@@ -88,46 +86,27 @@ function MobileLeadersCarousel({ items }: { items: typeof teamMembers }) {
                         key={idx}
                         className="w-full flex-shrink-0 flex flex-col items-center snap-center !py-4"
                     >
-                        {/* Image Container with Organic Blob */}
-                        <div className="relative w-72 h-[360px] !mb-5">
-                            <div
-                                className="absolute inset-0 bg-[#e76038] opacity-90 shadow-xl"
-                                style={{
-                                    borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-                                    transform: 'rotate(-8deg) scale(1.01)'
-                                }}
-                            />
-                            <div
-                                className="absolute inset-2 bg-[#f97316] opacity-40 blur-lg"
-                                style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }}
-                            />
-
-                            <div className="absolute inset-0 flex items-center justify-center overflow-hidden z-10"
-                                style={{ borderRadius: '40% 60% 70% 30% / 40% 40% 60% 60%' }}>
-                                {member.image ? (
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        fill
-                                        quality={100}
-                                        className="object-cover transition-transform duration-500"
-                                    />
-                                ) : (
-                                    <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[#2197A1]/20 font-black text-5xl select-none">
-                                        {member.name.split(' ').map(n => n[0]).join('')}
-                                    </div>
-                                )}
-                            </div>
+                        {/* Profile Card */}
+                        <div className="relative w-[230px] h-[310px] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-100 !mb-5">
+                            {/* Full photo */}
+                            {member.image ? (
+                                <Image
+                                    src={member.image}
+                                    alt={member.name}
+                                    fill
+                                    quality={100}
+                                    className="object-cover object-top"
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-slate-200 flex items-center justify-center text-[#2197A1]/30 font-black text-5xl select-none">
+                                    {member.name.split(' ').map(n => n[0]).join('')}
+                                </div>
+                            )}
                         </div>
-
-                        {/* Text Content */}
-                        <div className="text-center pb-10">
-                            <h3 className="text-2xl font-bold text-[#2A2A2A] mb-3 transition-colors tracking-tight">
-                                {member.name}
-                            </h3>
-                            <div className="flex flex-col items-center space-y-2">
-                                <p className="text-[#2197A1] font-black text-sm uppercase tracking-widest">{member.role}</p>
-                            </div>
+                        {/* Name & Role below card */}
+                        <div className="text-center !mt-4">
+                            <h3 className="text-[#2A2A2A] font-bold text-base leading-tight">{member.name}</h3>
+                            <p className="text-[#2A2A2A]/60 text-xs font-semibold tracking-widest uppercase mt-1">{member.role}</p>
                         </div>
                     </div>
                 ))}
@@ -697,51 +676,34 @@ export default function WhoWeArePage() {
                         </div>
 
                         {/* Leader Cards (Desktop Grid) */}
-                        <div ref={teamCardsRef} className="hidden md:flex flex-wrap justify-center gap-y-10 md:gap-y-8 gap-x-12">
+                        <div ref={teamCardsRef} className="hidden md:flex flex-wrap justify-center gap-y-12 md:gap-y-10 gap-x-10">
                             {teamMembers.map((member, idx) => (
-                                <div key={idx} className="w-full sm:w-[calc(50%-24px)] lg:w-[calc(25%-36px)] min-w-[260px] flex flex-col items-center group">
-                                    {/* Image Container with Organic Blob */}
-                                    <div className="relative w-64 h-[350px] !mb-10">
-                                        {/* Organic Blob Background (Floating) */}
-                                        <div
-                                            className="absolute inset-0 bg-[#e76038] opacity-90 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 shadow-xl"
-                                            style={{
-                                                borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-                                                transform: 'rotate(-8deg) scale(1.01)'
-                                            }}
-                                        />
-                                        <div
-                                            className="absolute inset-2 bg-[#f97316] opacity-20 blur-md transition-transform duration-700 group-hover:scale-110"
-                                            style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }}
-                                        />
-
-                                        {/* Image/Headshot Mask */}
-                                        <div className="absolute inset-0 flex items-center justify-center overflow-hidden z-10"
-                                            style={{ borderRadius: '40% 60% 70% 30% / 40% 40% 60% 60%' }}>
-                                            {member.image ? (
-                                                <Image
-                                                    src={member.image}
-                                                    alt={member.name}
-                                                    fill
-                                                    quality={100}
-                                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[#2197A1]/20 font-black text-5xl select-none group-hover:scale-110 transition-transform duration-500">
-                                                    {member.name.split(' ').map(n => n[0]).join('')}
-                                                </div>
-                                            )}
-                                        </div>
+                                <div key={idx} className="flex flex-col items-center">
+                                    <div
+                                        className="group relative w-[250px] h-[350px] rounded-[2rem] overflow-hidden shadow-xl bg-slate-100 cursor-pointer"
+                                        style={{ transition: 'transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s' }}
+                                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px) scale(1.03)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0px 10px #2197A1'; }}
+                                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
+                                    >
+                                        {/* Full-bleed photo */}
+                                        {member.image ? (
+                                            <Image
+                                                src={member.image}
+                                                alt={member.name}
+                                                fill
+                                                quality={100}
+                                                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full bg-slate-200 flex items-center justify-center text-[#2197A1]/30 font-black text-5xl select-none">
+                                                {member.name.split(' ').map(n => n[0]).join('')}
+                                            </div>
+                                        )}
                                     </div>
-
-                                    {/* Text Content */}
-                                    <div className="text-center">
-                                        <h3 className="text-2xl font-bold text-[#2A2A2A] !mb-1 group-hover:text-[#2197A1] transition-colors tracking-tight">
-                                            {member.name}
-                                        </h3>
-                                        <div className="flex flex-col items-center space-y-2">
-                                            <p className="text-[#2197A1] font-black text-sm uppercase tracking-widest">{member.role}</p>
-                                        </div>
+                                    {/* Name & Role below card */}
+                                    <div className="text-center !mt-4">
+                                        <h3 className="text-[#2A2A2A] font-bold text-base leading-tight">{member.name}</h3>
+                                        <p className="text-[#2A2A2A]/60 text-xs font-semibold tracking-widest uppercase mt-1">{member.role}</p>
                                     </div>
                                 </div>
                             ))}
