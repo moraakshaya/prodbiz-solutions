@@ -22,6 +22,7 @@ import dynamic from "next/dynamic";
 import CircularGallery from "@/components/CircularGallery";
 import DomeGallery from "@/components/DomeGallery";
 import MobileServiceCarousel from "@/components/MobileServiceCarousel";
+import MobileDesignCarousel from "@/components/MobileDesignCarousel";
 import MobileInfographicCarousel from "@/components/MobileInfographicCarousel";
 import FinalCTA from "@/components/FinalCTA";
 
@@ -533,7 +534,7 @@ export default function ContentCreationVideoMarketingPage() {
             {/* Our Creative Work Section - Circular Gallery Version */}
             <section ref={portfolioSectionRef} className="w-full bg-[#fff] overflow-hidden !py-24 md:!pt-48 md:!pb-0">
                 <div className="max-w-7xl !mx-auto !px-6">
-                    <div ref={portfolioHeaderRef} className="text-center !mb-16 md:!mb-0">
+                    <div ref={portfolioHeaderRef} className="hidden md:block text-center !mb-16 md:!mb-0">
                         <span className="text-[#2197A1] font-black uppercase tracking-widest text-xs !mb-3 block">Portfolio</span>
                         <h2 className="text-4xl md:text-6xl font-black text-[#2A2A2A] !mb-2 md:!mb-6 leading-tight">
                             Our <span className="text-[#2197A1]">Creative Work</span>
@@ -558,16 +559,9 @@ export default function ContentCreationVideoMarketingPage() {
                     <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[300px] h-[300px] bg-[#2197A1]/10 rounded-full blur-[100px] pointer-events-none"></div>
                 </div>
 
-                <div className="md:hidden block relative w-full h-[600px] top-[-30px]">
-                    <DomeGallery
-                        images={portfolioItems}
-                        fit={0.8}
-                        minRadius={600}
-                        maxVerticalRotationDeg={0}
-                        segments={34}
-                        dragDampening={2}
-                        grayscale={false}
-                    />
+                {/* Mobile Glass Card Carousel */}
+                <div className="md:hidden block w-full !py-0">
+                    <MobileDesignCarousel items={portfolioItems} />
                 </div>
             </section>
 
