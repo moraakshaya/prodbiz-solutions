@@ -14,7 +14,7 @@ const WhoWeAreHero3D = dynamic(() => import("@/components/WhoWeAreHero3D"), { ss
 import FolderAnimation from "@/components/FolderAnimation";
 import Stack from "@/components/Stack";
 import { caseStudies } from "./data";
- 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const TimelineItem = ({
@@ -88,7 +88,7 @@ const TimelineItem = ({
 export default function CaseStudiesPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [mounted, setMounted] = useState(false);
-    
+
     const h1Ref = useRef<HTMLHeadingElement>(null);
     const spanRef = useRef<HTMLSpanElement>(null);
     const paraRef = useRef<HTMLDivElement>(null);
@@ -146,14 +146,14 @@ export default function CaseStudiesPage() {
                 duration: 0.6,
                 ease: "power2.in"
             })
-            .set(spanRef.current, { y: 25, rotationX: -90 })
-            .to(spanRef.current, {
-                y: 0,
-                opacity: 1,
-                rotationX: 0,
-                duration: 0.8,
-                ease: "power2.out"
-            });
+                .set(spanRef.current, { y: 25, rotationX: -90 })
+                .to(spanRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    rotationX: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
 
             return () => {
                 splitParas.revert();
@@ -169,7 +169,7 @@ export default function CaseStudiesPage() {
             >
                 {/* ── 3D Glassmorphism Background ── */}
                 <WhoWeAreHero3D />
-                
+
                 {/* Mobile Folder Animation (Centered Background) */}
                 <div className="block md:hidden absolute inset-0 z-0 opacity-40 flex items-center justify-center">
                     <div className="w-[300px] h-[300px]">
@@ -179,23 +179,23 @@ export default function CaseStudiesPage() {
 
                 {/* Gradient overlay: ensures left-side text stays readable */}
                 <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "linear-gradient(105deg, rgba(3,14,18,0.72) 0%, rgba(3,14,18,0.45) 50%, transparent 100%)" }} />
-                
+
                 {/* Content Container */}
                 <div className="relative z-10 w-full max-w-7xl !mx-auto flex md:flex-row flex-col items-center !px-4 md:!px-2 !pt-10 md:!pt-10 gap-8 md:gap-1">
-  
+
                     {/* Hero Content Wrapper */}
                     <div className="w-full md:w-[60%] flex flex-col items-center md:items-start translate-y-[-20px] !mt-20 md:pr-8 md:!pl-8">
                         {/* Title: Centered on Mobile */}
                         <h1 ref={h1Ref} className="text-4xl sm:text-4xl md:text-6xl lg:text-7xl font-bold !text-white !mb-2 md:mb-6 leading-tight break-words text-center md:text-left w-full drop-shadow-lg" style={{ perspective: "1000px" }}>
                             Case <span ref={spanRef} className="text-[#2197A1] inline-block origin-center transform-style-3d" style={{ textShadow: "0 0 30px rgba(33,151,161,0.6)" }}>Studies</span>
                         </h1>
- 
+
                         <div ref={paraRef} className="w-full flex flex-col md:block">
                             {/* Short mobile content */}
                             <p className="block md:hidden text-base sm:text-base text-white/80 font-medium leading-relaxed text-center mb-8">
                                 Discover how Prodbiz Solutions transforms visions into high-impact digital realities through strategic growth and innovation.
                             </p>
- 
+
                             {/* Desktop content */}
                             <div className="hidden md:block space-y-4 max-w-3xl mb-1 md:mb-8">
                                 <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed">
@@ -203,7 +203,7 @@ export default function CaseStudiesPage() {
                                 </p>
                             </div>
                         </div>
- 
+
                         {/* Button: Centered on Mobile */}
                         <div ref={buttonsRef} className="w-full flex justify-center md:justify-start !mt-2">
                             <Button
@@ -216,7 +216,7 @@ export default function CaseStudiesPage() {
                             </Button>
                         </div>
                     </div>
- 
+
                     {/* Desktop Right Side: Folder Animation */}
                     <div className="hidden md:flex w-[40%] justify-center items-center h-full">
                         <FolderAnimation />
@@ -228,12 +228,12 @@ export default function CaseStudiesPage() {
             <section className="relative w-full !pb-0 md:!py-20 !px-6 md:!px-8 overflow-hidden flex items-center justify-center">
                 {/* Decorative blob */}
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#2197A1]/5 blur-3xl -mr-48 -mt-48 pointer-events-none" />
- 
+
                 <div className="max-w-7xl mx-auto w-full">
                     <div className="!space-y-14 !mt-10 ">
                         {paginatedCaseStudies.map((cs, idx) => {
                             const isReversed = idx % 2 !== 0;
-                                 const timeline = (
+                            const timeline = (
                                 <div className="relative">
                                     {/* Client Name Header */}
                                     <div className="!mb-8">
@@ -284,7 +284,7 @@ export default function CaseStudiesPage() {
                                             {cs.categories ? (
                                                 <div className="space-y-4 w-full">
                                                     {cs.categories.map((cat, cIdx) => (
-                                                        <div 
+                                                        <div
                                                             key={cIdx}
                                                             className="rounded-xl overflow-hidden shadow-[0_10px_10px_2px_rgba(0,0,0,0.05)] !p-4 !my-2 border border-gray-50 bg-white"
                                                         >
@@ -300,7 +300,7 @@ export default function CaseStudiesPage() {
                                                                 <ul className="space-y-1">
                                                                     {cat.points.map((pt, pIdx) => (
                                                                         <li key={pIdx} className="flex items-start">
-                                                                            <svg className="w-3 h-3 text-[#2197A1] !mt-1 !mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                                                            <svg className="w-3 h-3 text-[#2197A1] !mt-1 !mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                                                                             <p className="text-[13px] text-gray-700 leading-relaxed !mb-0">{pt}</p>
                                                                         </li>
                                                                     ))}
@@ -315,7 +315,7 @@ export default function CaseStudiesPage() {
                                                 </p>
                                             )}
                                         </TimelineItem>
- 
+
                                         {/* Results */}
                                         <div className="!mt-6 pl-2">
                                             <span className="text-[14px] font-black uppercase tracking-[0.15em] text-[#2197A1]/70 !mb-4 block">Results</span>
@@ -332,7 +332,7 @@ export default function CaseStudiesPage() {
                                 </div>
                             );
 
-                             const polaroid = (
+                            const polaroid = (
                                 <div className="relative h-[480px] w-full flex items-center justify-center">
                                     <div className="w-[300px] h-[400px] md:w-[340px] md:h-[440px]">
                                         <Stack
@@ -345,32 +345,32 @@ export default function CaseStudiesPage() {
                                                 // Primary Result Card (Desktop/Final)
                                                 <div key="after" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100 group">
                                                     <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50">
-                                                        <img 
-                                                            src={cs.images.after} 
-                                                            alt={`${cs.client} Desktop View`} 
-                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                                        <img
+                                                            src={cs.images.after}
+                                                            alt={`${cs.client} Desktop View`}
+                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                                         />
                                                     </div>
                                                     <div className="mt-4 pb-2 text-center">
                                                         <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-widest italic flex items-center justify-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> 
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" />
                                                             Desktop View
                                                         </span>
                                                     </div>
                                                 </div>,
-                                                
+
                                                 // Secondary Card: Either 'Before' or 'Mobile View'
                                                 <div key="secondary" className="w-full h-full bg-white p-3 rounded-2xl shadow-xl flex flex-col border border-gray-100 group">
                                                     <div className="flex-1 w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-50 transition-all duration-700">
-                                                        <img 
-                                                            src={cs.images.before || cs.images.mobile || cs.images.after} 
-                                                            alt={`${cs.client} Mobile View`} 
-                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                                        <img
+                                                            src={cs.images.before || cs.images.mobile || cs.images.after}
+                                                            alt={`${cs.client} Mobile View`}
+                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                                         />
                                                     </div>
                                                     <div className="mt-4 pb-2 text-center">
                                                         <span className="text-[11px] font-black uppercase text-[#2197A1] tracking-widest flex items-center justify-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" /> 
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2197A1]" />
                                                             Mobile View
                                                         </span>
                                                     </div>

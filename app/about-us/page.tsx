@@ -18,9 +18,9 @@ const OurApproach = dynamic(() => import("@/components/OurApproach"), { ssr: fal
 const teamMembers = [
     { name: "Srikanth Reddy", role: "Managing Director", image: "/images/gallery/employee-011.png" },
     { name: "Praveen Reddy", role: "CEO", image: "/images/gallery/employ-02.png" },
-    { name: "Pravanya Reddy", role: "COO", image: "/images/gallery/employe-03.png" },
-    { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employe-04.png" },
-    { name: "Gopala Krishna", role: "Marketing Strategist", image: "/images/gallery/employ-05.png" }
+    { name: "Pravanya Reddy", role: "COO", image: "/images/gallery/employe-03.png" }
+    // { name: "Surya Teja", role: "Business Head", image: "/images/gallery/employe-04.png" },
+    // { name: "Gopala Krishna", role: "Marketing Strategist", image: "/images/gallery/employ-05.png" }
 ];
 
 
